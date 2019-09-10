@@ -1,0 +1,13 @@
+# Sample configuration for kant-router
+
+# Logging level for the web server. If empty defaults to info.
+log_level = "debug"
+
+[network]
+
+# Whether to use IPv6 or not.
+use-ipv6 = true
+
+# What ports to use for HTTP/HTTPS.
+http-port = 80
+https-port = 443
