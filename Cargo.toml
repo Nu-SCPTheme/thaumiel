@@ -5,3 +5,9 @@ authors = ["Ammon Smith <ammon.i.smith@gmail.com>"]
 edition = "2018" # this refers to the Cargo.toml version
 
 [dependencies]
+color-backtrace = "0.2"
+config = { version = "0.9", features = ["toml"] }
+log = "0.4"
+pretty_env_logger = "0.3"
+serde = { version = "1", features = ["derive"] }
+structopt = "0.3"

@@ -18,4 +18,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-fn main() {}
+#![deny(missing_debug_implementations)]
+
+extern crate color_backtrace;
+extern crate config;
+
+#[macro_use]
+extern crate log;
+extern crate pretty_env_logger;
+
+#[macro_use]
+extern crate serde;
+
+#[macro_use]
+extern crate structopt;
+
+pub type StdResult<T, E> = std::result::Result<T, E>;
+
+fn main() {
+    color_backtrace::install();
+
+    let log_level = log::LevelFilter::Debug;
+
+    pretty_env_logger::formatted_builder()
+        .filter_level(log_level)
+        .init();
+
+    info!("Server starting");
+}
