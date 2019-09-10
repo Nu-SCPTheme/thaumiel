@@ -66,6 +66,13 @@ impl Config {
     }
 }
 
+#[serde(rename_all = "kebab-case")]
+#[derive(Deserialize, Debug)]
+struct App {
+    log_level: Option<String>,
+}
+
+#[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
 struct Network {
     use_ipv6: bool,
@@ -76,7 +83,7 @@ struct Network {
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
 struct ConfigFile {
-    log_level: Option<String>,
+    app: App,
     network: Network,
 }
 
@@ -107,7 +114,7 @@ impl ConfigFile {
             ("error", LevelFilter::Error),
         ];
 
-        let log_level = match self.log_level {
+        let log_level = match self.app.log_level {
             Some(ref log_level) => log_level,
             None => return DEFAULT_LOG_LEVEL,
         };

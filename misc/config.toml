@@ -1,5 +1,7 @@
 # Sample configuration for kant-router
 
+[app]
+
 # Logging level for the web server. If empty defaults to info.
 log_level = "debug"
 
