@@ -21,6 +21,7 @@
 use log::LevelFilter;
 use std::fs::File;
 use std::io::Read;
+use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr};
 use std::path::{Path, PathBuf};
 use structopt::StructOpt;
 
@@ -48,8 +49,8 @@ struct Options {
 #[derive(Debug, Clone)]
 pub struct Config {
     pub log_level: LevelFilter,
-    pub http_port: u16,
-    pub https_port: u16,
+    pub http_addr: SocketAddr,
+    pub https_addr: SocketAddr,
 }
 
 impl Config {
@@ -65,12 +66,18 @@ impl Config {
     }
 }
 
+#[derive(Deserialize, Debug)]
+struct Network {
+    use_ipv6: bool,
+    http_port: Option<u16>,
+    https_port: Option<u16>,
+}
+
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
 struct ConfigFile {
-    pub log_level: Option<String>,
-    pub http_port: Option<u16>,
-    pub https_port: Option<u16>,
+    log_level: Option<String>,
+    network: Network,
 }
 
 impl ConfigFile {
@@ -118,14 +125,26 @@ impl ConfigFile {
 impl Into<Config> for ConfigFile {
     #[cold]
     fn into(self) -> Config {
+        let Network {
+            use_ipv6,
+            http_port,
+            https_port,
+        } = self.network;
+
+        let ip_address = if use_ipv6 {
+            IpAddr::V6(Ipv6Addr::UNSPECIFIED)
+        } else {
+            IpAddr::V4(Ipv4Addr::UNSPECIFIED)
+        };
+
         let log_level = self.parse_log_level();
-        let http_port = self.http_port.unwrap_or(80);
-        let https_port = self.https_port.unwrap_or(443);
+        let http_addr = SocketAddr::new(ip_address, http_port.unwrap_or(80));
+        let https_addr = SocketAddr::new(ip_address, https_port.unwrap_or(443));
 
         Config {
             log_level,
-            http_port,
-            https_port,
+            http_addr,
+            https_addr,
         }
     }
 }
