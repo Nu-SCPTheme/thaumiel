@@ -20,6 +20,7 @@
 
 #![deny(missing_debug_implementations)]
 
+extern crate actix_web;
 extern crate color_backtrace;
 
 #[macro_use]
