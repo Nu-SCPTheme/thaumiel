@@ -1,4 +1,4 @@
-## kant-rounter
+## kant-router
 [![Build Status](https://travis-ci.org/Nu-SCPTheme/kant-router.svg?branch=master)](https://travis-ci.org/Nu-SCPTheme/kant-router)
 
 A Wikidot-compatible router for web applications, to make authentication, page generation and caching easier.

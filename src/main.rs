@@ -1,7 +1,7 @@
 /*
  * main.rs
  *
- * kant-rounter - Wikidot-compatible router for web applications
+ * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,6 @@
 #![deny(missing_debug_implementations)]
 
 extern crate color_backtrace;
-extern crate config;
 
 #[macro_use]
 extern crate log;
@@ -32,17 +31,23 @@ extern crate serde;
 
 #[macro_use]
 extern crate structopt;
+extern crate toml;
+
+mod config;
+
+use self::config::Config;
 
 pub type StdResult<T, E> = std::result::Result<T, E>;
 
 fn main() {
     color_backtrace::install();
 
-    let log_level = log::LevelFilter::Debug;
+    let config = Config::parse_args();
 
     pretty_env_logger::formatted_builder()
-        .filter_level(log_level)
+        .filter_level(config.log_level)
         .init();
 
+    debug!("Loaded config: {:?}", &config);
     info!("Server starting");
 }
