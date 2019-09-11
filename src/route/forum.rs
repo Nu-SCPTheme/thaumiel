@@ -1,5 +1,5 @@
 /*
- * route/page.rs
+ * route/forum.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -19,16 +19,29 @@
  */
 
 use super::prelude::*;
-use crate::request::PageRequest;
 
-pub fn page_args(parts: web::Path<(String, String)>) -> impl Responder {
-    format!("page:{}:{}", parts.0, parts.1)
+// TODO
+
+pub fn forum_thread(thread: web::Path<String>) -> impl Responder {
+    let thread = thread.into_inner();
+    format!("thread:{}", thread)
 }
 
-pub fn page_get(slug: web::Path<String>) -> impl Responder {
-    format!("page:{}", slug)
+pub fn forum_thread_name(thread: web::Path<(String, String)>) -> impl Responder {
+    let thread = thread.into_inner().0;
+    format!("thread:{}", thread)
 }
 
-pub fn page_main() -> impl Responder {
-    "page:main"
+pub fn forum_category(category: web::Path<String>) -> impl Responder {
+    let category = category.into_inner();
+    format!("category:{}", category)
+}
+
+pub fn forum_category_name(category: web::Path<(String, String)>) -> impl Responder {
+    let category = category.into_inner().0;
+    format!("category:{}", category)
+}
+
+pub fn forum_main() -> impl Responder {
+    "forum"
 }

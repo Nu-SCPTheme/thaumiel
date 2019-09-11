@@ -22,8 +22,10 @@ mod prelude {
     pub use actix_web::{web, HttpResponse, HttpServer, Responder};
 }
 
+mod forum;
 mod page;
 mod user;
 
+pub use self::forum::*;
 pub use self::page::*;
 pub use self::user::*;

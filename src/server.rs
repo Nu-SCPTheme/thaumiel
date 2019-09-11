@@ -19,20 +19,58 @@
  */
 
 use crate::route::*;
-use actix_web::{web, App, HttpResponse, HttpServer};
+use actix_web::{http, web, App, HttpResponse, HttpServer};
 use std::io;
 use std::net::SocketAddr;
 
+#[cold]
 pub fn run(hostname: String, addr: SocketAddr) -> io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .hostname(&hostname)
+
+            // Miscellaneous
             .route("favicon.ico", web::get().to(|| HttpResponse::NotFound()))
+
+            // Forum
+            .route(
+                "forum:start",
+                web::get().to(|| {
+                    HttpResponse::Found()
+                        .header(http::header::LOCATION, "/forum")
+                        .finish()
+                }),
+            )
+            .route(
+                "forum:start/",
+                web::get().to(|| {
+                    HttpResponse::Found()
+                        .header(http::header::LOCATION, "/forum")
+                        .finish()
+                }),
+            )
+            .route("forum", web::get().to(forum_main))
+            .route("forum/c-{category}", web::get().to(forum_category))
+            .route(
+                "forum/c-{category}/{name:.*}",
+                web::get().to(forum_category_name),
+            )
+            .route("forum/t-{thread}", web::get().to(forum_thread))
+            .route(
+                "forum/t-{thread}/{name:.*}",
+                web::get().to(forum_thread_name),
+            )
+
+            // User
             .route("user/{id}", web::get().to(user_get))
             .route("user/{id}", web::post().to(user_set))
+
+            // Regular pages
             .route("{name}", web::get().to(page_get))
             .route("{name}/", web::get().to(page_get))
             .route("{name}/{options:.*}", web::get().to(page_args))
+
+            // Main page
             .route("/", web::get().to(page_main))
             .route("/", web::route().to(|| HttpResponse::MethodNotAllowed()))
     })
