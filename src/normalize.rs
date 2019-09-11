@@ -22,6 +22,7 @@ use regex::Regex;
 
 lazy_static! {
     static ref NON_URL: Regex = Regex::new(r"([^\w-]+|-{2,})").unwrap();
+    static ref DASHES: Regex = Regex::new(r"(^-+)|(-+)$").unwrap();
 }
 
 /// Converts an arbitrary string into Wikidot normalized form.
@@ -34,25 +35,47 @@ lazy_static! {
 /// * `bottom--Text` -> `bottom-text`
 /// * `Tufto's Proposal` -> `tufto-s-proposal`
 /// * `-test-` -> `test`
-pub fn normalize(slug: &mut String) {
+pub fn normalize(name: &mut String) {
     // Lowercase
-    slug.make_ascii_lowercase();
+    name.make_ascii_lowercase();
 
     // Convert non-URL characters to dashes
-    while let Some(mtch) = NON_URL.find(slug) {
+    while let Some(mtch) = NON_URL.find(name) {
         let start = mtch.start();
         let end = mtch.end();
-        slug.replace_range(start..end, "-");
+        name.replace_range(start..end, "-");
     }
 
     // Remove leading and trailing dashes
-    while slug.starts_with("-") {
-        slug.remove(0);
+    while let Some(mtch) = DASHES.find(name) {
+        let start = mtch.start();
+        let end = mtch.end();
+        name.replace_range(start..end, "");
+    }
+}
+
+/// Determines if an arbitrary string is already in Wikidot normalized form.
+pub fn is_normal(name: &str) -> bool {
+    println!("> {}", name);
+    // Is all lowercase
+    let lowercase = name
+        .chars()
+        .all(|c| c.is_ascii_lowercase() || c.is_digit(10) || c == '-');
+    if !lowercase {
+        return false;
     }
 
-    while slug.ends_with("-") {
-        slug.pop();
+    // No special characters
+    if let Some(_) = NON_URL.find(name) {
+        return false;
     }
+
+    // Has leading or trailing dashes
+    if let Some(_) = DASHES.find(name) {
+        return false;
+    }
+
+    true
 }
 
 #[test]
@@ -74,4 +97,32 @@ fn test_normalize() {
     check!("$100 is a lot of money", "100-is-a-lot-of-money");
     check!(" <[ TEST ]> ", "test");
     check!("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "");
+}
+
+#[test]
+fn test_is_normal() {
+    macro_rules! check {
+        ($expected:expr, $input:expr) => {{
+            assert_eq!(
+                is_normal($input),
+                $expected,
+                "Normalization test failed: {}",
+                $input,
+            );
+        }};
+    }
+
+    check!(true, "");
+    check!(true, "big-cheese-horace");
+    check!(false, "Big Cheese Horace");
+    check!(true, "bottom-text");
+    check!(false, "bottom-Text");
+    check!(false, "-test-");
+    check!(true, "scp-1000");
+    check!(true, "end-of-death-hub");
+    check!(false, "End of Death Hub");
+    check!(false, "$200 please");
+    check!(false, "<[ TEST ]>");
+    check!(false, " <[ TEST ]> ");
+    check!(false, "!!!!!!!!!!!!");
 }
