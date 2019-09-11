@@ -22,7 +22,7 @@ use actix_web::{web, App, Responder, HttpResponse, HttpServer};
 use std::io;
 use std::net::SocketAddr;
 
-fn page_get() -> impl Responder {
+fn page_get(data: web::Path<String>, req: web::HttpRequest) -> impl Responder {
     // TODO proxy request to web server
     "page"
 }
