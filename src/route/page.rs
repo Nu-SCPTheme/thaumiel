@@ -21,8 +21,9 @@
 use super::prelude::*;
 use crate::request::PageRequest;
 
-pub fn page_args(parts: web::Path<(String, String)>) -> impl Responder {
-    format!("page:{}:{}", parts.0, parts.1)
+pub fn page_args(req: HttpRequest) -> impl Responder {
+    debug!("page_args: req {:#?}", req);
+    "page:<args>"
 }
 
 pub fn page_get(slug: web::Path<String>) -> impl Responder {
