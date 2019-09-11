@@ -34,24 +34,24 @@ lazy_static! {
 /// * `bottom--Text` -> `bottom-text`
 /// * `Tufto's Proposal` -> `tufto-s-proposal`
 /// * `-test-` -> `test`
-pub fn normalize(name: &mut String) {
+pub fn normalize(slug: &mut String) {
     // Lowercase
-    name.make_ascii_lowercase();
+    slug.make_ascii_lowercase();
 
     // Convert non-URL characters to dashes
-    while let Some(mtch) = NON_URL.find(name) {
+    while let Some(mtch) = NON_URL.find(slug) {
         let start = mtch.start();
         let end = mtch.end();
-        name.replace_range(start..end, "-");
+        slug.replace_range(start..end, "-");
     }
 
     // Remove leading and trailing dashes
-    while name.starts_with("-") {
-        name.remove(0);
+    while slug.starts_with("-") {
+        slug.remove(0);
     }
 
-    while name.ends_with("-") {
-        name.pop();
+    while slug.ends_with("-") {
+        slug.pop();
     }
 }
 
