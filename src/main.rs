@@ -43,6 +43,7 @@ extern crate toml;
 
 mod config;
 mod normalize;
+mod request;
 mod route;
 mod server;
 

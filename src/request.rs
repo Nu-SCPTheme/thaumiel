@@ -1,5 +1,5 @@
 /*
- * route/page.rs
+ * request.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -18,18 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use crate::request::PageRequest;
-use super::prelude::*;
+use std::collections::HashMap;
 
-pub fn page_args(parts: web::Path<(String, String)>) -> impl Responder {
-    // TODO proxy request to web server
-    format!("page:{}:{}", parts.0, parts.1)
-}
-
-pub fn page_get(slug: web::Path<String>) -> impl Responder {
-    format!("page:{}", slug)
-}
-
-pub fn page_main() -> impl Responder {
-    "page:main"
+#[derive(Serialize, Debug, Clone)]
+pub struct PageRequest<'a> {
+    pub slug: &'a str,
+    pub categories: Vec<&'a str>,
+    pub arguments: HashMap<&'a str, i32>,
 }
