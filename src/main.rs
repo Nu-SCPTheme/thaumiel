@@ -43,6 +43,7 @@ extern crate toml;
 
 mod config;
 mod normalize;
+mod route;
 mod server;
 
 use self::config::Config;

@@ -18,34 +18,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use actix_web::{web, App, HttpResponse, HttpServer, Responder};
+use crate::route::*;
+use actix_web::{web, App, HttpResponse, HttpServer};
 use std::io;
 use std::net::SocketAddr;
-
-fn page_get(data: web::Path<String>, req: web::HttpRequest) -> impl Responder {
-    // TODO proxy request to web server
-    "page"
-}
-
-fn user_get(id: web::Path<u64>) -> impl Responder {
-    // TODO
-    format!("Getting user info for id {}", *id)
-}
-
-fn user_set(_id: web::Path<u64>) -> impl Responder {
-    // TODO
-    HttpResponse::Ok()
-}
 
 pub fn run(hostname: String, addr: SocketAddr) -> io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .hostname(&hostname)
+            .route("favicon.ico", web::get().to(|| HttpResponse::NotFound()))
             .route("user/{id}", web::get().to(user_get))
             .route("user/{id}", web::post().to(user_set))
-            .route("{name}/{options:.*}", web::get().to(page_get))
-            .route("{name}", web::get().to(page_get))
-            .route("/", web::get().to(page_get))
+            .route("{slug}/{options:.*}", web::get().to(page_args))
+            .route("{slug}", web::get().to(page_get))
+            .route("/", web::get().to(page_main))
+            .route("/", web::route().to(|| HttpResponse::MethodNotAllowed()))
     })
     .bind(addr)
     .expect("Unable to bind to address")
