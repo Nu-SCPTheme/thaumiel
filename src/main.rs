@@ -35,20 +35,26 @@ extern crate structopt;
 extern crate toml;
 
 mod config;
+mod normalize;
+mod server;
 
 use self::config::Config;
+use std::process;
 
 pub type StdResult<T, E> = std::result::Result<T, E>;
 
 fn main() {
     color_backtrace::install();
 
-    let config = Config::parse_args();
+    let Config { hostname, address, log_level } = Config::parse_args();
 
     pretty_env_logger::formatted_builder()
-        .filter_level(config.log_level)
+        .filter_level(log_level)
         .init();
 
-    debug!("Loaded config: {:?}", &config);
-    info!("Server starting");
+    info!("Server starting on {}", address);
+    if let Err(error) = server::run(hostname, address) {
+        error!("Error running actix web server: {}", error);
+        process::exit(1);
+    }
 }
