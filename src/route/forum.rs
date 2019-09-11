@@ -22,27 +22,42 @@ use super::prelude::*;
 
 // TODO
 
+fn get_thread(thread: String) -> impl Responder {
+    info!("GET forum thread {}", thread);
+
+    // TODO
+    format!("forum:thread={}", thread)
+}
+
+#[inline]
 pub fn forum_thread(thread: web::Path<String>) -> impl Responder {
-    let thread = thread.into_inner();
-    format!("thread:{}", thread)
+    get_thread(thread.into_inner())
 }
 
+#[inline]
 pub fn forum_thread_name(thread: web::Path<(String, String)>) -> impl Responder {
-    let thread = thread.into_inner().0;
-    format!("thread:{}", thread)
+    get_thread(thread.into_inner().0)
 }
 
+fn get_category(category: String) -> impl Responder {
+    info!("GET forum category {}", category);
+
+    // TODO
+    format!("forum:category={}", category)
+}
+
+#[inline]
 pub fn forum_category(category: web::Path<String>) -> impl Responder {
-    let category = category.into_inner();
-    format!("category:{}", category)
+    get_category(category.into_inner())
 }
 
+#[inline]
 pub fn forum_category_name(category: web::Path<(String, String)>) -> impl Responder {
-    let category = category.into_inner().0;
-    format!("category:{}", category)
+    get_category(category.into_inner().0)
 }
 
 pub fn forum_redirect_new_thread(category: web::Path<String>) -> impl Responder {
+    info!("REDIRECT new-thread {}", category);
     let url = format!("/forum/new-thread/{}", category);
 
     HttpResponse::Found()
@@ -51,17 +66,28 @@ pub fn forum_redirect_new_thread(category: web::Path<String>) -> impl Responder 
 }
 
 pub fn forum_new_thread(category: web::Path<String>) -> impl Responder {
+    info!("GET new-thread {}", category);
+
+    // TODO
     format!("forum:new-thread:{}", category)
 }
 
 pub fn forum_recent_posts() -> impl Responder {
+    info!("GET recent-posts");
+
+    // TODO
     "forum:recent-posts"
 }
 
 pub fn forum_recent_threads() -> impl Responder {
+    info!("GET recent-threads");
+
+    // TODO
     "forum:recent-threads"
 }
 
 pub fn forum_main() -> impl Responder {
+    info!("GET forum main");
+
     "forum"
 }

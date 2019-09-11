@@ -25,8 +25,11 @@ use std::net::SocketAddr;
 
 #[inline]
 fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
+    let url = url.as_ref();
+    info!("REDIRECT {}", url);
+
     HttpResponse::Found()
-        .header(http::header::LOCATION, url.as_ref())
+        .header(http::header::LOCATION, url)
         .finish()
 }
 

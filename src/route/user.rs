@@ -21,11 +21,15 @@
 use super::prelude::*;
 
 pub fn user_get(id: web::Path<u64>) -> impl Responder {
+    info!("GET user {}", id);
+
     // TODO
     format!("Getting user info for id {}", *id)
 }
 
-pub fn user_set(_id: web::Path<u64>) -> impl Responder {
+pub fn user_set(id: web::Path<u64>) -> impl Responder {
+    info!("POST user {}", id);
+
     // TODO
     HttpResponse::Ok()
 }

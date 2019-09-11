@@ -27,9 +27,13 @@ pub fn page_args(req: HttpRequest) -> impl Responder {
 }
 
 pub fn page_get(slug: web::Path<String>) -> impl Responder {
+    info!("GET page {}", slug);
+
     format!("page:{}", slug)
 }
 
 pub fn page_main() -> impl Responder {
+    info!("GET /");
+
     "page:main"
 }
