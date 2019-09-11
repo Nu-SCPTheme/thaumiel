@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use actix_web::{web, App, Responder, HttpResponse, HttpServer};
+use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use std::io;
 use std::net::SocketAddr;
 
@@ -38,16 +38,16 @@ fn user_set(_id: web::Path<u64>) -> impl Responder {
 }
 
 pub fn run(hostname: String, addr: SocketAddr) -> io::Result<()> {
-    HttpServer::new(move ||
+    HttpServer::new(move || {
         App::new()
             .hostname(&hostname)
-                    .route("user/{id}", web::get().to(user_get))
-                    .route("user/{id}", web::post().to(user_set))
-                    .route("{name}/{options:.*}", web::get().to(page_get))
-                    .route("{name}", web::get().to(page_get))
-                    .route("/", web::get().to(page_get))
-        )
-        .bind(addr)
-        .expect("Unable to bind to address")
-        .run()
+            .route("user/{id}", web::get().to(user_get))
+            .route("user/{id}", web::post().to(user_set))
+            .route("{name}/{options:.*}", web::get().to(page_get))
+            .route("{name}", web::get().to(page_get))
+            .route("/", web::get().to(page_get))
+    })
+    .bind(addr)
+    .expect("Unable to bind to address")
+    .run()
 }

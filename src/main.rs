@@ -53,7 +53,11 @@ pub type StdResult<T, E> = std::result::Result<T, E>;
 fn main() {
     color_backtrace::install();
 
-    let Config { hostname, address, log_level } = Config::parse_args();
+    let Config {
+        hostname,
+        address,
+        log_level,
+    } = Config::parse_args();
 
     pretty_env_logger::formatted_builder()
         .filter_level(log_level)

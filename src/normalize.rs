@@ -62,7 +62,7 @@ fn test_normalize() {
             let mut text = str!($input);
             normalize(&mut text);
             assert_eq!(text, $expected, "Normalized text doesn't match expected");
-        }}
+        }};
     }
 
     check!("", "");

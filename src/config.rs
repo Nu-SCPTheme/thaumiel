@@ -133,7 +133,11 @@ impl Into<Config> for ConfigFile {
     #[cold]
     fn into(self) -> Config {
         let ConfigFile { app, network } = self;
-        let Network { hostname, use_ipv6, port } = network;
+        let Network {
+            hostname,
+            use_ipv6,
+            port,
+        } = network;
 
         let ip_address = if use_ipv6 {
             IpAddr::V6(Ipv6Addr::UNSPECIFIED)
@@ -145,6 +149,10 @@ impl Into<Config> for ConfigFile {
         let log_level = app.log_level.as_ref().map(|s| s.as_ref());
         let log_level = Self::parse_log_level(log_level);
 
-        Config { log_level, hostname, address }
+        Config {
+            log_level,
+            hostname,
+            address,
+        }
     }
 }
