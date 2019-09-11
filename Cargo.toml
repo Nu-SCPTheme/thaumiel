@@ -7,8 +7,11 @@ edition = "2018" # this refers to the Cargo.toml version
 [dependencies]
 actix-web = "1"
 color-backtrace = "0.2"
+lazy_static = "1"
 log = "0.4"
 pretty_env_logger = "0.3"
+regex = "1"
 serde = { version = "1", features = ["derive"] }
+str-macro = "0.1"
 structopt = "0.3"
 toml = "0.5"

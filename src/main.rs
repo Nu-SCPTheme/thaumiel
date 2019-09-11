@@ -24,11 +24,18 @@ extern crate actix_web;
 extern crate color_backtrace;
 
 #[macro_use]
+extern crate lazy_static;
+
+#[macro_use]
 extern crate log;
 extern crate pretty_env_logger;
+extern crate regex;
 
 #[macro_use]
 extern crate serde;
+
+#[macro_use]
+extern crate str_macro;
 
 #[macro_use]
 extern crate structopt;
