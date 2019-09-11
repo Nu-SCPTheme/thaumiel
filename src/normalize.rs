@@ -21,7 +21,7 @@
 use regex::Regex;
 
 lazy_static! {
-    static ref NON_URL: Regex = Regex::new(r"([^\w-]+|-{2,})").unwrap();
+    static ref NON_URL: Regex = Regex::new(r"([^a-z0-9\-]+|-{2,})").unwrap();
     static ref DASHES: Regex = Regex::new(r"(^-+)|(-+)$").unwrap();
 }
 
@@ -95,6 +95,8 @@ fn test_normalize() {
     check!("-test-", "test");
     check!("End of Death Hub", "end-of-death-hub");
     check!("$100 is a lot of money", "100-is-a-lot-of-money");
+    check!("snake_case", "snake-case");
+    check!("long__snake__case", "long-snake-case");
     check!(" <[ TEST ]> ", "test");
     check!("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "");
 }
@@ -122,6 +124,8 @@ fn test_is_normal() {
     check!(true, "end-of-death-hub");
     check!(false, "End of Death Hub");
     check!(false, "$200 please");
+    check!(false, "snake_case");
+    check!(true, "kebab-case");
     check!(false, "<[ TEST ]>");
     check!(false, " <[ TEST ]> ");
     check!(false, "!!!!!!!!!!!!");
