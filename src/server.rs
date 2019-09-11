@@ -19,36 +19,52 @@
  */
 
 use crate::route::*;
-use actix_web::{http, web, App, HttpResponse, HttpServer};
+use actix_web::{http, web, App, HttpResponse, HttpServer, Responder};
 use std::io;
 use std::net::SocketAddr;
+
+#[inline]
+fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
+    HttpResponse::Found()
+        .header(http::header::LOCATION, url.as_ref())
+        .finish()
+}
 
 #[cold]
 pub fn run(hostname: String, addr: SocketAddr) -> io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .hostname(&hostname)
-
             // Miscellaneous
             .route("favicon.ico", web::get().to(|| HttpResponse::NotFound()))
-
-            // Forum
+            // Forum redirects
+            .route("forum:start", web::get().to(|| redirect("/forum")))
+            .route("forum:start/", web::get().to(|| redirect("/forum")))
             .route(
-                "forum:start",
-                web::get().to(|| {
-                    HttpResponse::Found()
-                        .header(http::header::LOCATION, "/forum")
-                        .finish()
-                }),
+                "forum:new-thread/c/{category}",
+                web::get().to(forum_redirect_new_thread),
             )
             .route(
-                "forum:start/",
-                web::get().to(|| {
-                    HttpResponse::Found()
-                        .header(http::header::LOCATION, "/forum")
-                        .finish()
-                }),
+                "forum:new-thread/c/{category}/",
+                web::get().to(forum_redirect_new_thread),
             )
+            .route(
+                "forum:recent-posts",
+                web::get().to(|| redirect("/forum/recent-posts")),
+            )
+            .route(
+                "forum:recent-posts/",
+                web::get().to(|| redirect("/forum/recent-posts")),
+            )
+            .route(
+                "forum:recent-threads",
+                web::get().to(|| redirect("/forum/recent-threads")),
+            )
+            .route(
+                "forum:recent-threads/",
+                web::get().to(|| redirect("/forum/recent-threads")),
+            )
+            // Forum links
             .route("forum", web::get().to(forum_main))
             .route("forum/c-{category}", web::get().to(forum_category))
             .route(
@@ -60,16 +76,25 @@ pub fn run(hostname: String, addr: SocketAddr) -> io::Result<()> {
                 "forum/t-{thread}/{name:.*}",
                 web::get().to(forum_thread_name),
             )
-
+            .route(
+                "forum/new-thread/{category}",
+                web::get().to(forum_new_thread),
+            )
+            .route(
+                "forum/new-thread/{category}/",
+                web::get().to(forum_new_thread),
+            )
+            .route("forum/recent-posts", web::get().to(forum_recent_posts))
+            .route("forum/recent-posts/", web::get().to(forum_recent_posts))
+            .route("forum/recent-threads", web::get().to(forum_recent_threads))
+            .route("forum/recent-threads/", web::get().to(forum_recent_threads))
             // User
             .route("user/{id}", web::get().to(user_get))
             .route("user/{id}", web::post().to(user_set))
-
             // Regular pages
             .route("{name}", web::get().to(page_get))
             .route("{name}/", web::get().to(page_get))
             .route("{name}/{options:.*}", web::get().to(page_args))
-
             // Main page
             .route("/", web::get().to(page_main))
             .route("/", web::route().to(|| HttpResponse::MethodNotAllowed()))

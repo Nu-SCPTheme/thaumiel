@@ -19,7 +19,7 @@
  */
 
 mod prelude {
-    pub use actix_web::{web, HttpResponse, HttpServer, Responder};
+    pub use actix_web::{http, web, HttpResponse, HttpServer, Responder};
 }
 
 mod forum;

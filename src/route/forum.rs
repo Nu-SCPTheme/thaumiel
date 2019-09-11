@@ -42,6 +42,26 @@ pub fn forum_category_name(category: web::Path<(String, String)>) -> impl Respon
     format!("category:{}", category)
 }
 
+pub fn forum_redirect_new_thread(category: web::Path<String>) -> impl Responder {
+    let url = format!("/forum/new-thread/{}", category);
+
+    HttpResponse::Found()
+        .header(http::header::LOCATION, url)
+        .finish()
+}
+
+pub fn forum_new_thread(category: web::Path<String>) -> impl Responder {
+    format!("forum:new-thread:{}", category)
+}
+
+pub fn forum_recent_posts() -> impl Responder {
+    "forum:recent-posts"
+}
+
+pub fn forum_recent_threads() -> impl Responder {
+    "forum:recent-threads"
+}
+
 pub fn forum_main() -> impl Responder {
     "forum"
 }
