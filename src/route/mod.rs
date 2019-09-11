@@ -18,12 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-mod page;
-mod user;
-
 mod prelude {
     pub use actix_web::{web, HttpResponse, HttpServer, Responder};
 }
+
+mod page;
+mod user;
 
 pub use self::page::*;
 pub use self::user::*;
