@@ -28,6 +28,9 @@ extern crate lazy_static;
 
 #[macro_use]
 extern crate log;
+
+#[macro_use]
+extern crate maplit;
 extern crate percent_encoding;
 extern crate pretty_env_logger;
 extern crate regex;

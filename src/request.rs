@@ -20,7 +20,7 @@
 
 use std::collections::HashMap;
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Serialize, Debug, Clone, PartialEq, Eq)]
 pub struct PageRequest<'a> {
     pub slug: &'a str,
     pub categories: Vec<&'a str>,
@@ -85,4 +85,168 @@ fn parse_value(value: &str) -> Option<u32> {
     }
 }
 
-// TODO: add #[test] cases
+#[test]
+fn test_page_request() {
+    macro_rules! check {
+        ($path:expr, $expected:expr) => {{
+            let page_req = PageRequest::parse($path);
+            assert_eq!(
+                page_req, $expected,
+                "Parsed PageRequest doesn't match expected"
+            );
+        }};
+    }
+
+    check!(
+        "scp-1000",
+        PageRequest {
+            slug: "scp-1000",
+            categories: vec![],
+            arguments: hashmap! {},
+        }
+    );
+    check!(
+        "scp-1000/edit",
+        PageRequest {
+            slug: "scp-1000",
+            categories: vec![],
+            arguments: hashmap! { "edit" => None },
+        }
+    );
+    check!(
+        "scp-1000/edit/1",
+        PageRequest {
+            slug: "scp-1000",
+            categories: vec![],
+            arguments: hashmap! { "edit" => Some(1) },
+        }
+    );
+    check!(
+        "scp-1000/edit/true",
+        PageRequest {
+            slug: "scp-1000",
+            categories: vec![],
+            arguments: hashmap! { "edit" => Some(1) },
+        }
+    );
+    check!(
+        "component:image-block",
+        PageRequest {
+            slug: "image-block",
+            categories: vec!["component"],
+            arguments: hashmap! {},
+        }
+    );
+    check!(
+        "deleted:component:image-block",
+        PageRequest {
+            slug: "image-block",
+            categories: vec!["deleted", "component"],
+            arguments: hashmap! {},
+        }
+    );
+    check!(
+        "fragment:scp-4447-1",
+        PageRequest {
+            slug: "scp-4447-1",
+            categories: vec!["fragment"],
+            arguments: hashmap! {},
+        }
+    );
+    check!(
+        "fragment:scp-4447-1/discuss",
+        PageRequest {
+            slug: "scp-4447-1",
+            categories: vec!["fragment"],
+            arguments: hashmap! { "discuss" => None },
+        }
+    );
+    check!(
+        "fragment:scp-4447-1/discuss/true",
+        PageRequest {
+            slug: "scp-4447-1",
+            categories: vec!["fragment"],
+            arguments: hashmap! { "discuss" => Some(1) },
+        }
+    );
+    check!(
+        "scp-series-5",
+        PageRequest {
+            slug: "scp-series-5",
+            categories: vec![],
+            arguments: hashmap! {},
+        }
+    );
+    check!(
+        "scp-series-5/norender",
+        PageRequest {
+            slug: "scp-series-5",
+            categories: vec![],
+            arguments: hashmap! { "norender" => None },
+        }
+    );
+    check!(
+        "scp-series-5/norender/1",
+        PageRequest {
+            slug: "scp-series-5",
+            categories: vec![],
+            arguments: hashmap! { "norender" => Some(1) },
+        }
+    );
+    check!(
+        "scp-series-5/norender/true",
+        PageRequest {
+            slug: "scp-series-5",
+            categories: vec![],
+            arguments: hashmap! { "norender" => Some(1) },
+        }
+    );
+    check!(
+        "scp-series-5/norender/true/noredirect",
+        PageRequest {
+            slug: "scp-series-5",
+            categories: vec![],
+            arguments: hashmap! { "norender" => Some(1), "noredirect" => None },
+        }
+    );
+    check!(
+        "scp-series-5/norender/1/noredirect",
+        PageRequest {
+            slug: "scp-series-5",
+            categories: vec![],
+            arguments: hashmap! { "norender" => Some(1), "noredirect" => None },
+        }
+    );
+    check!(
+        "scp-series-5/norender/true/noredirect",
+        PageRequest {
+            slug: "scp-series-5",
+            categories: vec![],
+            arguments: hashmap! { "norender" => Some(1), "noredirect" => None },
+        }
+    );
+    check!(
+        "scp-series-5/norender/true/noredirect/true",
+        PageRequest {
+            slug: "scp-series-5",
+            categories: vec![],
+            arguments: hashmap! { "norender" => Some(1), "noredirect" => Some(1) },
+        }
+    );
+    check!(
+        "scp-series-5/norender/1/noredirect/1",
+        PageRequest {
+            slug: "scp-series-5",
+            categories: vec![],
+            arguments: hashmap! { "norender" => Some(1), "noredirect" => Some(1) },
+        }
+    );
+    check!(
+        "scp-series-5/norender/true/noredirect/true",
+        PageRequest {
+            slug: "scp-series-5",
+            categories: vec![],
+            arguments: hashmap! { "norender" => Some(1), "noredirect" => Some(1) },
+        }
+    );
+}
