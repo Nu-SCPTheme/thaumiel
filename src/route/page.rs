@@ -35,10 +35,10 @@ lazy_static! {
 
 /// Route handlers with arguments, like `/scp-1000/offset/2`
 pub fn page_get(req: HttpRequest) -> impl Responder {
-    info!("GET page {}", req.uri());
-
     let uri = req.uri();
     let mut path = uri.path().to_string();
+
+    info!("GET page {}", uri);
 
     if is_normal(&path) {
         let page_req = PageRequest::parse(&path);
@@ -59,11 +59,11 @@ pub fn page_main() -> impl Responder {
 
 /// Takes a page request and sends the appropriate HttpResponse for it.
 fn send_page(page_req: &PageRequest) -> HttpResponse {
-    debug!("page_req: {:#?}", page_req);
+    debug!("Sending page request: {:?}", page_req);
 
     // TODO
 
-    HttpResponse::Ok().body(format!("page${:?}", page_req))
+    HttpResponse::Ok().body(format!("page\n{:#?}", page_req))
 }
 
 /// Normalizes the path and redirects the user to that URL.
