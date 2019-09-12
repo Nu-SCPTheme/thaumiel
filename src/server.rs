@@ -94,6 +94,7 @@ pub fn run(hostname: String, addr: SocketAddr) -> io::Result<()> {
             // User
             .route("user/{id}", web::get().to(user_get))
             .route("user/{id}", web::post().to(user_set))
+            .route("user/avatars/{id}", web::get().to(user_avatar_get))
             // Regular pages
             .route("{name}", web::get().to(page_get))
             .route("{name}/", web::get().to(page_get))

@@ -33,3 +33,9 @@ pub fn user_set(id: web::Path<u64>) -> impl Responder {
     // TODO
     HttpResponse::Ok()
 }
+
+pub fn user_avatar_get(id: web::Path<u64>) -> impl Responder {
+    info!("GET user/avatars {}", id);
+
+    format!("user-avatar:{}", id)
+}
