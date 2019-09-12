@@ -21,7 +21,7 @@
 use regex::Regex;
 
 lazy_static! {
-    static ref NON_URL: Regex = Regex::new(r"([^a-z0-9\-]+|-{2,})").unwrap();
+    static ref NON_URL: Regex = Regex::new(r"([^a-z0-9/\-]+|-{2,})").unwrap();
     static ref DASHES: Regex = Regex::new(r"(^-+)|(-+)$").unwrap();
 }
 
@@ -56,11 +56,10 @@ pub fn normalize(name: &mut String) {
 
 /// Determines if an arbitrary string is already in Wikidot normalized form.
 pub fn is_normal(name: &str) -> bool {
-    println!("> {}", name);
     // Is all lowercase
     let lowercase = name
         .chars()
-        .all(|c| c.is_ascii_lowercase() || c.is_digit(10) || c == '-');
+        .all(|c| c.is_ascii_lowercase() || c.is_digit(10) || c == '-' || c == '/');
     if !lowercase {
         return false;
     }
@@ -99,6 +98,12 @@ fn test_normalize() {
     check!("long__snake__case", "long-snake-case");
     check!(" <[ TEST ]> ", "test");
     check!("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "");
+
+    // Limited route tests
+    check!("/", "/");
+    check!("/scp-1000/", "/scp-1000/");
+    check!("/SCP 4447/ofFSEt/2", "/scp-4447/offset/2");
+    check!("page/discuss", "page/discuss");
 }
 
 #[test]
@@ -129,4 +134,12 @@ fn test_is_normal() {
     check!(false, "<[ TEST ]>");
     check!(false, " <[ TEST ]> ");
     check!(false, "!!!!!!!!!!!!");
+
+    // Limited route tests
+    check!(true, "/");
+    check!(true, "/scp-1000/");
+    check!(false, "/SCP-1000/");
+    check!(true, "/scp-4447/offset/2");
+    check!(false, "/SCP 4447/ofFSEt/2");
+    check!(true, "page/discuss");
 }
