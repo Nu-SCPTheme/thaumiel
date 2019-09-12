@@ -22,7 +22,8 @@ use regex::Regex;
 
 lazy_static! {
     static ref NON_URL: Regex = Regex::new(r"([^a-z0-9/\-]+|-{2,})").unwrap();
-    static ref DASHES: Regex = Regex::new(r"(^-+)|(-+)$").unwrap();
+    static ref START_DASHES: Regex = Regex::new(r"(^|/+)(?P<dash>-+)").unwrap();
+    static ref END_DASHES: Regex = Regex::new(r"(?P<dash>-+)($|/+)").unwrap();
 }
 
 /// Converts an arbitrary string into Wikidot normalized form.
@@ -47,10 +48,22 @@ pub fn normalize(name: &mut String) {
     }
 
     // Remove leading and trailing dashes
-    while let Some(mtch) = DASHES.find(name) {
+    let get_range = |captures: regex::Captures| {
+        let mtch = captures.name("dash").unwrap();
         let start = mtch.start();
         let end = mtch.end();
-        name.replace_range(start..end, "");
+
+        start..end
+    };
+
+    while let Some(captures) = START_DASHES.captures(name) {
+        let range = get_range(captures);
+        name.replace_range(range, "");
+    }
+
+    while let Some(captures) = END_DASHES.captures(name) {
+        let range = get_range(captures);
+        name.replace_range(range, "");
     }
 }
 
@@ -70,7 +83,11 @@ pub fn is_normal(name: &str) -> bool {
     }
 
     // Has leading or trailing dashes
-    if let Some(_) = DASHES.find(name) {
+    if let Some(_) = START_DASHES.find(name) {
+        return false;
+    }
+
+    if let Some(_) = END_DASHES.find(name) {
         return false;
     }
 
@@ -99,11 +116,14 @@ fn test_normalize() {
     check!(" <[ TEST ]> ", "test");
     check!("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "");
 
-    // Limited route tests
     check!("/", "/");
     check!("/scp-1000/", "/scp-1000/");
     check!("/SCP 4447/ofFSEt/2", "/scp-4447/offset/2");
     check!("page/discuss", "page/discuss");
+    check!("/-test-/", "/test/");
+    check!("/Tufto's Proposal---", "/tufto-s-proposal");
+    check!("page/-", "page/");
+    check!("/ page /-yeah-/ thing ", "/page/yeah/thing");
 }
 
 #[test]
@@ -135,11 +155,18 @@ fn test_is_normal() {
     check!(false, " <[ TEST ]> ");
     check!(false, "!!!!!!!!!!!!");
 
-    // Limited route tests
     check!(true, "/");
     check!(true, "/scp-1000/");
     check!(false, "/SCP-1000/");
     check!(true, "/scp-4447/offset/2");
     check!(false, "/SCP 4447/ofFSEt/2");
     check!(true, "page/discuss");
+    check!(false, "/-test-/");
+    check!(true, "/test/");
+    check!(false, "/Tufto's Proposal---");
+    check!(false, "/ page /-yeah-/ thing");
+    check!(false, "/ page /-yeah-/ ");
+    check!(false, "/ page /-yeah-");
+    check!(false, "/ page /-");
+    check!(false, "/ page");
 }
