@@ -70,13 +70,15 @@ fn send_page(page_req: &PageRequest) -> HttpResponse {
 fn redirect_normal(path: &mut String, query: Option<&str>) -> HttpResponse {
     normalize(path);
 
+    // Remove empty directories
+    while let Some(idx) = path.find("//") {
+        path.replace_range(idx..idx+1, "");
+    }
+
+    // Add query at the end if relevant
     if let Some(query) = query {
         path.push('?');
         path.push_str(query);
-    }
-
-    while path.ends_with("//") {
-        path.pop();
     }
 
     debug!("REDIRECT {}", path);
