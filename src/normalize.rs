@@ -88,10 +88,11 @@ pub fn normalize(name: &mut String) {
 /// Determines if an arbitrary string is already in Wikidot normalized form.
 pub fn is_normal(name: &str) -> bool {
     // Is all lowercase
-    let lowercase = name
-        .chars()
-        .all(|c| c.is_ascii_lowercase() || c.is_digit(10) || c == '-' || c == '/');
-    if !lowercase {
+    fn is_valid_char(ch: char) -> bool {
+        ch.is_ascii_lowercase() || ch.is_digit(10) || ch == '-' || ch == '_' || ch == '/'
+    }
+
+    if !name.chars().all(is_valid_char) {
         return false;
     }
 
@@ -129,8 +130,8 @@ fn test_normalize() {
     check!("-test-", "test");
     check!("End of Death Hub", "end-of-death-hub");
     check!("$100 is a lot of money", "100-is-a-lot-of-money");
-    check!("snake_case", "snake-case");
-    check!("long__snake__case", "long-snake-case");
+    check!("snake_case", "snake_case");
+    check!("long__snake__case", "long__snake__case");
     check!(" <[ TEST ]> ", "test");
     check!("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "");
 
@@ -142,6 +143,10 @@ fn test_normalize() {
     check!("/Tufto's Proposal---", "/tufto-s-proposal");
     check!("page/-", "page/");
     check!("/ page /-yeah-/ thing ", "/page/yeah/thing");
+
+    check!("/SCP%20xxxx", "/scp-xxxx");
+    check!("/scp%20xxxx/", "/scp-xxxx/");
+    check!("%20scp%20%20xxxx", "scp-xxxx");
 }
 
 #[test]
@@ -167,7 +172,7 @@ fn test_is_normal() {
     check!(true, "end-of-death-hub");
     check!(false, "End of Death Hub");
     check!(false, "$200 please");
-    check!(false, "snake_case");
+    check!(true, "snake_case");
     check!(true, "kebab-case");
     check!(false, "<[ TEST ]>");
     check!(false, " <[ TEST ]> ");
@@ -187,4 +192,9 @@ fn test_is_normal() {
     check!(false, "/ page /-yeah-");
     check!(false, "/ page /-");
     check!(false, "/ page");
+
+    check!(false, "/scp xxxx");
+    check!(false, "/scp%20xxxx");
+    check!(false, "/SCP%20xxxx");
+    check!(true, "/scp-xxxx");
 }
