@@ -24,5 +24,5 @@ use std::collections::HashMap;
 pub struct PageRequest<'a> {
     pub slug: &'a str,
     pub categories: Vec<&'a str>,
-    pub arguments: HashMap<&'a str, i32>,
+    pub arguments: HashMap<&'a str, Option<u32>>,
 }
