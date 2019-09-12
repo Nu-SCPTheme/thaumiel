@@ -18,12 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crate::StdResult;
 use regex::Regex;
+use std::borrow::Cow;
+use std::mem;
+use std::str::Utf8Error;
 
 lazy_static! {
-    static ref NON_URL: Regex = Regex::new(r"([^a-z0-9/\-]+|-{2,})").unwrap();
+    static ref NON_URL: Regex = Regex::new(r"([^\w/\-]+|-{2,})").unwrap();
     static ref START_DASHES: Regex = Regex::new(r"(^|/+)(?P<dash>-+)").unwrap();
     static ref END_DASHES: Regex = Regex::new(r"(?P<dash>-+)($|/+)").unwrap();
+}
+
+#[inline]
+fn percent_decode(input: &str) -> StdResult<Cow<str>, Utf8Error> {
+    use percent_encoding::percent_decode_str;
+
+    percent_decode_str(input).decode_utf8()
 }
 
 /// Converts an arbitrary string into Wikidot normalized form.
@@ -37,6 +48,13 @@ lazy_static! {
 /// * `Tufto's Proposal` -> `tufto-s-proposal`
 /// * `-test-` -> `test`
 pub fn normalize(name: &mut String) {
+    // Perform percent-decoding, if needed
+    match percent_decode(&name) {
+        Ok(Cow::Borrowed(_)) => (),
+        Ok(Cow::Owned(mut decoded)) => mem::swap(name, &mut decoded),
+        Err(_) => warn!("Error decoding percent string"),
+    }
+
     // Lowercase
     name.make_ascii_lowercase();
 
