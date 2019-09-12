@@ -35,45 +35,54 @@ pub fn page_args(req: HttpRequest) -> impl Responder {
     debug!("page_args: req {:#?}", req);
 
     let uri = req.uri();
-    let path = uri.path();
-
-    if !is_normal(path) {
-        let mut path = str!(path);
-        normalize(&mut path);
-
-        if let Some(query) = uri.query() {
-            path.push('?');
-            path.push_str(query);
-        }
-
-        return HttpResponse::Found()
-            .header(http::header::LOCATION, path.as_str())
-            .finish();
-    }
+    let mut path = uri.path().to_string();
 
     debug!("path: {}", path);
-    let page_req = parse_path(path);
-    debug!("page_req: {:#?}", page_req);
-
-    HttpResponse::Ok().finish()
+    if is_normal(&path) {
+        send_page(&parse_path(&path))
+    } else {
+        redirect_normal(&mut path, uri.query())
+    }
 }
 
 pub fn page_get(path: web::Path<String>) -> impl Responder {
     info!("GET page {}", path);
 
-    let page_req = parse_path(&*path);
-    debug!("page_req: {:#?}", page_req);
+    let mut path = path.into_inner();
 
-    "page:_"
+    debug!("path: {}", path);
+    if is_normal(&path) {
+        send_page(&parse_path(&path))
+    } else {
+        redirect_normal(&mut path, None)
+    }
 }
 
 pub fn page_main() -> impl Responder {
     info!("GET /");
 
-    let page_req = &*MAIN_PAGE;
+    send_page(&*MAIN_PAGE)
+}
+
+fn send_page(page_req: &PageRequest) -> HttpResponse {
     debug!("page_req: {:#?}", page_req);
 
-    "page:main"
+    // TODO
+
+    HttpResponse::Ok().body(format!("page${:?}", page_req))
+}
+
+fn redirect_normal(path: &mut String, query: Option<&str>) -> HttpResponse {
+    normalize(path);
+
+    if let Some(query) = query {
+        path.push('?');
+        path.push_str(query);
+    }
+
+    HttpResponse::Found()
+        .header(http::header::LOCATION, path.as_str())
+        .finish()
 }
 
 fn parse_path(mut path: &str) -> PageRequest {
