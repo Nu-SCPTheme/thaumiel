@@ -98,7 +98,7 @@ pub fn run(hostname: String, addr: SocketAddr) -> io::Result<()> {
             // Regular pages
             .route("{name}", web::get().to(page_get))
             .route("{name}/", web::get().to(page_get))
-            .route("{name}/{options:.*}", web::get().to(page_args))
+            .route("{name}/{options:.*}", web::get().to(page_get))
             // Main page
             .route("/", web::get().to(page_main))
             .route("/", web::route().to(|| HttpResponse::MethodNotAllowed()))

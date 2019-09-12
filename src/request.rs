@@ -54,7 +54,7 @@ impl<'a> PageRequest<'a> {
             let mut arguments = HashMap::new();
 
             while let Some(key) = parts.next() {
-                if key == "true" || key == "false" {
+                if key.is_empty() || key == "true" || key == "false" {
                     continue;
                 }
 

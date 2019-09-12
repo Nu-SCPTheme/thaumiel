@@ -34,33 +34,17 @@ lazy_static! {
 // Public route methods
 
 /// Route handlers with arguments, like `/scp-1000/offset/2`
-pub fn page_args(req: HttpRequest) -> impl Responder {
-    debug!("page_args: req {:#?}", req);
+pub fn page_get(req: HttpRequest) -> impl Responder {
+    info!("GET page {}", req.uri());
 
     let uri = req.uri();
     let mut path = uri.path().to_string();
 
-    debug!("path: {}", path);
     if is_normal(&path) {
         let page_req = PageRequest::parse(&path);
         send_page(&page_req)
     } else {
         redirect_normal(&mut path, uri.query())
-    }
-}
-
-/// Route handler for those with only a slug, like `/scp-1000`
-pub fn page_get(path: web::Path<String>) -> impl Responder {
-    info!("GET page {}", path);
-
-    let mut path = path.into_inner();
-
-    debug!("path: {}", path);
-    if is_normal(&path) {
-        let page_req = PageRequest::parse(&path);
-        send_page(&page_req)
-    } else {
-        redirect_normal(&mut path, None)
     }
 }
 
