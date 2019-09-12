@@ -87,10 +87,10 @@ fn parse_path(mut path: &str) -> PageRequest {
     let slug = parts.next().expect("Path split has no items");
 
     // Get all page categories
-    let categories = {
+    let (slug, categories) = {
         let mut categories: Vec<_> = slug.split(':').collect();
-        categories.pop(); // Last item is the name of the page
-        categories
+        let slug = categories.pop().expect("Category split has no items");
+        (slug, categories)
     };
 
     // Parse out Wikidot arguments
