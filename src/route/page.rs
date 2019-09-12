@@ -31,6 +31,9 @@ lazy_static! {
     };
 }
 
+// Public route methods
+
+/// Route handlers with arguments, like `/scp-1000/offset/2`
 pub fn page_args(req: HttpRequest) -> impl Responder {
     debug!("page_args: req {:#?}", req);
 
@@ -39,12 +42,14 @@ pub fn page_args(req: HttpRequest) -> impl Responder {
 
     debug!("path: {}", path);
     if is_normal(&path) {
-        send_page(&parse_path(&path))
+        let page_req = PageRequest::parse(&path);
+        send_page(&page_req)
     } else {
         redirect_normal(&mut path, uri.query())
     }
 }
 
+/// Route handler for those with only a slug, like `/scp-1000`
 pub fn page_get(path: web::Path<String>) -> impl Responder {
     info!("GET page {}", path);
 
@@ -52,18 +57,23 @@ pub fn page_get(path: web::Path<String>) -> impl Responder {
 
     debug!("path: {}", path);
     if is_normal(&path) {
-        send_page(&parse_path(&path))
+        let page_req = PageRequest::parse(&path);
+        send_page(&page_req)
     } else {
         redirect_normal(&mut path, None)
     }
 }
 
+/// Route for root, which is the same as whatever the `main` page is.
 pub fn page_main() -> impl Responder {
     info!("GET /");
 
     send_page(&*MAIN_PAGE)
 }
 
+// Helper functions
+
+/// Takes a page request and sends the appropriate HttpResponse for it.
 fn send_page(page_req: &PageRequest) -> HttpResponse {
     debug!("page_req: {:#?}", page_req);
 
@@ -72,6 +82,7 @@ fn send_page(page_req: &PageRequest) -> HttpResponse {
     HttpResponse::Ok().body(format!("page${:?}", page_req))
 }
 
+/// Normalizes the path and redirects the user to that URL.
 fn redirect_normal(path: &mut String, query: Option<&str>) -> HttpResponse {
     normalize(path);
 
@@ -84,61 +95,3 @@ fn redirect_normal(path: &mut String, query: Option<&str>) -> HttpResponse {
         .header(http::header::LOCATION, path.as_str())
         .finish()
 }
-
-fn parse_path(mut path: &str) -> PageRequest {
-    // Remove leading slash to avoid empty slugs
-    if path.starts_with("/") {
-        path = &path[1..];
-    }
-
-    // Create part iterator and get slug
-    let mut parts = path.split('/');
-    let slug = parts.next().expect("Path split has no items");
-
-    // Get all page categories
-    let (slug, categories) = {
-        let mut categories: Vec<_> = slug.split(':').collect();
-        let slug = categories.pop().expect("Category split has no items");
-        (slug, categories)
-    };
-
-    // Parse out Wikidot arguments
-    //
-    // This algorithm is compatible with the /KEY/true format,
-    // but also allowing the more sensible /KEY for options
-    // where a 'false' value doesn't make sense, like 'norender' or 'edit'.
-    let arguments = {
-        let mut arguments = HashMap::new();
-
-        while let Some(key) = parts.next() {
-            if key == "true" || key == "false" {
-                continue;
-            }
-
-            let value = match parts.next() {
-                Some(value) => parse_value(value),
-                None => None,
-            };
-            arguments.insert(key, value);
-        }
-
-        arguments
-    };
-
-    PageRequest {
-        slug,
-        categories,
-        arguments,
-    }
-}
-
-fn parse_value(value: &str) -> Option<u32> {
-    match value {
-        "" => None,
-        "true" => Some(1),
-        "false" => Some(0),
-        _ => value.parse::<u32>().ok(),
-    }
-}
-
-// TODO: add #[test] cases
