@@ -249,4 +249,36 @@ fn test_page_request() {
             arguments: hashmap! { "norender" => Some(1), "noredirect" => Some(1) },
         }
     );
+    check!(
+        "aaa:page/true/false/true/false/edit",
+        PageRequest {
+            slug: "page",
+            categories: vec!["aaa"],
+            arguments: hashmap! { "edit" => None },
+        }
+    );
+    check!(
+        "aaa:page/true/false/true/false/edit/1",
+        PageRequest {
+            slug: "page",
+            categories: vec!["aaa"],
+            arguments: hashmap! { "edit" => Some(1) },
+        }
+    );
+    check!(
+        "aaa:page/true/false/true/false/edit/true",
+        PageRequest {
+            slug: "page",
+            categories: vec!["aaa"],
+            arguments: hashmap! { "edit" => Some(1) },
+        }
+    );
+    check!(
+        "aaa:bbb:page/noredirect/false/norender/0/true/false",
+        PageRequest {
+            slug: "page",
+            categories: vec!["aaa", "bbb"],
+            arguments: hashmap! { "noredirect" => Some(0), "norender" => Some(0) },
+        }
+    );
 }
