@@ -21,7 +21,9 @@
 #![deny(missing_debug_implementations)]
 
 extern crate actix_web;
+extern crate awc;
 extern crate color_backtrace;
+extern crate futures;
 
 #[macro_use]
 extern crate lazy_static;
@@ -44,14 +46,19 @@ extern crate structopt;
 extern crate toml;
 
 mod config;
+mod forwarder;
 mod normalize;
 mod request;
 mod route;
 mod server;
 
 use self::config::Config;
+use self::forwarder::Forwarder;
+use actix_web::HttpResponse;
+use futures::Future;
 use std::process;
 
+pub type HttpFuture = Box<dyn Future<Item = HttpResponse, Error = ()>>;
 pub type StdResult<T, E> = std::result::Result<T, E>;
 
 fn main() {
@@ -61,14 +68,17 @@ fn main() {
         hostname,
         address,
         log_level,
+        page_host,
     } = Config::parse_args();
+
+    let forwarder = Forwarder { page_host };
 
     pretty_env_logger::formatted_builder()
         .filter_level(log_level)
         .init();
 
     info!("Server starting on {}", address);
-    if let Err(error) = server::run(hostname, address) {
+    if let Err(error) = server::run(hostname, address, forwarder) {
         error!("Error running actix web server: {}", error);
         process::exit(1);
     }

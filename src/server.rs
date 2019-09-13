@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crate::forwarder::Forwarder;
 use crate::route::*;
 use actix_web::{http, web, App, HttpResponse, HttpServer, Responder};
 use std::io;
@@ -34,9 +35,12 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 }
 
 #[cold]
-pub fn run(hostname: String, addr: SocketAddr) -> io::Result<()> {
+pub fn run(hostname: String, addr: SocketAddr, forwarder: Forwarder) -> io::Result<()> {
+    let data = web::Data::new(forwarder);
+
     HttpServer::new(move || {
         App::new()
+            .data(data.clone())
             .hostname(&hostname)
             // Miscellaneous
             .route("favicon.ico", web::get().to(|| HttpResponse::NotFound()))

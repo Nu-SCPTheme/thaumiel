@@ -13,5 +13,10 @@ hostname = "kant"
 # Whether to use IPv6 or not.
 use-ipv6 = true
 
-# What port to serve on
+# What port to serve on.
 port = 8000
+
+[forwards]
+
+# Where to send page requests.
+page = "http://localhost:7243"

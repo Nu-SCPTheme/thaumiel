@@ -6,7 +6,9 @@ edition = "2018" # this refers to the Cargo.toml version
 
 [dependencies]
 actix-web = "1"
+awc = "*"
 color-backtrace = "0.2"
+futures = "*"
 lazy_static = "1"
 log = "0.4"
 maplit = "1"

@@ -48,9 +48,10 @@ struct Options {
 
 #[derive(Debug, Clone)]
 pub struct Config {
-    pub log_level: LevelFilter,
     pub hostname: String,
     pub address: SocketAddr,
+    pub log_level: LevelFilter,
+    pub page_host: String,
 }
 
 impl Config {
@@ -82,9 +83,16 @@ struct Network {
 
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
+struct Forwards {
+    page: String,
+}
+
+#[serde(rename_all = "kebab-case")]
+#[derive(Deserialize, Debug)]
 struct ConfigFile {
     app: App,
     network: Network,
+    forwards: Forwards,
 }
 
 impl ConfigFile {
@@ -132,12 +140,19 @@ impl ConfigFile {
 impl Into<Config> for ConfigFile {
     #[cold]
     fn into(self) -> Config {
-        let ConfigFile { app, network } = self;
+        let ConfigFile {
+            app,
+            network,
+            forwards,
+        } = self;
+
         let Network {
             hostname,
             use_ipv6,
             port,
         } = network;
+
+        let Forwards { page } = forwards;
 
         let ip_address = if use_ipv6 {
             IpAddr::V6(Ipv6Addr::UNSPECIFIED)
@@ -147,12 +162,12 @@ impl Into<Config> for ConfigFile {
 
         let address = SocketAddr::new(ip_address, port.unwrap_or(80));
         let log_level = app.log_level.as_ref().map(|s| s.as_ref());
-        let log_level = Self::parse_log_level(log_level);
 
         Config {
-            log_level,
             hostname,
             address,
+            log_level: Self::parse_log_level(log_level),
+            page_host: page,
         }
     }
 }

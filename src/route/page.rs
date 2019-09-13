@@ -21,6 +21,7 @@
 use super::prelude::*;
 use crate::normalize::{is_normal, normalize};
 use crate::request::PageRequest;
+use crate::HttpFuture;
 use std::collections::HashMap;
 
 lazy_static! {
