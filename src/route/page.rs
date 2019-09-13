@@ -33,7 +33,7 @@ lazy_static! {
 
 // Public route methods
 
-/// Route handlers with arguments, like `/scp-1000/offset/2`
+/// Route handling for pages, with arguments or not.
 pub fn page_get(req: HttpRequest) -> impl Responder {
     let uri = req.uri();
     let mut path = uri.path().to_string();
