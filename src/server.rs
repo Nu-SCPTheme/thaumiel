@@ -20,7 +20,7 @@
 
 use crate::forwarder::Forwarder;
 use crate::route::*;
-use actix_web::{http, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
 use std::io;
 use std::net::SocketAddr;
 
@@ -42,6 +42,7 @@ pub fn run(hostname: String, addr: SocketAddr, forwarder: Forwarder) -> io::Resu
         App::new()
             .data(data.clone())
             .hostname(&hostname)
+            .wrap(middleware::Logger::default())
             // Miscellaneous
             .route("favicon.ico", web::get().to(|| HttpResponse::NotFound()))
             // Forum redirects

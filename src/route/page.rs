@@ -81,7 +81,7 @@ fn redirect_normal(path: &mut String, query: Option<&str>) -> HttpResponse {
         path.push_str(query);
     }
 
-    debug!("REDIRECT {}", path);
+    info!("REDIRECT {}", path);
 
     HttpResponse::Found()
         .header(http::header::LOCATION, path.as_str())
