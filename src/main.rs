@@ -40,8 +40,6 @@ extern crate serde;
 
 #[macro_use]
 extern crate str_macro;
-
-#[macro_use]
 extern crate structopt;
 extern crate toml;
 
