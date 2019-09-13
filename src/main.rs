@@ -21,9 +21,7 @@
 #![deny(missing_debug_implementations)]
 
 extern crate actix_web;
-extern crate awc;
 extern crate color_backtrace;
-extern crate futures;
 
 #[macro_use]
 extern crate lazy_static;
@@ -54,11 +52,8 @@ mod server;
 
 use self::config::Config;
 use self::forwarder::Forwarder;
-use actix_web::HttpResponse;
-use futures::Future;
 use std::process;
 
-pub type HttpFuture = Box<dyn Future<Item = HttpResponse, Error = ()>>;
 pub type StdResult<T, E> = std::result::Result<T, E>;
 
 fn main() {

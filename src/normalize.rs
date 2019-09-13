@@ -89,7 +89,12 @@ pub fn normalize(name: &mut String) {
 pub fn is_normal(name: &str) -> bool {
     // Is all lowercase
     fn is_valid_char(ch: char) -> bool {
-        ch.is_ascii_lowercase() || ch.is_digit(10) || ch == ':' || ch == '-' || ch == '_' || ch == '/'
+        ch.is_ascii_lowercase()
+            || ch.is_digit(10)
+            || ch == ':'
+            || ch == '-'
+            || ch == '_'
+            || ch == '/'
     }
 
     if !name.chars().all(is_valid_char) {

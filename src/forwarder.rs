@@ -19,15 +19,14 @@
  */
 
 use crate::request::PageRequest;
-use crate::HttpFuture;
-use awc::Client;
+use actix_web::HttpResponse;
 
 pub struct Forwarder {
     pub page_host: String,
 }
 
 impl Forwarder {
-    pub fn to_page(&self, request: &PageRequest) -> HttpFuture {
+    pub fn to_page(&self, request: &PageRequest) -> HttpResponse {
         unimplemented!()
     }
 }
