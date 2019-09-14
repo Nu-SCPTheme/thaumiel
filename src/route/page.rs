@@ -19,8 +19,10 @@
  */
 
 use super::prelude::*;
+use crate::forwarder::Forwarder;
 use crate::normalize::{is_normal, normalize};
 use crate::request::PageRequest;
+use actix_web::client::Client;
 use std::collections::HashMap;
 
 lazy_static! {
@@ -34,7 +36,11 @@ lazy_static! {
 // Public route methods
 
 /// Route handling for pages, with arguments or not.
-pub fn page_get(req: HttpRequest) -> impl Responder {
+pub fn page_get(
+    req: HttpRequest,
+    forwarder: web::Data<Forwarder>,
+    client: web::Data<Client>,
+) -> impl Responder {
     let uri = req.uri();
     let mut path = uri.path().to_string();
 
@@ -42,23 +48,27 @@ pub fn page_get(req: HttpRequest) -> impl Responder {
 
     if is_normal(&path) {
         let page_req = PageRequest::parse(&path);
-        send_page(&page_req)
+        send_page(&*forwarder, &*client, &page_req)
     } else {
         redirect_normal(&mut path, uri.query())
     }
 }
 
 /// Route for root, which is the same as whatever the `main` page is.
-pub fn page_main() -> impl Responder {
+pub fn page_main(
+    _: HttpRequest,
+    forwarder: web::Data<Forwarder>,
+    client: web::Data<Client>,
+) -> impl Responder {
     info!("GET /");
 
-    send_page(&*MAIN_PAGE)
+    send_page(&*forwarder, &*client, &*MAIN_PAGE)
 }
 
 // Helper functions
 
 /// Takes a page request and sends the appropriate HttpResponse for it.
-fn send_page(page_req: &PageRequest) -> HttpResponse {
+fn send_page(forwarder: &Forwarder, client: &Client, page_req: &PageRequest) -> HttpResponse {
     debug!("Sending page request: {:?}", page_req);
 
     // TODO
