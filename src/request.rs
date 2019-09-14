@@ -143,7 +143,7 @@ impl<'a> From<u32> for PageArgumentValue<'a> {
 
 impl<'a> From<()> for PageArgumentValue<'a> {
     #[inline]
-    fn from(value: ()) -> Self {
+    fn from(_: ()) -> Self {
         Value::Empty
     }
 }

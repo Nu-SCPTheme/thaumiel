@@ -56,7 +56,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-1000",
             categories: vec![],
-            arguments: hashmap! { "edit" => Some(1) },
+            arguments: hashmap! { "edit" => Value::from(1) },
         }
     );
     check!(
@@ -65,7 +65,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-1000",
             categories: vec![],
-            arguments: hashmap! { "edit" => Some(1) },
+            arguments: hashmap! { "edit" => Value::from(1) },
         }
     );
     check!(
@@ -101,7 +101,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-4447-1",
             categories: vec!["fragment"],
-            arguments: hashmap! { "discuss" => None },
+            arguments: hashmap! { "discuss" => Value::Empty },
         }
     );
     check!(
@@ -110,7 +110,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-4447-1",
             categories: vec!["fragment"],
-            arguments: hashmap! { "discuss" => Some(1) },
+            arguments: hashmap! { "discuss" => Value::from(true) },
         }
     );
     check!(
@@ -128,7 +128,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => None },
+            arguments: hashmap! { "norender" => Value::Empty },
         }
     );
     check!(
@@ -137,7 +137,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Some(1) },
+            arguments: hashmap! { "norender" => Value::from(true) },
         }
     );
     check!(
@@ -146,7 +146,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Some(1) },
+            arguments: hashmap! { "norender" => Value::from(true) },
         }
     );
     check!(
@@ -155,7 +155,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => None },
+            arguments: hashmap! { "norender" => Value::from(true), "noredirect" => Value::Empty },
         }
     );
     check!(
@@ -164,7 +164,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => None },
+            arguments: hashmap! { "norender" => Value::from(true), "noredirect" => Value::Empty },
         }
     );
     check!(
@@ -173,7 +173,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => None },
+            arguments: hashmap! { "norender" => Value::from(true), "noredirect" => Value::Empty },
         }
     );
     check!(
@@ -182,7 +182,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => Some(1) },
+            arguments: hashmap! { "norender" => Value::from(true), "noredirect" => Value::from(true) },
         }
     );
     check!(
@@ -191,7 +191,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => Some(1) },
+            arguments: hashmap! { "norender" => Value::from(true), "noredirect" => Value::from(true) },
         }
     );
     check!(
@@ -200,7 +200,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => Some(1) },
+            arguments: hashmap! { "norender" => Value::from(true), "noredirect" => Value::from(true) },
         }
     );
     check!(
@@ -209,7 +209,7 @@ fn test_page_request() {
             host: None,
             slug: "page",
             categories: vec!["aaa"],
-            arguments: hashmap! { "edit" => None },
+            arguments: hashmap! { "edit" => Value::Empty },
         }
     );
     check!(
@@ -218,7 +218,7 @@ fn test_page_request() {
             host: None,
             slug: "page",
             categories: vec!["aaa"],
-            arguments: hashmap! { "edit" => Some(1) },
+            arguments: hashmap! { "edit" => Value::from(true) },
         }
     );
     check!(
@@ -227,7 +227,7 @@ fn test_page_request() {
             host: None,
             slug: "page",
             categories: vec!["aaa"],
-            arguments: hashmap! { "edit" => Some(1) },
+            arguments: hashmap! { "edit" => Value::from(true) },
         }
     );
     check!(
@@ -236,7 +236,7 @@ fn test_page_request() {
             host: None,
             slug: "page",
             categories: vec!["aaa", "bbb"],
-            arguments: hashmap! { "noredirect" => Some(0), "norender" => Some(0) },
+            arguments: hashmap! { "noredirect" => Value::from(false), "norender" => Value::from(false) },
         }
     );
 }
