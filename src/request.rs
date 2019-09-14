@@ -18,14 +18,37 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crate::StdResult;
+use serde::{Serialize, Serializer};
 use std::collections::HashMap;
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum PageArgumentValue<'a> {
+    String(&'a str),
+    Boolean(bool),
+    Integer(u32),
+    Empty,
+}
+
+impl<'a> Serialize for PageArgumentValue<'a> {
+    fn serialize<S: Serializer>(&self, serializer: S) -> StdResult<S::Ok, S::Error> {
+        use self::PageArgumentValue::*;
+
+        match self {
+            String(value) => serializer.serialize_str(value),
+            Boolean(value) => serializer.serialize_bool(*value),
+            Integer(value) => serializer.serialize_u32(*value),
+            Empty => serializer.serialize_unit(),
+        }
+    }
+}
 
 #[derive(Serialize, Debug, Clone, PartialEq, Eq)]
 pub struct PageRequest<'a> {
     pub host: Option<&'a str>,
     pub slug: &'a str,
     pub categories: Vec<&'a str>,
-    pub arguments: HashMap<&'a str, Option<u32>>,
+    pub arguments: HashMap<&'a str, PageArgumentValue<'a>>,
 }
 
 impl<'a> PageRequest<'a> {
@@ -61,8 +84,9 @@ impl<'a> PageRequest<'a> {
 
                 let value = match parts.next() {
                     Some(value) => parse_value(value),
-                    None => None,
+                    None => PageArgumentValue::Empty,
                 };
+
                 arguments.insert(key, value);
             }
 
@@ -78,12 +102,17 @@ impl<'a> PageRequest<'a> {
     }
 }
 
-fn parse_value(value: &str) -> Option<u32> {
+fn parse_value(value: &str) -> PageArgumentValue {
+    use PageArgumentValue as Value;
+
     match value {
-        "" => None,
-        "true" => Some(1),
-        "false" => Some(0),
-        _ => value.parse::<u32>().ok(),
+        "" => Value::Empty,
+        "true" => Value::Boolean(true),
+        "false" => Value::Boolean(false),
+        _ => match value.parse::<u32>() {
+            Ok(int) => Value::Integer(int),
+            Err(_) => Value::String(value),
+        },
     }
 }
 
