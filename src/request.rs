@@ -20,7 +20,10 @@
 
 use crate::StdResult;
 use serde::{Serialize, Serializer};
+use self::PageArgumentValue as Value;
 use std::collections::HashMap;
+
+// Request argument value
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PageArgumentValue<'a> {
@@ -42,6 +45,53 @@ impl<'a> Serialize for PageArgumentValue<'a> {
         }
     }
 }
+
+impl<'a> From<Option<&'a str>> for PageArgumentValue<'a> {
+    #[inline]
+    fn from(value: Option<&'a str>) -> Self {
+        match value {
+            Some(value) => Value::from(value),
+            None => Value::Empty,
+        }
+    }
+}
+
+impl<'a> From<&'a str> for PageArgumentValue<'a> {
+    fn from(value: &'a str) -> Self {
+        match value {
+            "" => Value::Empty,
+            "true" => Value::Boolean(true),
+            "false" => Value::Boolean(false),
+            _ => match value.parse::<u32>() {
+                Ok(int) => Value::Integer(int),
+                Err(_) => Value::String(value),
+            },
+        }
+    }
+}
+
+impl<'a> From<bool> for PageArgumentValue<'a> {
+    #[inline]
+    fn from(value: bool) -> Self {
+        Value::Boolean(value)
+    }
+}
+
+impl<'a> From<u32> for PageArgumentValue<'a> {
+    #[inline]
+    fn from(value: u32) -> Self {
+        Value::Integer(value)
+    }
+}
+
+impl<'a> From<()> for PageArgumentValue<'a> {
+    #[inline]
+    fn from(value: ()) -> Self {
+        Value::Empty
+    }
+}
+
+// Request struct
 
 #[derive(Serialize, Debug, Clone, PartialEq, Eq)]
 pub struct PageRequest<'a> {
@@ -82,11 +132,7 @@ impl<'a> PageRequest<'a> {
                     continue;
                 }
 
-                let value = match parts.next() {
-                    Some(value) => parse_value(value),
-                    None => PageArgumentValue::Empty,
-                };
-
+                let value = Value::from(parts.next());
                 arguments.insert(key, value);
             }
 
@@ -100,216 +146,4 @@ impl<'a> PageRequest<'a> {
             arguments,
         }
     }
-}
-
-fn parse_value(value: &str) -> PageArgumentValue {
-    use PageArgumentValue as Value;
-
-    match value {
-        "" => Value::Empty,
-        "true" => Value::Boolean(true),
-        "false" => Value::Boolean(false),
-        _ => match value.parse::<u32>() {
-            Ok(int) => Value::Integer(int),
-            Err(_) => Value::String(value),
-        },
-    }
-}
-
-#[test]
-fn test_page_request() {
-    macro_rules! check {
-        ($path:expr, $expected:expr) => {{
-            let page_req = PageRequest::parse($path);
-            assert_eq!(
-                page_req, $expected,
-                "Parsed PageRequest doesn't match expected"
-            );
-        }};
-    }
-
-    check!(
-        "scp-1000",
-        PageRequest {
-            slug: "scp-1000",
-            categories: vec![],
-            arguments: hashmap! {},
-        }
-    );
-    check!(
-        "scp-1000/edit",
-        PageRequest {
-            slug: "scp-1000",
-            categories: vec![],
-            arguments: hashmap! { "edit" => None },
-        }
-    );
-    check!(
-        "scp-1000/edit/1",
-        PageRequest {
-            slug: "scp-1000",
-            categories: vec![],
-            arguments: hashmap! { "edit" => Some(1) },
-        }
-    );
-    check!(
-        "scp-1000/edit/true",
-        PageRequest {
-            slug: "scp-1000",
-            categories: vec![],
-            arguments: hashmap! { "edit" => Some(1) },
-        }
-    );
-    check!(
-        "component:image-block",
-        PageRequest {
-            slug: "image-block",
-            categories: vec!["component"],
-            arguments: hashmap! {},
-        }
-    );
-    check!(
-        "deleted:component:image-block",
-        PageRequest {
-            slug: "image-block",
-            categories: vec!["deleted", "component"],
-            arguments: hashmap! {},
-        }
-    );
-    check!(
-        "fragment:scp-4447-1",
-        PageRequest {
-            slug: "scp-4447-1",
-            categories: vec!["fragment"],
-            arguments: hashmap! {},
-        }
-    );
-    check!(
-        "fragment:scp-4447-1/discuss",
-        PageRequest {
-            slug: "scp-4447-1",
-            categories: vec!["fragment"],
-            arguments: hashmap! { "discuss" => None },
-        }
-    );
-    check!(
-        "fragment:scp-4447-1/discuss/true",
-        PageRequest {
-            slug: "scp-4447-1",
-            categories: vec!["fragment"],
-            arguments: hashmap! { "discuss" => Some(1) },
-        }
-    );
-    check!(
-        "scp-series-5",
-        PageRequest {
-            slug: "scp-series-5",
-            categories: vec![],
-            arguments: hashmap! {},
-        }
-    );
-    check!(
-        "scp-series-5/norender",
-        PageRequest {
-            slug: "scp-series-5",
-            categories: vec![],
-            arguments: hashmap! { "norender" => None },
-        }
-    );
-    check!(
-        "scp-series-5/norender/1",
-        PageRequest {
-            slug: "scp-series-5",
-            categories: vec![],
-            arguments: hashmap! { "norender" => Some(1) },
-        }
-    );
-    check!(
-        "scp-series-5/norender/true",
-        PageRequest {
-            slug: "scp-series-5",
-            categories: vec![],
-            arguments: hashmap! { "norender" => Some(1) },
-        }
-    );
-    check!(
-        "scp-series-5/norender/true/noredirect",
-        PageRequest {
-            slug: "scp-series-5",
-            categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => None },
-        }
-    );
-    check!(
-        "scp-series-5/norender/1/noredirect",
-        PageRequest {
-            slug: "scp-series-5",
-            categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => None },
-        }
-    );
-    check!(
-        "scp-series-5/norender/true/noredirect",
-        PageRequest {
-            slug: "scp-series-5",
-            categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => None },
-        }
-    );
-    check!(
-        "scp-series-5/norender/true/noredirect/true",
-        PageRequest {
-            slug: "scp-series-5",
-            categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => Some(1) },
-        }
-    );
-    check!(
-        "scp-series-5/norender/1/noredirect/1",
-        PageRequest {
-            slug: "scp-series-5",
-            categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => Some(1) },
-        }
-    );
-    check!(
-        "scp-series-5/norender/true/noredirect/true",
-        PageRequest {
-            slug: "scp-series-5",
-            categories: vec![],
-            arguments: hashmap! { "norender" => Some(1), "noredirect" => Some(1) },
-        }
-    );
-    check!(
-        "aaa:page/true/false/true/false/edit",
-        PageRequest {
-            slug: "page",
-            categories: vec!["aaa"],
-            arguments: hashmap! { "edit" => None },
-        }
-    );
-    check!(
-        "aaa:page/true/false/true/false/edit/1",
-        PageRequest {
-            slug: "page",
-            categories: vec!["aaa"],
-            arguments: hashmap! { "edit" => Some(1) },
-        }
-    );
-    check!(
-        "aaa:page/true/false/true/false/edit/true",
-        PageRequest {
-            slug: "page",
-            categories: vec!["aaa"],
-            arguments: hashmap! { "edit" => Some(1) },
-        }
-    );
-    check!(
-        "aaa:bbb:page/noredirect/false/norender/0/true/false",
-        PageRequest {
-            slug: "page",
-            categories: vec!["aaa", "bbb"],
-            arguments: hashmap! { "noredirect" => Some(0), "norender" => Some(0) },
-        }
-    );
 }
