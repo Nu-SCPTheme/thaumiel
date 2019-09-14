@@ -22,13 +22,14 @@ use std::collections::HashMap;
 
 #[derive(Serialize, Debug, Clone, PartialEq, Eq)]
 pub struct PageRequest<'a> {
+    pub host: Option<&'a str>,
     pub slug: &'a str,
     pub categories: Vec<&'a str>,
     pub arguments: HashMap<&'a str, Option<u32>>,
 }
 
 impl<'a> PageRequest<'a> {
-    pub fn parse(mut path: &'a str) -> Self {
+    pub fn parse(host: Option<&'a str>, mut path: &'a str) -> Self {
         // Remove leading slash to avoid empty slugs
         if path.starts_with("/") {
             path = &path[1..];
@@ -69,6 +70,7 @@ impl<'a> PageRequest<'a> {
         };
 
         PageRequest {
+            host,
             slug,
             categories,
             arguments,

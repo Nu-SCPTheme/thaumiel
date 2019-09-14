@@ -25,14 +25,6 @@ use crate::request::PageRequest;
 use actix_web::client::Client;
 use std::collections::HashMap;
 
-lazy_static! {
-    static ref MAIN_PAGE: PageRequest<'static> = PageRequest {
-        slug: "main",
-        categories: Vec::new(),
-        arguments: HashMap::new(),
-    };
-}
-
 // Public route methods
 
 /// Route handling for pages, with arguments or not.
@@ -42,12 +34,13 @@ pub fn page_get(
     client: web::Data<Client>,
 ) -> Box<dyn Future<Item = HttpResponse, Error = Error>> {
     let uri = req.uri();
+    let host = uri.host();
     let mut path = uri.path().to_string();
 
     info!("GET page {}", uri);
 
     if is_normal(&path) {
-        let page_req = PageRequest::parse(&path);
+        let page_req = PageRequest::parse(host, &path);
         let future = forwarder.get_page(&*client, &page_req);
         Box::new(future)
     } else {
@@ -58,13 +51,20 @@ pub fn page_get(
 
 /// Route for root, which is the same as whatever the `main` page is.
 pub fn page_main(
-    _: HttpRequest,
+    req: HttpRequest,
     forwarder: web::Data<Forwarder>,
     client: web::Data<Client>,
 ) -> impl Future<Item = HttpResponse, Error = Error> {
     info!("GET /");
 
-    forwarder.get_page(&*client, &*MAIN_PAGE)
+    let page_req = PageRequest {
+        host: req.uri().host(),
+        slug: "main",
+        categories: Vec::new(),
+        arguments: HashMap::new(),
+    };
+
+    forwarder.get_page(&*client, &page_req)
 }
 
 // Helper functions
