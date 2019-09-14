@@ -48,7 +48,7 @@ pub fn page_get(
 
     if is_normal(&path) {
         let page_req = PageRequest::parse(&path);
-        let future = send_page(&*forwarder, &*client, &page_req);
+        let future = forwarder.get_page(&*client, &page_req);
         Box::new(future)
     } else {
         let result = redirect_normal(&mut path, uri.query());
@@ -64,22 +64,10 @@ pub fn page_main(
 ) -> impl Future<Item = HttpResponse, Error = Error> {
     info!("GET /");
 
-    send_page(&*forwarder, &*client, &*MAIN_PAGE)
+    forwarder.get_page(&*client, &*MAIN_PAGE)
 }
 
 // Helper functions
-
-/// Takes a page request and sends the appropriate HttpResponse for it.
-#[inline]
-fn send_page(
-    forwarder: &Forwarder,
-    client: &Client,
-    page_req: &PageRequest,
-) -> impl Future<Item = HttpResponse, Error = Error> {
-    debug!("Sending page request: {:?}", page_req);
-
-    forwarder.to_page(client, page_req)
-}
 
 /// Normalizes the path and redirects the user to that URL.
 fn redirect_normal(path: &mut String, query: Option<&str>) -> HttpResponse {

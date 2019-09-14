@@ -29,11 +29,13 @@ pub struct Forwarder {
 }
 
 impl Forwarder {
-    pub fn to_page(
+    pub fn get_page(
         &self,
         client: &Client,
         request: &PageRequest,
     ) -> impl Future<Item = HttpResponse, Error = Error> {
+        debug!("Sending page request: {:?}", request);
+
         let body = serde_json::to_string(request).expect("Unable to serialize PageRequest to JSON");
 
         client
