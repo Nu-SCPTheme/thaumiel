@@ -239,4 +239,17 @@ fn test_page_request() {
             arguments: hashmap! { "noredirect" => Value::from(false), "norender" => Value::from(0) },
         }
     );
+    check!(
+        "aaa:bbb:page/tags/tale/title/A Story/edit",
+        PageRequest {
+            host: None,
+            slug: "page",
+            categories: vec!["aaa", "bbb"],
+            arguments: hashmap! {
+                "tags" => Value::from("tale"),
+                "title" => Value::from("A Story"),
+                "edit" => Value::Empty,
+            },
+        }
+    );
 }
