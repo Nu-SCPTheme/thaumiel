@@ -19,7 +19,8 @@
  */
 
 mod prelude {
-    pub use actix_web::{http, web, HttpRequest, HttpResponse, HttpServer, Responder};
+    pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer, Responder};
+    pub use futures::{future, Future};
 }
 
 mod forum;

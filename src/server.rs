@@ -101,11 +101,11 @@ pub fn run(hostname: String, addr: SocketAddr, forwarder: Forwarder) -> io::Resu
             .route("user/{id}", web::post().to(user_set))
             .route("user/avatars/{id}", web::get().to(user_avatar_get))
             // Regular pages
-            .route("{name}", web::get().to(page_get))
-            .route("{name}/", web::get().to(page_get))
-            .route("{name}/{options:.*}", web::get().to(page_get))
+            .route("{name}", web::get().to_async(page_get))
+            .route("{name}/", web::get().to_async(page_get))
+            .route("{name}/{options:.*}", web::get().to_async(page_get))
             // Main page
-            .route("/", web::get().to(page_main))
+            .route("/", web::get().to_async(page_main))
             .route("/", web::route().to(|| HttpResponse::MethodNotAllowed()))
     })
     .bind(addr)
