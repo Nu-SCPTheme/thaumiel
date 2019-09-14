@@ -23,6 +23,63 @@ use serde::{Serialize, Serializer};
 use self::PageArgumentValue as Value;
 use std::collections::HashMap;
 
+// Request struct
+
+#[derive(Serialize, Debug, Clone, PartialEq, Eq)]
+pub struct PageRequest<'a> {
+    pub host: Option<&'a str>,
+    pub slug: &'a str,
+    pub categories: Vec<&'a str>,
+    pub arguments: HashMap<&'a str, PageArgumentValue<'a>>,
+}
+
+impl<'a> PageRequest<'a> {
+    pub fn parse(host: Option<&'a str>, mut path: &'a str) -> Self {
+        // Remove leading slash to avoid empty slugs
+        if path.starts_with("/") {
+            path = &path[1..];
+        }
+
+        // Create part iterator and get slug
+        let mut parts = path.split('/');
+        let slug = parts.next().expect("Path split has no items");
+
+        // Get all page categories
+        let (slug, categories) = {
+            let mut categories: Vec<_> = slug.split(':').collect();
+            let slug = categories.pop().expect("Category split has no items");
+            (slug, categories)
+        };
+
+        // Parse out Wikidot arguments
+        //
+        // This algorithm is compatible with the /KEY/true format,
+        // but also allowing the more sensible /KEY for options
+        // where a 'false' value doesn't make sense, like 'norender' or 'edit'.
+        let arguments = {
+            let mut arguments = HashMap::new();
+
+            while let Some(key) = parts.next() {
+                if key.is_empty() || key == "true" || key == "false" {
+                    continue;
+                }
+
+                let value = Value::from(parts.next());
+                arguments.insert(key, value);
+            }
+
+            arguments
+        };
+
+        PageRequest {
+            host,
+            slug,
+            categories,
+            arguments,
+        }
+    }
+}
+
 // Request argument value
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -88,62 +145,5 @@ impl<'a> From<()> for PageArgumentValue<'a> {
     #[inline]
     fn from(value: ()) -> Self {
         Value::Empty
-    }
-}
-
-// Request struct
-
-#[derive(Serialize, Debug, Clone, PartialEq, Eq)]
-pub struct PageRequest<'a> {
-    pub host: Option<&'a str>,
-    pub slug: &'a str,
-    pub categories: Vec<&'a str>,
-    pub arguments: HashMap<&'a str, PageArgumentValue<'a>>,
-}
-
-impl<'a> PageRequest<'a> {
-    pub fn parse(host: Option<&'a str>, mut path: &'a str) -> Self {
-        // Remove leading slash to avoid empty slugs
-        if path.starts_with("/") {
-            path = &path[1..];
-        }
-
-        // Create part iterator and get slug
-        let mut parts = path.split('/');
-        let slug = parts.next().expect("Path split has no items");
-
-        // Get all page categories
-        let (slug, categories) = {
-            let mut categories: Vec<_> = slug.split(':').collect();
-            let slug = categories.pop().expect("Category split has no items");
-            (slug, categories)
-        };
-
-        // Parse out Wikidot arguments
-        //
-        // This algorithm is compatible with the /KEY/true format,
-        // but also allowing the more sensible /KEY for options
-        // where a 'false' value doesn't make sense, like 'norender' or 'edit'.
-        let arguments = {
-            let mut arguments = HashMap::new();
-
-            while let Some(key) = parts.next() {
-                if key.is_empty() || key == "true" || key == "false" {
-                    continue;
-                }
-
-                let value = Value::from(parts.next());
-                arguments.insert(key, value);
-            }
-
-            arguments
-        };
-
-        PageRequest {
-            host,
-            slug,
-            categories,
-            arguments,
-        }
     }
 }
