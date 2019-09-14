@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use crate::request::{PageRequest, PageArgumentValue as Value};
+use crate::request::{PageArgumentValue as Value, PageRequest};
 
 #[test]
 fn test_page_request() {
@@ -65,7 +65,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-1000",
             categories: vec![],
-            arguments: hashmap! { "edit" => Value::from(1) },
+            arguments: hashmap! { "edit" => Value::from(true) },
         }
     );
     check!(
@@ -137,7 +137,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Value::from(true) },
+            arguments: hashmap! { "norender" => Value::from(1) },
         }
     );
     check!(
@@ -164,7 +164,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Value::from(true), "noredirect" => Value::Empty },
+            arguments: hashmap! { "norender" => Value::from(1), "noredirect" => Value::Empty },
         }
     );
     check!(
@@ -191,7 +191,7 @@ fn test_page_request() {
             host: None,
             slug: "scp-series-5",
             categories: vec![],
-            arguments: hashmap! { "norender" => Value::from(true), "noredirect" => Value::from(true) },
+            arguments: hashmap! { "norender" => Value::from(1), "noredirect" => Value::from(1) },
         }
     );
     check!(
@@ -218,7 +218,7 @@ fn test_page_request() {
             host: None,
             slug: "page",
             categories: vec!["aaa"],
-            arguments: hashmap! { "edit" => Value::from(true) },
+            arguments: hashmap! { "edit" => Value::from(1) },
         }
     );
     check!(
@@ -236,7 +236,7 @@ fn test_page_request() {
             host: None,
             slug: "page",
             categories: vec!["aaa", "bbb"],
-            arguments: hashmap! { "noredirect" => Value::from(false), "norender" => Value::from(false) },
+            arguments: hashmap! { "noredirect" => Value::from(false), "norender" => Value::from(0) },
         }
     );
 }

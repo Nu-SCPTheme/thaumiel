@@ -18,9 +18,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use self::PageArgumentValue as Value;
 use crate::StdResult;
 use serde::{Serialize, Serializer};
-use self::PageArgumentValue as Value;
 use std::collections::HashMap;
 
 // Request struct
