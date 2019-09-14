@@ -19,14 +19,40 @@
  */
 
 use crate::request::PageRequest;
-use actix_web::HttpResponse;
+use actix_web::client::Client;
+use actix_web::{http, Error, HttpResponse};
+use futures::Future;
 
 pub struct Forwarder {
     pub page_host: String,
 }
 
 impl Forwarder {
-    pub fn to_page(&self, request: &PageRequest) -> HttpResponse {
-        unimplemented!()
+    pub fn to_page(
+        &self,
+        client: &Client,
+        request: &PageRequest,
+    ) -> impl Future<Item = HttpResponse, Error = Error> {
+        let body = serde_json::to_string(request).expect("Unable to serialize PageRequest to JSON");
+
+        client
+            .get(&self.page_host)
+            .header(http::header::USER_AGENT, "kant-router")
+            .header(http::header::CONTENT_TYPE, "application/json")
+            .send_body(body)
+            .map_err(Error::from)
+            .map(|resp| {
+                let mut client_resp = HttpResponse::build(resp.status());
+                let headers = resp
+                    .headers()
+                    .iter()
+                    .filter(|(h, _)| *h != "connection" && *h != "content-length");
+
+                for (name, value) in headers {
+                    client_resp.header(name.clone(), value.clone());
+                }
+
+                client_resp.streaming(resp)
+            })
     }
 }

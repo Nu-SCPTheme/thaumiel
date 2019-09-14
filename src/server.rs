@@ -20,6 +20,7 @@
 
 use crate::forwarder::Forwarder;
 use crate::route::*;
+use actix_web::client::Client;
 use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
 use std::io;
 use std::net::SocketAddr;
@@ -41,6 +42,7 @@ pub fn run(hostname: String, addr: SocketAddr, forwarder: Forwarder) -> io::Resu
     HttpServer::new(move || {
         App::new()
             .data(data.clone())
+            .data(Client::new())
             .hostname(&hostname)
             .wrap(middleware::Logger::default())
             // Miscellaneous

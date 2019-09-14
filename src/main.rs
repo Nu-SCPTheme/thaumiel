@@ -22,6 +22,7 @@
 
 extern crate actix_web;
 extern crate color_backtrace;
+extern crate futures;
 
 #[macro_use]
 extern crate lazy_static;
@@ -37,6 +38,7 @@ extern crate regex;
 
 #[macro_use]
 extern crate serde;
+extern crate serde_json;
 
 #[macro_use]
 extern crate str_macro;

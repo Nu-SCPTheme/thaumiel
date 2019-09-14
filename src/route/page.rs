@@ -63,7 +63,7 @@ fn send_page(page_req: &PageRequest) -> HttpResponse {
 
     // TODO
 
-    HttpResponse::Ok().body(format!("page\n{:#?}", page_req))
+    HttpResponse::Ok().body(format!("{:#?}", page_req))
 }
 
 /// Normalizes the path and redirects the user to that URL.
