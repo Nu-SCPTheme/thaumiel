@@ -23,6 +23,7 @@ use actix_web::client::Client;
 use actix_web::{http, Error, HttpResponse};
 use futures::Future;
 
+#[derive(Debug, Clone)]
 pub struct Forwarder {
     pub page_host: String,
 }

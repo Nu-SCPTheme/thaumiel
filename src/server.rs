@@ -37,8 +37,6 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 
 #[cold]
 pub fn run(hostname: String, addr: SocketAddr, forwarder: Forwarder) -> io::Result<()> {
-    let forwarder = web::Data::new(forwarder);
-
     HttpServer::new(move || {
         App::new()
             .data(forwarder.clone())
