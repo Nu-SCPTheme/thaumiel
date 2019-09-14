@@ -52,6 +52,9 @@ mod request;
 mod route;
 mod server;
 
+#[cfg(test)]
+mod test;
+
 use self::config::Config;
 use self::forwarder::Forwarder;
 use std::process;
