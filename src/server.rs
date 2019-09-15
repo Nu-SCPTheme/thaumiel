@@ -46,7 +46,7 @@ pub fn run(network: NetworkOptions, forwarder: Forwarder) -> io::Result<()> {
             .hostname(&hostname)
             .wrap(middleware::Logger::default())
             // Miscellaneous
-            .route("favicon.ico", web::get().to(|| HttpResponse::NotFound()))
+            .route("favicon.ico", web::get().to(file_get))
             .route("robots.txt", web::get().to(file_get))
             // Forum redirects
             .route("forum:start", web::get().to(|| redirect("/forum")))
