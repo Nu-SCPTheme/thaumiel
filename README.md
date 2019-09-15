@@ -1,7 +1,7 @@
 ## kant-router
 [![Build Status](https://travis-ci.org/Nu-SCPTheme/kant-router.svg?branch=master)](https://travis-ci.org/Nu-SCPTheme/kant-router)
 
-A Wikidot-compatible router for web applications, to make authentication, page generation and caching easier.
+A Wikidot-compatible router for web applications, forwarding requests to page, forum, or other services and enabling caching and session management.
 
 Available under the terms of the GNU Affero General Public License. See [LICENSE.md](LICENSE).
 
