@@ -22,7 +22,10 @@ use crate::forwarder::Forwarder;
 use crate::route::*;
 use crate::ssl::NetworkOptions;
 use actix_web::client::Client;
+use actix_web::dev::Service;
+use actix_web::http::uri::Scheme;
 use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
+use futures::future;
 use std::io;
 
 #[inline]
@@ -45,6 +48,16 @@ pub fn run(network: NetworkOptions, forwarder: Forwarder) -> io::Result<()> {
             .data(Client::new())
             .hostname(&hostname)
             .wrap(middleware::Logger::default())
+            .wrap_fn(|req, srv| {
+                if true {
+                    let scheme = req.uri().scheme_part();
+                    if scheme == Some(&Scheme::HTTP) {
+                        // TODO
+                    }
+                }
+
+                srv.call(req)
+            })
             // Miscellaneous
             .route("favicon.ico", web::get().to(|| HttpResponse::NotFound()))
             .route("robots.txt", web::get().to(file_get))
