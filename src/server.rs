@@ -20,7 +20,7 @@
 
 use crate::forwarder::Forwarder;
 use crate::route::*;
-use crate::ssl::NetworkOptions;
+use crate::network::NetworkOptions;
 use actix_web::client::Client;
 use actix_web::dev::Service;
 use actix_web::http::uri::Scheme;

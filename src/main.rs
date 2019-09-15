@@ -48,18 +48,18 @@ extern crate toml;
 
 mod config;
 mod forwarder;
+mod network;
 mod normalize;
 mod request;
 mod route;
 mod server;
-mod ssl;
 
 #[cfg(test)]
 mod test;
 
 use self::config::Config;
 use self::forwarder::Forwarder;
-use self::ssl::NetworkOptions;
+use self::network::NetworkOptions;
 use std::process;
 
 pub type StdResult<T, E> = std::result::Result<T, E>;
