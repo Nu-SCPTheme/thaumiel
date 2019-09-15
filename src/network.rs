@@ -48,9 +48,12 @@ impl Into<(String, SocketAddr, SocketAddr, ServerConfig)> for NetworkOptions {
             BufReader::new(file)
         };
 
-        let mut keys = pkcs8_private_keys(&mut key_file).expect("Unable to create PKCS8 private keys");
+        let mut keys =
+            pkcs8_private_keys(&mut key_file).expect("Unable to create PKCS8 private keys");
         let cert_chain = certs(&mut cert_file).expect("Unable to create certificate chain");
-        config.set_single_cert(cert_chain, keys.remove(0)).expect("Unable to set certificate in configuration");
+        config
+            .set_single_cert(cert_chain, keys.remove(0))
+            .expect("Unable to set certificate in configuration");
 
         (self.hostname, self.http_address, self.https_address, config)
     }

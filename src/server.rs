@@ -19,8 +19,8 @@
  */
 
 use crate::forwarder::Forwarder;
-use crate::route::*;
 use crate::network::NetworkOptions;
+use crate::route::*;
 use actix_web::client::Client;
 use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
 use std::io;
