@@ -19,7 +19,6 @@
  */
 
 use super::prelude::*;
-use crate::forwarder::Forwarder;
 use crate::normalize::{is_normal, normalize};
 use crate::request::PageRequest;
 use actix_web::client::Client;

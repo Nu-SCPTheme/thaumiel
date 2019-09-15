@@ -96,6 +96,11 @@ pub fn run(hostname: String, addr: SocketAddr, forwarder: Forwarder) -> io::Resu
             .route("forum/recent-posts/", web::get().to(forum_recent_posts))
             .route("forum/recent-threads", web::get().to(forum_recent_threads))
             .route("forum/recent-threads/", web::get().to(forum_recent_threads))
+            // Session management
+            .route("login", web::get().to(login_get))
+            .route("login", web::post().to(login_post))
+            .route("logout", web::get().to(logout_get))
+            .route("logout", web::delete().to(logout_del))
             // User
             .route("user/{id}", web::get().to(user_get))
             .route("user/{id}", web::post().to(user_set))

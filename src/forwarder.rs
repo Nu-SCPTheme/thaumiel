@@ -58,4 +58,12 @@ impl Forwarder {
                 client_resp.streaming(resp)
             })
     }
+
+    pub fn send_login(&self, _client: ()) {
+        debug!("Login stub")
+    }
+
+    pub fn send_logout(&self, _client: ()) {
+        debug!("Logout stub")
+    }
 }

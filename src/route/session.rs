@@ -1,5 +1,5 @@
 /*
- * route/mod.rs
+ * route/session.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -18,18 +18,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-mod prelude {
-    pub use crate::forwarder::Forwarder;
-    pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer, Responder};
-    pub use futures::{future, Future};
+use super::prelude::*;
+
+// TODO
+
+pub fn login_get(_: HttpRequest) -> impl Responder {
+    "login page"
 }
 
-mod forum;
-mod page;
-mod session;
-mod user;
+pub fn login_post(_: HttpRequest, forwarder: web::Data<Forwarder>) -> impl Responder {
+    forwarder.send_login(());
+    "login result"
+}
 
-pub use self::forum::*;
-pub use self::page::*;
-pub use self::session::*;
-pub use self::user::*;
+pub fn logout_get(_: HttpRequest) -> impl Responder {
+    "logout page"
+}
+
+pub fn logout_del(_: HttpRequest, forwarder: web::Data<Forwarder>) -> impl Responder {
+    forwarder.send_logout(());
+    "logout result"
+}
