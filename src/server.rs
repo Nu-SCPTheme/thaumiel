@@ -22,8 +22,6 @@ use crate::forwarder::Forwarder;
 use crate::route::*;
 use crate::network::NetworkOptions;
 use actix_web::client::Client;
-use actix_web::dev::Service;
-use actix_web::http::uri::Scheme;
 use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
 use std::io;
 
@@ -39,7 +37,7 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 
 #[cold]
 pub fn run(network: NetworkOptions, forwarder: Forwarder) -> io::Result<()> {
-    let (hostname, http_address, https_address, redirect_http, tls_config) = network.into();
+    let (hostname, http_address, https_address, tls_config) = network.into();
 
     HttpServer::new(move || {
         App::new()
@@ -47,16 +45,6 @@ pub fn run(network: NetworkOptions, forwarder: Forwarder) -> io::Result<()> {
             .data(Client::new())
             .hostname(&hostname)
             .wrap(middleware::Logger::default())
-            .wrap_fn(move |req, srv| {
-                if redirect_http {
-                    let scheme = req.uri().scheme_part();
-                    if scheme == Some(&Scheme::HTTP) {
-                        // TODO
-                    }
-                }
-
-                srv.call(req)
-            })
             // Miscellaneous
             .route("favicon.ico", web::get().to(|| HttpResponse::NotFound()))
             .route("robots.txt", web::get().to(file_get))

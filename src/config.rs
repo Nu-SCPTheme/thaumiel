@@ -52,7 +52,6 @@ pub struct Config {
     pub hostname: String,
     pub http_address: SocketAddr,
     pub https_address: SocketAddr,
-    pub redirect_http: bool,
     // Server settings
     pub log_level: LevelFilter,
     // Forwarder
@@ -89,7 +88,6 @@ struct Network {
     use_ipv6: bool,
     http_port: Option<u16>,
     https_port: Option<u16>,
-    redirect_http: bool,
 }
 
 #[serde(rename_all = "kebab-case")]
@@ -172,7 +170,6 @@ impl Into<Config> for ConfigFile {
             use_ipv6,
             http_port,
             https_port,
-            redirect_http,
         } = network;
 
         let Ssl {
@@ -196,7 +193,6 @@ impl Into<Config> for ConfigFile {
             hostname,
             http_address,
             https_address,
-            redirect_http,
             log_level: Self::parse_log_level(log_level),
             file_dir: file,
             page_host: page,
