@@ -72,7 +72,10 @@ fn main() {
         page_host,
     } = Config::parse_args();
 
-    let forwarder = Forwarder { file_dir, page_host };
+    let forwarder = Forwarder {
+        file_dir,
+        page_host,
+    };
 
     pretty_env_logger::formatted_builder()
         .filter_level(log_level)

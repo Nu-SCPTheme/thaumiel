@@ -22,7 +22,9 @@ use crate::request::PageRequest;
 use actix_web::client::Client;
 use actix_web::{http, Error, HttpResponse};
 use futures::Future;
-use std::path::PathBuf;
+use std::fs::File;
+use std::io::{self, Read};
+use std::path::{Path, PathBuf};
 
 #[derive(Debug, Clone)]
 pub struct Forwarder {
@@ -31,6 +33,36 @@ pub struct Forwarder {
 }
 
 impl Forwarder {
+    pub fn get_file(&self, path: &str) -> HttpResponse {
+        assert!(path.starts_with("/"));
+        let full_path = self.file_dir.join(&path[1..]);
+
+        debug!("Getting file at {}", full_path.display());
+
+        fn read_file(path: &Path) -> io::Result<String> {
+            let mut file = File::open(path)?;
+            let mut contents = String::new();
+            file.read_to_string(&mut contents)?;
+            Ok(contents)
+        }
+
+        match read_file(&full_path) {
+            Ok(contents) => HttpResponse::Ok().body(contents),
+            Err(error) => {
+                use io::ErrorKind::*;
+
+                let mut resp = match error.kind() {
+                    NotFound => HttpResponse::NotFound(),
+                    PermissionDenied => HttpResponse::Forbidden(),
+                    TimedOut => HttpResponse::RequestTimeout(),
+                    _ => HttpResponse::InternalServerError(),
+                };
+
+                resp.body(str!(error))
+            }
+        }
+    }
+
     pub fn get_page(
         &self,
         client: &Client,
