@@ -1,5 +1,5 @@
 /*
- * route/mod.rs
+ * route/file.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -18,20 +18,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-mod prelude {
-    pub use crate::forwarder::Forwarder;
-    pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer, Responder};
-    pub use futures::{future, Future};
+use super::prelude::*;
+
+pub fn file_get(req: HttpRequest) -> impl Responder {
+    let path = req.uri().path();
+    "static data from file"
 }
-
-mod file;
-mod forum;
-mod page;
-mod session;
-mod user;
-
-pub use self::file::*;
-pub use self::forum::*;
-pub use self::page::*;
-pub use self::session::*;
-pub use self::user::*;

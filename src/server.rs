@@ -45,6 +45,7 @@ pub fn run(hostname: String, addr: SocketAddr, forwarder: Forwarder) -> io::Resu
             .wrap(middleware::Logger::default())
             // Miscellaneous
             .route("favicon.ico", web::get().to(|| HttpResponse::NotFound()))
+            .route("robots.txt", web::get().to(file_get))
             // Forum redirects
             .route("forum:start", web::get().to(|| redirect("/forum")))
             .route("forum:start/", web::get().to(|| redirect("/forum")))
