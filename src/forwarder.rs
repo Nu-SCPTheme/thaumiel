@@ -22,9 +22,11 @@ use crate::request::PageRequest;
 use actix_web::client::Client;
 use actix_web::{http, Error, HttpResponse};
 use futures::Future;
+use std::path::PathBuf;
 
 #[derive(Debug, Clone)]
 pub struct Forwarder {
+    pub file_dir: PathBuf,
     pub page_host: String,
 }
 

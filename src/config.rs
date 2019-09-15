@@ -51,6 +51,7 @@ pub struct Config {
     pub hostname: String,
     pub address: SocketAddr,
     pub log_level: LevelFilter,
+    pub file_dir: PathBuf,
     pub page_host: String,
 }
 
@@ -84,6 +85,7 @@ struct Network {
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
 struct Forwards {
+    file: PathBuf,
     page: String,
 }
 
@@ -152,7 +154,7 @@ impl Into<Config> for ConfigFile {
             port,
         } = network;
 
-        let Forwards { page } = forwards;
+        let Forwards { file, page } = forwards;
 
         let ip_address = if use_ipv6 {
             IpAddr::V6(Ipv6Addr::UNSPECIFIED)
@@ -167,6 +169,7 @@ impl Into<Config> for ConfigFile {
             hostname,
             address,
             log_level: Self::parse_log_level(log_level),
+            file_dir: file,
             page_host: page,
         }
     }

@@ -18,5 +18,8 @@ port = 8000
 
 [forwards]
 
+# What directory to get static file requests from.
+file = "/var/www"
+
 # Where to send page requests.
 page = "http://localhost:7243"
