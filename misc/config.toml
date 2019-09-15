@@ -17,6 +17,9 @@ use-ipv6 = true
 http-port = 8000
 https-port = 8443
 
+# When enabled, all HTTP queries will be redirected to HTTPS.
+redirect-http = true
+
 [ssl]
 private-key-file = "misc/test-private-key.pem"
 certificate-file = "misc/test-certificate.pem"

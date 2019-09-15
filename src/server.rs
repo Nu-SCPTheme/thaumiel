@@ -25,7 +25,6 @@ use actix_web::client::Client;
 use actix_web::dev::Service;
 use actix_web::http::uri::Scheme;
 use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
-use futures::future;
 use std::io;
 
 #[inline]
@@ -40,7 +39,7 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 
 #[cold]
 pub fn run(network: NetworkOptions, forwarder: Forwarder) -> io::Result<()> {
-    let (hostname, http_address, https_address, tls_config) = network.into();
+    let (hostname, http_address, https_address, redirect_http, tls_config) = network.into();
 
     HttpServer::new(move || {
         App::new()
@@ -48,8 +47,8 @@ pub fn run(network: NetworkOptions, forwarder: Forwarder) -> io::Result<()> {
             .data(Client::new())
             .hostname(&hostname)
             .wrap(middleware::Logger::default())
-            .wrap_fn(|req, srv| {
-                if true {
+            .wrap_fn(move |req, srv| {
+                if redirect_http {
                     let scheme = req.uri().scheme_part();
                     if scheme == Some(&Scheme::HTTP) {
                         // TODO

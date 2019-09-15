@@ -71,6 +71,7 @@ fn main() {
         hostname,
         http_address,
         https_address,
+        redirect_http,
         log_level,
         file_dir,
         page_host,
@@ -91,6 +92,7 @@ fn main() {
         hostname,
         http_address,
         https_address,
+        redirect_http,
         private_key_file,
         certificate_file,
     };

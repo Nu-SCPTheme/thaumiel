@@ -30,12 +30,13 @@ pub struct NetworkOptions {
     pub hostname: String,
     pub http_address: SocketAddr,
     pub https_address: SocketAddr,
+    pub redirect_http: bool,
     pub private_key_file: PathBuf,
     pub certificate_file: PathBuf,
 }
 
-impl Into<(String, SocketAddr, SocketAddr, ServerConfig)> for NetworkOptions {
-    fn into(self) -> (String, SocketAddr, SocketAddr, ServerConfig) {
+impl Into<(String, SocketAddr, SocketAddr, bool, ServerConfig)> for NetworkOptions {
+    fn into(self) -> (String, SocketAddr, SocketAddr, bool, ServerConfig) {
         let mut config = ServerConfig::new(NoClientAuth::new());
 
         let mut key_file = {
@@ -52,6 +53,6 @@ impl Into<(String, SocketAddr, SocketAddr, ServerConfig)> for NetworkOptions {
         let cert_chain = certs(&mut cert_file).expect("Unable to create certificate chain");
         config.set_single_cert(cert_chain, keys.remove(0)).expect("Unable to set certificate in configuration");
 
-        (self.hostname, self.http_address, self.https_address, config)
+        (self.hostname, self.http_address, self.https_address, self.redirect_http, config)
     }
 }
