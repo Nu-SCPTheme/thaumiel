@@ -13,8 +13,13 @@ hostname = "kant"
 # Whether to use IPv6 or not.
 use-ipv6 = true
 
-# What port to serve on.
-port = 8000
+# What port to serve HTTP/HTTPS on.
+http-port = 8000
+https-port = 8443
+
+[ssl]
+private-key-file = "misc/test-private-key.pem"
+certificate-file = "misc/test-certificate.pem"
 
 [forwards]
 

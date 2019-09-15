@@ -20,10 +20,10 @@
 
 use crate::forwarder::Forwarder;
 use crate::route::*;
+use crate::ssl::NetworkOptions;
 use actix_web::client::Client;
 use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
 use std::io;
-use std::net::SocketAddr;
 
 #[inline]
 fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
@@ -36,7 +36,9 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 }
 
 #[cold]
-pub fn run(hostname: String, addr: SocketAddr, forwarder: Forwarder) -> io::Result<()> {
+pub fn run(network: NetworkOptions, forwarder: Forwarder) -> io::Result<()> {
+    let (hostname, http_address, https_address, tls_config) = network.into();
+
     HttpServer::new(move || {
         App::new()
             .data(forwarder.clone())
@@ -114,7 +116,9 @@ pub fn run(hostname: String, addr: SocketAddr, forwarder: Forwarder) -> io::Resu
             .route("/", web::get().to_async(page_main))
             .route("/", web::route().to(|| HttpResponse::MethodNotAllowed()))
     })
-    .bind(addr)
-    .expect("Unable to bind to address")
+    .bind(http_address)
+    .expect("Unable to bind to HTTP socket")
+    .bind_rustls(https_address, tls_config)
+    .expect("Unable to bind to HTTPS socket")
     .run()
 }
