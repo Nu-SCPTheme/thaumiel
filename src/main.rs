@@ -30,8 +30,6 @@ extern crate lazy_static;
 #[macro_use]
 extern crate log;
 
-#[macro_use]
-extern crate maplit;
 extern crate percent_encoding;
 extern crate pretty_env_logger;
 extern crate regex;
@@ -45,6 +43,10 @@ extern crate serde_json;
 extern crate str_macro;
 extern crate structopt;
 extern crate toml;
+
+#[cfg(test)]
+#[macro_use]
+extern crate maplit;
 
 mod config;
 mod forwarder;
