@@ -1,5 +1,13 @@
 [package]
 name = "kant-router"
+description = "A Wikidot-compatible router for web applications"
+repository = "https://github.com/Nu-SCPTheme/kant-router"
+readme = "README.md"
+license = "AGPL-3.0-or-later"
+keywords = ["wikidot", "router", "web", "nuscp"]
+categories = ["web-programming::http-server"]
+exclude = [".gitignore", ".travis.yml"]
+
 version = "0.0.6"
 authors = ["Ammon Smith <ammon.i.smith@gmail.com>"]
 edition = "2018" # this refers to the Cargo.toml version
