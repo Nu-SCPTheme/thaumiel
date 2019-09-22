@@ -32,11 +32,11 @@ pub fn page_get(
     forwarder: web::Data<Forwarder>,
     client: web::Data<Client>,
 ) -> Box<dyn Future<Item = HttpResponse, Error = Error>> {
+    let host = get_host(&req);
     let uri = req.uri();
-    let host = uri.host();
     let mut path = uri.path().to_string();
 
-    info!("GET page {}", uri);
+    info!("GET page {} [{}]", &path, host.unwrap_or("none"));
 
     if is_normal(&path) {
         let page_req = PageRequest::parse(host, &path);
@@ -54,10 +54,12 @@ pub fn page_main(
     forwarder: web::Data<Forwarder>,
     client: web::Data<Client>,
 ) -> impl Future<Item = HttpResponse, Error = Error> {
-    info!("GET /");
+    let host = get_host(&req);
+
+    info!("GET / [{}]", host.unwrap_or("none"));
 
     let page_req = PageRequest {
-        host: req.uri().host(),
+        host,
         slug: "main",
         categories: Vec::new(),
         arguments: HashMap::new(),
@@ -67,6 +69,14 @@ pub fn page_main(
 }
 
 // Helper functions
+
+/// Gets the client hostname, from headers if present, then URI.
+fn get_host(req: &HttpRequest) -> Option<&str> {
+    match req.headers().get(http::header::HOST) {
+        Some(value) => value.to_str().ok(),
+        None => req.uri().host(),
+    }
+}
 
 /// Normalizes the path and redirects the user to that URL.
 fn redirect_normal(path: &mut String, query: Option<&str>) -> HttpResponse {
