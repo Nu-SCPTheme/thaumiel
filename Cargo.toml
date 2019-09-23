@@ -13,13 +13,12 @@ authors = ["Ammon Smith <ammon.i.smith@gmail.com>"]
 edition = "2018" # this refers to the Cargo.toml version
 
 [dependencies]
-actix-web = { version = "1", features = ["client", "rust-tls"] }
+actix-web = "1"
 color-backtrace = "0.2"
 futures = "*"
 lazy_static = "1"
 log = "0.4"
 maplit = "1"
-rustls = "0.15"
 percent-encoding = "2"
 pretty_env_logger = "0.3"
 regex = "1"

@@ -51,15 +51,11 @@ pub struct Config {
     // Network
     pub hostname: String,
     pub http_address: SocketAddr,
-    pub https_address: SocketAddr,
     // Server settings
     pub log_level: LevelFilter,
     // Forwarder
     pub file_dir: PathBuf,
     pub page_host: String,
-    // SSL options
-    pub private_key_file: PathBuf,
-    pub certificate_file: PathBuf,
 }
 
 impl Config {
@@ -86,15 +82,7 @@ struct App {
 struct Network {
     hostname: String,
     use_ipv6: bool,
-    http_port: Option<u16>,
-    https_port: Option<u16>,
-}
-
-#[serde(rename_all = "kebab-case")]
-#[derive(Deserialize, Debug)]
-struct Ssl {
-    private_key_file: PathBuf,
-    certificate_file: PathBuf,
+    port: Option<u16>,
 }
 
 #[serde(rename_all = "kebab-case")]
@@ -109,7 +97,6 @@ struct Forwards {
 struct ConfigFile {
     app: App,
     network: Network,
-    ssl: Ssl,
     forwards: Forwards,
 }
 
@@ -161,21 +148,14 @@ impl Into<Config> for ConfigFile {
         let ConfigFile {
             app,
             network,
-            ssl,
             forwards,
         } = self;
 
         let Network {
             hostname,
             use_ipv6,
-            http_port,
-            https_port,
+            port,
         } = network;
-
-        let Ssl {
-            private_key_file,
-            certificate_file,
-        } = ssl;
 
         let Forwards { file, page } = forwards;
 
@@ -185,19 +165,15 @@ impl Into<Config> for ConfigFile {
             IpAddr::V4(Ipv4Addr::UNSPECIFIED)
         };
 
-        let http_address = SocketAddr::new(ip_address, http_port.unwrap_or(80));
-        let https_address = SocketAddr::new(ip_address, https_port.unwrap_or(443));
+        let http_address = SocketAddr::new(ip_address, port.unwrap_or(80));
         let log_level = app.log_level.as_ref().map(|s| s.as_ref());
 
         Config {
             hostname,
             http_address,
-            https_address,
             log_level: Self::parse_log_level(log_level),
             file_dir: file,
             page_host: page,
-            private_key_file,
-            certificate_file,
         }
     }
 }

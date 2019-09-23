@@ -33,7 +33,6 @@ extern crate log;
 extern crate percent_encoding;
 extern crate pretty_env_logger;
 extern crate regex;
-extern crate rustls;
 
 #[macro_use]
 extern crate serde;
@@ -50,7 +49,6 @@ extern crate maplit;
 
 mod config;
 mod forwarder;
-mod network;
 mod normalize;
 mod request;
 mod route;
@@ -61,7 +59,6 @@ mod test;
 
 use self::config::Config;
 use self::forwarder::Forwarder;
-use self::network::NetworkOptions;
 use std::process;
 
 pub type StdResult<T, E> = std::result::Result<T, E>;
@@ -72,12 +69,9 @@ fn main() {
     let Config {
         hostname,
         http_address,
-        https_address,
         log_level,
         file_dir,
         page_host,
-        private_key_file,
-        certificate_file,
     } = Config::parse_args();
 
     let forwarder = Forwarder {
@@ -89,17 +83,8 @@ fn main() {
         .filter_level(log_level)
         .init();
 
-    let network = NetworkOptions {
-        hostname,
-        http_address,
-        https_address,
-        private_key_file,
-        certificate_file,
-    };
-
     info!("HTTP server starting on {}", http_address);
-    info!("HTTPS server starting on {}", https_address);
-    if let Err(error) = server::run(network, forwarder) {
+    if let Err(error) = server::run(hostname, http_address, forwarder) {
         error!("Error running actix web server: {}", error);
         process::exit(1);
     }
