@@ -1,6 +1,9 @@
 # Artifacts
 target/
 
+# Local
+config.toml
+
 # Misc
 *.bak
 *~
