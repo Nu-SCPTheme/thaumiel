@@ -70,11 +70,15 @@ pub fn page_main(
 
 // Helper functions
 
-/// Gets the client hostname, from headers if present, then URI.
+/// Gets the client hostname, from URI, then headers if present.
 fn get_host(req: &HttpRequest) -> Option<&str> {
+    if let Some(host) = req.uri().host() {
+        return Some(host);
+    }
+
     match req.headers().get(http::header::HOST) {
         Some(value) => value.to_str().ok(),
-        None => req.uri().host(),
+        None => None,
     }
 }
 
