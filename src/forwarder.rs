@@ -34,7 +34,7 @@ pub struct Forwarder {
 
 impl Forwarder {
     pub fn get_file(&self, path: &str) -> HttpResponse {
-        assert!(path.starts_with("/"));
+        assert!(path.starts_with('/'));
         let full_path = self.file_dir.join(&path[1..]);
 
         debug!("Getting file at {}", full_path.display());

@@ -102,16 +102,16 @@ pub fn is_normal(name: &str) -> bool {
     }
 
     // No special characters
-    if let Some(_) = NON_URL.find(name) {
+    if NON_URL.find(name).is_some() {
         return false;
     }
 
     // Has leading or trailing dashes
-    if let Some(_) = START_DASHES.find(name) {
+    if START_DASHES.find(name).is_some() {
         return false;
     }
 
-    if let Some(_) = END_DASHES.find(name) {
+    if END_DASHES.find(name).is_some() {
         return false;
     }
 

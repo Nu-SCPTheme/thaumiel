@@ -36,7 +36,7 @@ pub struct PageRequest<'a> {
 impl<'a> PageRequest<'a> {
     pub fn parse(host: Option<&'a str>, mut path: &'a str) -> Self {
         // Remove leading slash to avoid empty slugs
-        if path.starts_with("/") {
+        if path.starts_with('/') {
             path = &path[1..];
         }
 

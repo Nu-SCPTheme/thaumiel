@@ -88,7 +88,7 @@ fn redirect_normal(path: &mut String, query: Option<&str>) -> HttpResponse {
 
     // Remove empty directories
     while let Some(idx) = path.find("//") {
-        path.replace_range(idx..idx + 1, "");
+        path.replace_range(idx..=idx, "");
     }
 
     // Add query at the end if relevant

@@ -112,7 +112,7 @@ pub fn run(hostname: String, address: SocketAddr, forwarder: Forwarder) -> io::R
             .route("{name}/{options:.*}", web::get().to_async(page_get))
             // Main page
             .route("/", web::get().to_async(page_main))
-            .route("/", web::route().to(|| HttpResponse::MethodNotAllowed()))
+            .route("/", web::route().to(HttpResponse::MethodNotAllowed))
     })
     .bind(address)
     .expect("Unable to bind to HTTP socket")
