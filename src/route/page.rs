@@ -19,10 +19,10 @@
  */
 
 use super::prelude::*;
-use wikidot_normalize::{is_normal, normalize_decode as normalize};
 use crate::request::PageRequest;
 use actix_web::client::Client;
 use std::collections::HashMap;
+use wikidot_normalize::{is_normal, normalize_decode as normalize};
 
 // Public route methods
 
