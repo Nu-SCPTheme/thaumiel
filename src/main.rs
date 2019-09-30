@@ -42,6 +42,7 @@ extern crate serde_json;
 extern crate str_macro;
 extern crate structopt;
 extern crate toml;
+extern crate wikidot_normalize;
 
 #[cfg(test)]
 #[macro_use]
@@ -49,7 +50,6 @@ extern crate maplit;
 
 mod config;
 mod forwarder;
-mod normalize;
 mod request;
 mod route;
 mod server;

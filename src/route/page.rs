@@ -19,7 +19,7 @@
  */
 
 use super::prelude::*;
-use crate::normalize::{is_normal, normalize};
+use wikidot_normalize::{is_normal, normalize_decode as normalize};
 use crate::request::PageRequest;
 use actix_web::client::Client;
 use std::collections::HashMap;
