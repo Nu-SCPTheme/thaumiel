@@ -38,7 +38,7 @@ pub fn page_get(
 
     info!("GET page {} [{}]", &path, host.unwrap_or("none"));
 
-    if is_normal(&path) {
+    if is_normal(&path, true) {
         let page_req = PageRequest::parse(host, &path);
         let future = forwarder.get_page(&*client, &page_req);
         Box::new(future)
