@@ -27,11 +27,10 @@ use wikidot_normalize::{is_normal, normalize_decode as normalize};
 // Public route methods
 
 /// Route handling for pages, with arguments or not.
-pub fn page_get(
+pub async fn page_get(
     req: HttpRequest,
-    forwarder: web::Data<Forwarder>,
     client: web::Data<Client>,
-) -> Box<dyn Future<Item = HttpResponse, Error = Error>> {
+) -> HttpResult {
     let host = get_host(&req);
     let uri = req.uri();
     let mut path = uri.path().to_string();
@@ -40,20 +39,18 @@ pub fn page_get(
 
     if is_normal(&path, true) {
         let page_req = PageRequest::parse(host, &path);
-        let future = forwarder.get_page(&*client, &page_req);
-        Box::new(future)
+        // TODO retrieve page from client
+        Ok(HttpResponse::NotImplemented().finish())
     } else {
-        let result = redirect_normal(&mut path, uri.query());
-        Box::new(future::ok(result))
+        Ok(redirect_normal(&mut path, uri.query()))
     }
 }
 
 /// Route for root, which is the same as whatever the `main` page is.
-pub fn page_main(
+pub async fn page_main(
     req: HttpRequest,
-    forwarder: web::Data<Forwarder>,
     client: web::Data<Client>,
-) -> impl Future<Item = HttpResponse, Error = Error> {
+) -> HttpResult {
     let host = get_host(&req);
 
     info!("GET / [{}]", host.unwrap_or("none"));
@@ -65,7 +62,8 @@ pub fn page_main(
         arguments: HashMap::new(),
     };
 
-    forwarder.get_page(&*client, &page_req)
+    // TODO get page request
+    Ok(HttpResponse::NotImplemented().finish())
 }
 
 // Helper functions

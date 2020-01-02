@@ -18,7 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use crate::forwarder::Forwarder;
 use crate::route::*;
 use actix_web::client::Client;
 use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
@@ -36,10 +35,9 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 }
 
 #[cold]
-pub fn run(hostname: String, address: SocketAddr, forwarder: Forwarder) -> io::Result<()> {
+pub fn run(hostname: String, address: SocketAddr) -> io::Result<()> {
     HttpServer::new(move || {
         App::new()
-            .data(forwarder.clone())
             .data(Client::new())
             .hostname(&hostname)
             .wrap(middleware::Logger::default())
@@ -107,9 +105,9 @@ pub fn run(hostname: String, address: SocketAddr, forwarder: Forwarder) -> io::R
             .route("user/{id}", web::post().to(user_set))
             .route("user/avatars/{id}", web::get().to(user_avatar_get))
             // Regular pages
-            .route("{name}", web::get().to_async(page_get))
-            .route("{name}/", web::get().to_async(page_get))
-            .route("{name}/{options:.*}", web::get().to_async(page_get))
+            .route("{name}", web::get().to(page_get))
+            .route("{name}/", web::get().to(page_get))
+            .route("{name}/{options:.*}", web::get().to(page_get))
             // Main page
             .route("/", web::get().to_async(page_main))
             .route("/", web::route().to(HttpResponse::MethodNotAllowed))

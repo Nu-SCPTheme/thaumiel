@@ -44,7 +44,6 @@ extern crate wikidot_path;
 extern crate maplit;
 
 mod config;
-mod forwarder;
 mod request;
 mod route;
 mod server;
@@ -53,7 +52,6 @@ mod server;
 mod test;
 
 use self::config::Config;
-use self::forwarder::Forwarder;
 use std::process;
 
 pub type StdResult<T, E> = std::result::Result<T, E>;
@@ -69,17 +67,12 @@ fn main() {
         page_host,
     } = Config::parse_args();
 
-    let forwarder = Forwarder {
-        file_dir,
-        page_host,
-    };
-
     pretty_env_logger::formatted_builder()
         .filter_level(log_level)
         .init();
 
     info!("HTTP server starting on {}", http_address);
-    if let Err(error) = server::run(hostname, http_address, forwarder) {
+    if let Err(error) = server::run(hostname, http_address) {
         error!("Error running actix web server: {}", error);
         process::exit(1);
     }

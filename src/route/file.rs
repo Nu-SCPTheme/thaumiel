@@ -20,9 +20,10 @@
 
 use super::prelude::*;
 
-pub fn file_get(req: HttpRequest, forwarder: web::Data<Forwarder>) -> impl Responder {
+pub fn file_get(req: HttpRequest) -> HttpResult {
     let path = req.uri().path();
     info!("GET file {}", path);
 
-    forwarder.get_file(path)
+    // TODO get file
+    Ok(HttpResponse::NotImplemented().finish())
 }

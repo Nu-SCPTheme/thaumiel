@@ -20,14 +20,13 @@
 
 use super::prelude::*;
 
-// TODO
+// TODO all methods
 
 pub fn login_get(_: HttpRequest) -> impl Responder {
     "login page"
 }
 
-pub fn login_post(_: HttpRequest, forwarder: web::Data<Forwarder>) -> impl Responder {
-    forwarder.send_login(());
+pub fn login_post(_: HttpRequest) -> impl Responder {
     "login result"
 }
 
@@ -35,7 +34,6 @@ pub fn logout_get(_: HttpRequest) -> impl Responder {
     "logout page"
 }
 
-pub fn logout_del(_: HttpRequest, forwarder: web::Data<Forwarder>) -> impl Responder {
-    forwarder.send_logout(());
+pub fn logout_del(_: HttpRequest) -> impl Responder {
     "logout result"
 }
