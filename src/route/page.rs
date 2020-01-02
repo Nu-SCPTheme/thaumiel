@@ -27,10 +27,7 @@ use wikidot_normalize::{is_normal, normalize_decode as normalize};
 // Public route methods
 
 /// Route handling for pages, with arguments or not.
-pub async fn page_get(
-    req: HttpRequest,
-    client: web::Data<Client>,
-) -> HttpResult {
+pub async fn page_get(req: HttpRequest, client: web::Data<Client>) -> HttpResult {
     let host = get_host(&req);
     let uri = req.uri();
     let mut path = uri.path().to_string();
@@ -47,10 +44,7 @@ pub async fn page_get(
 }
 
 /// Route for root, which is the same as whatever the `main` page is.
-pub async fn page_main(
-    req: HttpRequest,
-    client: web::Data<Client>,
-) -> HttpResult {
+pub async fn page_main(req: HttpRequest, client: web::Data<Client>) -> HttpResult {
     let host = get_host(&req);
 
     info!("GET / [{}]", host.unwrap_or("none"));

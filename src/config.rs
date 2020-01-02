@@ -135,10 +135,7 @@ impl ConfigFile {
 impl Into<Config> for ConfigFile {
     #[cold]
     fn into(self) -> Config {
-        let ConfigFile {
-            app,
-            network,
-        } = self;
+        let ConfigFile { app, network } = self;
 
         let Network {
             hostname,

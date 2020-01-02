@@ -19,9 +19,9 @@
  */
 
 mod prelude {
+    pub use crate::StdResult;
     pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer, Responder};
     pub use futures::{future, Future};
-    pub use crate::StdResult;
 
     pub type HttpResult = StdResult<HttpResponse, Error>;
 }
