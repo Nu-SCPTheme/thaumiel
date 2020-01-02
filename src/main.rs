@@ -63,8 +63,6 @@ fn main() {
         hostname,
         http_address,
         log_level,
-        file_dir,
-        page_host,
     } = Config::parse_args();
 
     pretty_env_logger::formatted_builder()

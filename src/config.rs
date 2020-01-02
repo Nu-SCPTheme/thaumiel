@@ -53,9 +53,6 @@ pub struct Config {
     pub http_address: SocketAddr,
     // Server settings
     pub log_level: LevelFilter,
-    // Forwarder
-    pub file_dir: PathBuf,
-    pub page_host: String,
 }
 
 impl Config {
@@ -87,17 +84,9 @@ struct Network {
 
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
-struct Forwards {
-    file: PathBuf,
-    page: String,
-}
-
-#[serde(rename_all = "kebab-case")]
-#[derive(Deserialize, Debug)]
 struct ConfigFile {
     app: App,
     network: Network,
-    forwards: Forwards,
 }
 
 impl ConfigFile {
@@ -108,6 +97,7 @@ impl ConfigFile {
         let _ = file
             .read_to_string(&mut contents)
             .expect("Unable to read config file");
+
         let obj: Self = toml::from_str(&contents).expect("Unable to parse TOML in config file");
 
         obj
@@ -148,7 +138,6 @@ impl Into<Config> for ConfigFile {
         let ConfigFile {
             app,
             network,
-            forwards,
         } = self;
 
         let Network {
@@ -156,8 +145,6 @@ impl Into<Config> for ConfigFile {
             use_ipv6,
             port,
         } = network;
-
-        let Forwards { file, page } = forwards;
 
         let ip_address = if use_ipv6 {
             IpAddr::V6(Ipv6Addr::UNSPECIFIED)
@@ -172,8 +159,6 @@ impl Into<Config> for ConfigFile {
             hostname,
             http_address,
             log_level: Self::parse_log_level(log_level),
-            file_dir: file,
-            page_host: page,
         }
     }
 }
