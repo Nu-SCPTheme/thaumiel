@@ -20,6 +20,7 @@
 
 #![deny(missing_debug_implementations)]
 
+extern crate actix_files;
 extern crate actix_identity;
 extern crate actix_rt;
 extern crate actix_web;

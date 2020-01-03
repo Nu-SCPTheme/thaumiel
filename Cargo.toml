@@ -13,6 +13,7 @@ authors = ["Ammon Smith <ammon.i.smith@gmail.com>"]
 edition = "2018" # this refers to the Cargo.toml version
 
 [dependencies]
+actix-files = "0.2"
 actix-identity = "0.2"
 actix-rt = "1"
 actix-web = "2"
