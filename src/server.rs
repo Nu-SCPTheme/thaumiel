@@ -37,11 +37,15 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 #[cold]
 pub async fn run(hostname: String, address: SocketAddr, keep_alive: usize) -> io::Result<()> {
     HttpServer::new(move || {
-        App::new().service(
-            web::scope("test")
-                .route("a", web::get().to(temp_a))
-                .route("b", web::get().to(temp_b)),
-        )
+        App::new()
+            .data(Client::default())
+            .wrap(middleware::Compress::default())
+            .wrap(middleware::Logger::default())
+            .service(
+                web::scope("test")
+                    .route("a", web::get().to(temp_a))
+                    .route("b", web::get().to(temp_b)),
+            )
     })
     .server_hostname(&hostname)
     .keep_alive(keep_alive)
