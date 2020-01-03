@@ -1,5 +1,5 @@
 /*
- * route/mod.rs
+ * route/temp.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -18,20 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-mod prelude {
-    pub use crate::StdResult;
-    pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer, Responder};
-    pub use futures::{future, Future};
+use super::prelude::*;
 
-    pub type HttpResult = StdResult<HttpResponse, Error>;
+pub async fn temp_a(req: HttpRequest) -> HttpResponse {
+    HttpResponse::Ok().body("Page A!")
 }
 
-mod file;
-mod forum;
-mod page;
-mod temp;
-
-pub use self::file::*;
-pub use self::forum::*;
-pub use self::page::*;
-pub use self::temp::*;
+pub async fn temp_b(req: HttpRequest) -> HttpResponse {
+    HttpResponse::Ok().body("The second page, B!")
+}

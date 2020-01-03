@@ -35,7 +35,23 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 }
 
 #[cold]
-pub fn run(hostname: String, address: SocketAddr) -> io::Result<()> {
+pub async fn run(hostname: String, address: SocketAddr) -> io::Result<()> {
+    HttpServer::new(move || {
+        App::new().service(
+            web::scope("test")
+                .route("a", web::get().to(temp_a))
+                .route("b", web::get().to(temp_b))
+        )
+    })
+    .bind(address)
+    .expect("Unable to bind to HTTP socket")
+    .run()
+    .await
+
+
+    /*
+        original old httpserver that doesn't compile
+
     HttpServer::new(move || {
         App::new()
             .server_hostname(&hostname)
@@ -112,4 +128,5 @@ pub fn run(hostname: String, address: SocketAddr) -> io::Result<()> {
     .bind(address)
     .expect("Unable to bind to HTTP socket")
     .run()
+    */
 }
