@@ -109,7 +109,7 @@ pub fn run(hostname: String, address: SocketAddr) -> io::Result<()> {
             .route("{name}/", web::get().to(page_get))
             .route("{name}/{options:.*}", web::get().to(page_get))
             // Main page
-            .route("/", web::get().to_async(page_main))
+            .route("/", web::get().to(page_main))
             .route("/", web::route().to(HttpResponse::MethodNotAllowed))
     })
     .bind(address)
