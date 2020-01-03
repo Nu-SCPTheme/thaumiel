@@ -26,12 +26,10 @@ mod prelude {
     pub type HttpResult = StdResult<HttpResponse, Error>;
 }
 
-mod file;
 mod forum;
 mod page;
 mod temp;
 
-pub use self::file::*;
 pub use self::forum::*;
 pub use self::page::*;
 pub use self::temp::*;

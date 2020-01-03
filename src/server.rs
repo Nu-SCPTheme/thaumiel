@@ -21,7 +21,7 @@
 use crate::route::*;
 use actix_files::Files;
 use actix_web::client::Client;
-use actix_web::{http, guard, middleware, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
 use std::io;
 use std::net::SocketAddr;
 
@@ -43,6 +43,7 @@ pub async fn run(hostname: String, address: SocketAddr, keep_alive: usize) -> io
             .wrap(middleware::Compress::default())
             .wrap(middleware::Logger::default())
             .service(
+                // Figure out actix-files or use alternative
                 web::service("{filename}.{ext}")
                     .finish(Files::new("/static", "."))
             )
