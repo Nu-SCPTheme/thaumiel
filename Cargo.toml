@@ -14,6 +14,7 @@ edition = "2018" # this refers to the Cargo.toml version
 
 [dependencies]
 actix-identity = "0.2"
+actix-rt = "1"
 actix-web = "2"
 color-backtrace = "0.3"
 futures = "*"

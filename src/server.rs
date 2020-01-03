@@ -40,14 +40,13 @@ pub async fn run(hostname: String, address: SocketAddr) -> io::Result<()> {
         App::new().service(
             web::scope("test")
                 .route("a", web::get().to(temp_a))
-                .route("b", web::get().to(temp_b))
+                .route("b", web::get().to(temp_b)),
         )
     })
     .bind(address)
     .expect("Unable to bind to HTTP socket")
     .run()
     .await
-
 
     /*
         original old httpserver that doesn't compile

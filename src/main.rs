@@ -21,6 +21,7 @@
 #![deny(missing_debug_implementations)]
 
 extern crate actix_identity;
+extern crate actix_rt;
 extern crate actix_web;
 extern crate color_backtrace;
 extern crate futures;
@@ -57,7 +58,8 @@ use std::process;
 
 pub type StdResult<T, E> = std::result::Result<T, E>;
 
-fn main() {
+#[actix_rt::main]
+async fn main() {
     color_backtrace::install();
 
     let Config {
@@ -71,7 +73,9 @@ fn main() {
         .init();
 
     info!("HTTP server starting on {}", http_address);
-    if let Err(error) = server::run(hostname, http_address) {
+    let server_result = server::run(hostname, http_address).await;
+
+    if let Err(error) = server_result {
         error!("Error running actix web server: {}", error);
         process::exit(1);
     }
