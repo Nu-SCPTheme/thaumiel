@@ -13,7 +13,8 @@ authors = ["Ammon Smith <ammon.i.smith@gmail.com>"]
 edition = "2018" # this refers to the Cargo.toml version
 
 [dependencies]
-actix-web = "1"
+actix-identity = "0.2"
+actix-web = "2"
 color-backtrace = "0.3"
 futures = "*"
 log = "0.4"

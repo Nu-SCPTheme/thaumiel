@@ -38,8 +38,10 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 pub fn run(hostname: String, address: SocketAddr) -> io::Result<()> {
     HttpServer::new(move || {
         App::new()
+            .server_hostname(&hostname)
+            .keep_alive(60)
             .data(Client::new())
-            .hostname(&hostname)
+            .wrap(middleware::Compress::default())
             .wrap(middleware::Logger::default())
             // Miscellaneous
             .route("favicon.ico", web::get().to(file_get))
@@ -72,45 +74,40 @@ pub fn run(hostname: String, address: SocketAddr) -> io::Result<()> {
                 web::get().to(|| redirect("/forum/recent-threads")),
             )
             // Forum links
-            .route("forum", web::get().to(forum_main))
-            .route("forum/c-{category}", web::get().to(forum_category))
-            .route(
-                "forum/c-{category}/{name:.*}",
-                web::get().to(forum_category_name),
+            .service(
+                web::scope("forum")
+                    .route("/", web::get().to(forum_main))
+                    .route("c-{category}", web::get().to(forum_category))
+                    .route(
+                        "c-{category}/{name:.*}",
+                        web::get().to(forum_category_name),
+                    )
+                    .route("t-{thread}", web::get().to(forum_thread))
+                    .route(
+                        "t-{thread}/{name:.*}",
+                        web::get().to(forum_thread_name),
+                    )
+                    .route(
+                        "new-thread/{category}",
+                        web::get().to(forum_new_thread),
+                    )
+                    .route(
+                        "new-thread/{category}/",
+                        web::get().to(forum_new_thread),
+                    )
+                    .route("recent-posts", web::get().to(forum_recent_posts))
+                    .route("recent-posts/", web::get().to(forum_recent_posts))
+                    .route("recent-threads", web::get().to(forum_recent_threads))
+                    .route("recent-threads/", web::get().to(forum_recent_threads))
             )
-            .route("forum/t-{thread}", web::get().to(forum_thread))
-            .route(
-                "forum/t-{thread}/{name:.*}",
-                web::get().to(forum_thread_name),
+            .service(
+                web::scope("/")
+                    .route("{name}", web::get().to(page_get))
+                    .route("{name}/", web::get().to(page_get))
+                    .route("{name}/{options:.*}", web::get().to(page_get))
+                    .route("/", web::get().to(page_main))
+                    .route("/", web::route().to(HttpResponse::MethodNotAllowed))
             )
-            .route(
-                "forum/new-thread/{category}",
-                web::get().to(forum_new_thread),
-            )
-            .route(
-                "forum/new-thread/{category}/",
-                web::get().to(forum_new_thread),
-            )
-            .route("forum/recent-posts", web::get().to(forum_recent_posts))
-            .route("forum/recent-posts/", web::get().to(forum_recent_posts))
-            .route("forum/recent-threads", web::get().to(forum_recent_threads))
-            .route("forum/recent-threads/", web::get().to(forum_recent_threads))
-            // Session management
-            .route("login", web::get().to(login_get))
-            .route("login", web::post().to(login_post))
-            .route("logout", web::get().to(logout_get))
-            .route("logout", web::delete().to(logout_del))
-            // User
-            .route("user/{id}", web::get().to(user_get))
-            .route("user/{id}", web::post().to(user_set))
-            .route("user/avatars/{id}", web::get().to(user_avatar_get))
-            // Regular pages
-            .route("{name}", web::get().to(page_get))
-            .route("{name}/", web::get().to(page_get))
-            .route("{name}/{options:.*}", web::get().to(page_get))
-            // Main page
-            .route("/", web::get().to(page_main))
-            .route("/", web::route().to(HttpResponse::MethodNotAllowed))
     })
     .bind(address)
     .expect("Unable to bind to HTTP socket")
