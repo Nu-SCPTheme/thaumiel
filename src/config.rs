@@ -25,6 +25,7 @@ use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr};
 use std::path::{Path, PathBuf};
 use structopt::StructOpt;
 
+const DEFAULT_KEEP_ALIVE: usize = 20;
 const DEFAULT_LOG_LEVEL: LevelFilter = LevelFilter::Info;
 
 // Structopt argument parsing
@@ -51,6 +52,7 @@ pub struct Config {
     // Network
     pub hostname: String,
     pub http_address: SocketAddr,
+    pub keep_alive: usize,
     // Server settings
     pub log_level: LevelFilter,
 }
@@ -80,6 +82,7 @@ struct Network {
     hostname: String,
     use_ipv6: bool,
     port: Option<u16>,
+    keep_alive: Option<usize>,
 }
 
 #[serde(rename_all = "kebab-case")]
@@ -141,6 +144,7 @@ impl Into<Config> for ConfigFile {
             hostname,
             use_ipv6,
             port,
+            keep_alive,
         } = network;
 
         let ip_address = if use_ipv6 {
@@ -150,11 +154,13 @@ impl Into<Config> for ConfigFile {
         };
 
         let http_address = SocketAddr::new(ip_address, port.unwrap_or(80));
+        let keep_alive = keep_alive.unwrap_or(DEFAULT_KEEP_ALIVE);
         let log_level = app.log_level.as_ref().map(|s| s.as_ref());
 
         Config {
             hostname,
             http_address,
+            keep_alive,
             log_level: Self::parse_log_level(log_level),
         }
     }

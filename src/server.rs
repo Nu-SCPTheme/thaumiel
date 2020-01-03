@@ -35,7 +35,7 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 }
 
 #[cold]
-pub async fn run(hostname: String, address: SocketAddr) -> io::Result<()> {
+pub async fn run(hostname: String, address: SocketAddr, keep_alive: usize) -> io::Result<()> {
     HttpServer::new(move || {
         App::new().service(
             web::scope("test")
@@ -43,6 +43,8 @@ pub async fn run(hostname: String, address: SocketAddr) -> io::Result<()> {
                 .route("b", web::get().to(temp_b)),
         )
     })
+    .server_hostname(&hostname)
+    .keep_alive(keep_alive)
     .bind(address)
     .expect("Unable to bind to HTTP socket")
     .run()

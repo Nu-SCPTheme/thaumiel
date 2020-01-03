@@ -65,6 +65,7 @@ async fn main() {
     let Config {
         hostname,
         http_address,
+        keep_alive,
         log_level,
     } = Config::parse_args();
 
@@ -73,7 +74,7 @@ async fn main() {
         .init();
 
     info!("HTTP server starting on {}", http_address);
-    let server_result = server::run(hostname, http_address).await;
+    let server_result = server::run(hostname, http_address, keep_alive).await;
 
     if let Err(error) = server_result {
         error!("Error running actix web server: {}", error);

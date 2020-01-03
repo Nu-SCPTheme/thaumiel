@@ -15,3 +15,6 @@ use-ipv6 = true
 
 # What port to serve on.
 port = 8000
+
+# The keep-alive duration in seconds. Use 0 to disable.
+keep-alive = 65
