@@ -42,8 +42,6 @@ pub async fn run(
     keep_alive: usize,
     settings: RuntimeSettings,
 ) -> io::Result<()> {
-    let settings = web::Data::new(settings);
-
     HttpServer::new(move || {
         App::new()
             .data(Client::default())

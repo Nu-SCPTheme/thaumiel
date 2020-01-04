@@ -19,13 +19,14 @@
  */
 
 use super::prelude::*;
+use crate::config::RuntimeSettings;
 use actix_files::NamedFile;
 use std::path::PathBuf;
 
-pub async fn static_file(req: HttpRequest) -> HttpResult {
+pub async fn static_file(req: HttpRequest, settings: web::Data<RuntimeSettings>) -> HttpResult {
     let info = req.match_info();
 
-    let mut path = PathBuf::new();
+    let mut path = settings.static_dir.clone();
     path.push(info.query("filename"));
     path.set_extension(info.query("ext"));
 
