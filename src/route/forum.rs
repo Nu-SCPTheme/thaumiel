@@ -22,72 +22,87 @@ use super::prelude::*;
 
 // TODO
 
-fn get_thread(thread: String) -> impl Responder {
-    info!("GET forum thread {}", thread);
-
-    // TODO
-    format!("forum:thread={}", thread)
+pub async fn forum_page(req: HttpRequest) -> HttpResult {
+    Ok(HttpResponse::NotImplemented().body(format!("forum page:\n{:#?}", req)))
 }
 
-#[inline]
-pub fn forum_thread(thread: web::Path<String>) -> impl Responder {
-    get_thread(thread.into_inner())
+pub async fn forum_category(req: HttpRequest, category: web::Path<String>) -> HttpResult {
+    Ok(HttpResponse::NotImplemented().body(format!("forum category: {}", &category)))
 }
 
-#[inline]
-pub fn forum_thread_name(thread: web::Path<(String, String)>) -> impl Responder {
-    get_thread(thread.into_inner().0)
-}
+// old handlers, here for future reference
+#[allow(dead_code)]
+mod old {
+    use super::super::prelude::*;
+    use actix_web::Responder;
 
-fn get_category(category: String) -> impl Responder {
-    info!("GET forum category {}", category);
+    fn get_thread(thread: String) -> impl Responder {
+        info!("GET forum thread {}", thread);
 
-    // TODO
-    format!("forum:category={}", category)
-}
+        // TODO
+        format!("forum:thread={}", thread)
+    }
 
-#[inline]
-pub fn forum_category(category: web::Path<String>) -> impl Responder {
-    get_category(category.into_inner())
-}
+    #[inline]
+    pub fn forum_thread(thread: web::Path<String>) -> impl Responder {
+        get_thread(thread.into_inner())
+    }
 
-#[inline]
-pub fn forum_category_name(category: web::Path<(String, String)>) -> impl Responder {
-    get_category(category.into_inner().0)
-}
+    #[inline]
+    pub fn forum_thread_name(thread: web::Path<(String, String)>) -> impl Responder {
+        get_thread(thread.into_inner().0)
+    }
 
-pub fn forum_redirect_new_thread(category: web::Path<String>) -> impl Responder {
-    info!("REDIRECT new-thread {}", category);
-    let url = format!("/forum/new-thread/{}", category);
+    fn get_category(category: String) -> impl Responder {
+        info!("GET forum category {}", category);
 
-    HttpResponse::Found()
-        .header(http::header::LOCATION, url)
-        .finish()
-}
+        // TODO
+        format!("forum:category={}", category)
+    }
 
-pub fn forum_new_thread(category: web::Path<String>) -> impl Responder {
-    info!("GET new-thread {}", category);
+    #[inline]
+    pub fn forum_category(category: web::Path<String>) -> impl Responder {
+        get_category(category.into_inner())
+    }
 
-    // TODO
-    format!("forum:new-thread:{}", category)
-}
+    #[inline]
+    pub fn forum_category_name(category: web::Path<(String, String)>) -> impl Responder {
+        get_category(category.into_inner().0)
+    }
 
-pub fn forum_recent_posts() -> impl Responder {
-    info!("GET recent-posts");
+    pub fn forum_redirect_new_thread(category: web::Path<String>) -> impl Responder {
+        info!("REDIRECT new-thread {}", category);
+        let url = format!("/forum/new-thread/{}", category);
 
-    // TODO
-    "forum:recent-posts"
-}
+        HttpResponse::Found()
+            .header(http::header::LOCATION, url)
+            .finish()
+    }
 
-pub fn forum_recent_threads() -> impl Responder {
-    info!("GET recent-threads");
+    pub fn forum_new_thread(category: web::Path<String>) -> impl Responder {
+        info!("GET new-thread {}", category);
 
-    // TODO
-    "forum:recent-threads"
-}
+        // TODO
+        format!("forum:new-thread:{}", category)
+    }
 
-pub fn forum_main() -> impl Responder {
-    info!("GET forum main");
+    pub fn forum_recent_posts() -> impl Responder {
+        info!("GET recent-posts");
 
-    "forum"
+        // TODO
+        "forum:recent-posts"
+    }
+
+    pub fn forum_recent_threads() -> impl Responder {
+        info!("GET recent-threads");
+
+        // TODO
+        "forum:recent-threads"
+    }
+
+    pub fn forum_main() -> impl Responder {
+        info!("GET forum main");
+
+        "forum"
+    }
 }

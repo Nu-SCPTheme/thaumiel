@@ -1,5 +1,5 @@
 /*
- * route/temp.rs
+ * route/files.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -18,16 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use actix_files::NamedFile;
+use std::path::PathBuf;
 use super::prelude::*;
 
-pub async fn temp_a(req: HttpRequest) -> HttpResponse {
-    HttpResponse::Ok().body("Page A!")
-}
+pub async fn static_file(req: HttpRequest) -> HttpResult {
+    let info = req.match_info();
 
-pub async fn temp_b(req: HttpRequest) -> HttpResponse {
-    HttpResponse::Ok().body("The second page, B!")
-}
+    let mut path = PathBuf::new();
+    path.push(info.query("filename"));
+    path.set_extension(info.query("ext"));
 
-pub async fn temp_debug(req: HttpRequest) -> HttpResponse {
-    HttpResponse::Ok().body(format!("{:#?}", &req))
+    let file = NamedFile::open(&path)?;
+    let resp = file.into_response(&req)?;
+    Ok(resp)
 }

@@ -20,16 +20,18 @@
 
 mod prelude {
     pub use crate::StdResult;
-    pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer, Responder};
+    pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer};
     pub use futures::{future, Future};
 
     pub type HttpResult = StdResult<HttpResponse, Error>;
 }
 
+mod files;
 mod forum;
 mod page;
 mod temp;
 
+pub use self::files::*;
 pub use self::forum::*;
 pub use self::page::*;
 pub use self::temp::*;

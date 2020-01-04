@@ -19,7 +19,6 @@
  */
 
 use crate::route::*;
-use actix_files::Files;
 use actix_web::client::Client;
 use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
 use std::io;
@@ -44,13 +43,22 @@ pub async fn run(hostname: String, address: SocketAddr, keep_alive: usize) -> io
             .wrap(middleware::Logger::default())
             .service(
                 // Figure out actix-files or use alternative
-                web::service("{filename}.{ext}")
-                    .finish(Files::new("/static", "."))
+                web::resource("{filename}.{ext}")
+                    .to(static_file)
+            )
+            .service(
+                // TODO
+                web::scope("forum:{page}")
+                    .route("/", web::get().to(forum_page))
+                    .route("/c/{category}", web::get().to(forum_category))
             )
             .service(
                 web::scope("test")
                     .route("a", web::get().to(temp_a))
                     .route("b", web::get().to(temp_b)),
+            )
+            .service(
+                web::resource("/{page:.*}").to(temp_debug)
             )
     })
     .server_hostname(&hostname)
