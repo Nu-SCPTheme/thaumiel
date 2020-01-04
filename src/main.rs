@@ -68,6 +68,7 @@ async fn main() {
         http_address,
         keep_alive,
         log_level,
+        runtime,
     } = Config::parse_args();
 
     pretty_env_logger::formatted_builder()
@@ -75,7 +76,7 @@ async fn main() {
         .init();
 
     info!("HTTP server starting on {}", http_address);
-    let server_result = server::run(hostname, http_address, keep_alive).await;
+    let server_result = server::run(hostname, http_address, keep_alive, runtime).await;
 
     if let Err(error) = server_result {
         error!("Error running actix web server: {}", error);

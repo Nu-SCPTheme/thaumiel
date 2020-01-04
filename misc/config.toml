@@ -18,3 +18,8 @@ port = 8000
 
 # The keep-alive duration in seconds. Use 0 to disable.
 keep-alive = 65
+
+[files]
+
+# What directory to fetch static files from
+static-dir = "/var/www/static"

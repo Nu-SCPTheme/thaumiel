@@ -18,9 +18,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use super::prelude::*;
 use actix_files::NamedFile;
 use std::path::PathBuf;
-use super::prelude::*;
 
 pub async fn static_file(req: HttpRequest) -> HttpResult {
     let info = req.match_info();

@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crate::config::RuntimeSettings;
 use crate::route::*;
 use actix_web::client::Client;
 use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
@@ -35,31 +36,33 @@ fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
 }
 
 #[cold]
-pub async fn run(hostname: String, address: SocketAddr, keep_alive: usize) -> io::Result<()> {
+pub async fn run(
+    hostname: String,
+    address: SocketAddr,
+    keep_alive: usize,
+    settings: RuntimeSettings,
+) -> io::Result<()> {
+    let settings = web::Data::new(settings);
+
     HttpServer::new(move || {
         App::new()
             .data(Client::default())
+            .data(settings.clone())
             .wrap(middleware::Compress::default())
             .wrap(middleware::Logger::default())
-            .service(
-                // Figure out actix-files or use alternative
-                web::resource("{filename}.{ext}")
-                    .to(static_file)
-            )
+            .service(web::resource("{filename}.{ext}").to(static_file))
             .service(
                 // TODO
                 web::scope("forum:{page}")
                     .route("/", web::get().to(forum_page))
-                    .route("/c/{category}", web::get().to(forum_category))
+                    .route("/c/{category}", web::get().to(forum_category)),
             )
             .service(
                 web::scope("test")
                     .route("a", web::get().to(temp_a))
                     .route("b", web::get().to(temp_b)),
             )
-            .service(
-                web::resource("/{page:.*}").to(temp_debug)
-            )
+            .service(web::resource("/{page:.*}").to(temp_debug))
     })
     .server_hostname(&hostname)
     .keep_alive(keep_alive)

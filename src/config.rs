@@ -55,6 +55,8 @@ pub struct Config {
     pub keep_alive: usize,
     // Server settings
     pub log_level: LevelFilter,
+    // Runtime settings
+    pub runtime: RuntimeSettings,
 }
 
 impl Config {
@@ -68,6 +70,11 @@ impl Config {
 
         config
     }
+}
+
+#[derive(Debug, Clone)]
+pub struct RuntimeSettings {
+    pub static_dir: PathBuf,
 }
 
 #[serde(rename_all = "kebab-case")]
@@ -87,9 +94,16 @@ struct Network {
 
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
+struct Files {
+    static_dir: PathBuf,
+}
+
+#[serde(rename_all = "kebab-case")]
+#[derive(Deserialize, Debug)]
 struct ConfigFile {
     app: App,
     network: Network,
+    files: Files,
 }
 
 impl ConfigFile {
@@ -138,7 +152,11 @@ impl ConfigFile {
 impl Into<Config> for ConfigFile {
     #[cold]
     fn into(self) -> Config {
-        let ConfigFile { app, network } = self;
+        let ConfigFile {
+            app,
+            network,
+            files,
+        } = self;
 
         let Network {
             hostname,
@@ -146,6 +164,9 @@ impl Into<Config> for ConfigFile {
             port,
             keep_alive,
         } = network;
+
+        let App { log_level } = app;
+        let Files { static_dir } = files;
 
         let ip_address = if use_ipv6 {
             IpAddr::V6(Ipv6Addr::UNSPECIFIED)
@@ -155,13 +176,16 @@ impl Into<Config> for ConfigFile {
 
         let http_address = SocketAddr::new(ip_address, port.unwrap_or(80));
         let keep_alive = keep_alive.unwrap_or(DEFAULT_KEEP_ALIVE);
-        let log_level = app.log_level.as_ref().map(|s| s.as_ref());
+        let log_level = log_level.as_ref().map(|s| s.as_ref());
+
+        let runtime = RuntimeSettings { static_dir };
 
         Config {
             hostname,
             http_address,
             keep_alive,
             log_level: Self::parse_log_level(log_level),
+            runtime,
         }
     }
 }
