@@ -1,5 +1,5 @@
 /*
- * route/mod.rs
+ * route/utils.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -18,22 +18,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-mod prelude {
-    pub use super::utils::*;
-    pub use crate::StdResult;
-    pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer};
-    pub use futures::{future, Future};
+use actix_web::{http, HttpRequest};
 
-    pub type HttpResult = StdResult<HttpResponse, Error>;
+/// Gets the client hostname, from URI, then headers if present.
+pub fn get_host(req: &HttpRequest) -> Option<&str> {
+    if let Some(host) = req.uri().host() {
+        return Some(host);
+    }
+
+    match req.headers().get(http::header::HOST) {
+        Some(value) => value.to_str().ok(),
+        None => None,
+    }
 }
-
-mod files;
-mod forum;
-mod page;
-mod temp;
-mod utils;
-
-pub use self::files::*;
-pub use self::forum::*;
-pub use self::page::*;
-pub use self::temp::*;

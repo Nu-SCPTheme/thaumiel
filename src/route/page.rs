@@ -28,8 +28,7 @@ use std::collections::HashMap;
 /// Route handling for pages, with arguments or not.
 pub async fn page_get(req: HttpRequest, client: web::Data<Client>) -> HttpResult {
     let host = get_host(&req);
-    let uri = req.uri();
-    let path = uri.path();
+    let path = req.uri().path();
 
     info!("GET page {} [{}]", path, host.unwrap_or("none"));
 
@@ -54,18 +53,4 @@ pub async fn page_main(req: HttpRequest, client: web::Data<Client>) -> HttpResul
 
     // TODO get page request
     Ok(HttpResponse::NotImplemented().finish())
-}
-
-// Helper functions
-
-/// Gets the client hostname, from URI, then headers if present.
-fn get_host(req: &HttpRequest) -> Option<&str> {
-    if let Some(host) = req.uri().host() {
-        return Some(host);
-    }
-
-    match req.headers().get(http::header::HOST) {
-        Some(value) => value.to_str().ok(),
-        None => None,
-    }
 }

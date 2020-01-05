@@ -60,29 +60,24 @@ impl Server {
                     web::resource("forum:recent-threads/").to(|| redirect("/forum/recent-threads")),
                 )
                 .service(
-                    web::resource("forum:new-thread/c/{category}")
-                        .to(forum_redirect_new_thread),
+                    web::resource("forum:new-thread/c/{category}").to(forum_redirect_new_thread),
                 )
                 .service(
-                    web::resource("forum:new-thread/c/{category}/")
-                        .to(forum_redirect_new_thread),
+                    web::resource("forum:new-thread/c/{category}/").to(forum_redirect_new_thread),
                 )
                 // Forum links
                 .service(web::resource("forum").to(forum_main))
                 .service(web::resource("forum/c-{category}").to(forum_category))
+                .service(web::resource("forum/c-{category}/{name:.*}").to(forum_category))
+                .service(web::resource("forum/t-{thread}").to(forum_thread))
+                .service(web::resource("forum/t-{thread}/{name:.*}").to(forum_thread))
+                .service(web::resource("forum/new-thread/{category}").to(forum_new_thread))
+                .service(web::resource("forum/recent-posts").to(forum_recent_posts))
+                .service(web::resource("forum/recent-threads").to(forum_recent_threads))
                 // Pages
-                .service(
-                    web::resource("{name}")
-                        .to(temp_debug),
-                )
-                .service(
-                    web::resource("{name}/")
-                        .to(temp_debug),
-                )
-                .service(
-                    web::resource("/{name}/{options:.*}")
-                        .to(temp_debug),
-                )
+                .service(web::resource("{name}").to(temp_debug))
+                .service(web::resource("{name}/").to(temp_debug))
+                .service(web::resource("/{name}/{options:.*}").to(temp_debug))
                 .service(web::resource("/").to(temp_debug))
         })
         .server_hostname(&self.hostname)

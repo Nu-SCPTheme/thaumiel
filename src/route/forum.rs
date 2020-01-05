@@ -23,18 +23,68 @@ use super::prelude::*;
 // TODO
 
 pub async fn forum_main(req: HttpRequest) -> HttpResult {
+    let host = get_host(&req);
+
+    info!("GET forum main [{}]", host.unwrap_or("none"));
+
     Ok(HttpResponse::NotImplemented().body("forum main page"))
 }
 
 pub async fn forum_page(req: HttpRequest) -> HttpResult {
+    let host = get_host(&req);
+    let path = req.uri().path();
+
+    info!("GET forum {} [{}]", path, host.unwrap_or("none"));
+
     Ok(HttpResponse::NotImplemented().body(format!("forum page:\n{:#?}", req)))
 }
 
-pub async fn forum_category(req: HttpRequest, category: web::Path<String>) -> HttpResult {
-    Ok(HttpResponse::NotImplemented().body(format!("forum category: {}", &category)))
+pub async fn forum_recent_posts(req: HttpRequest) -> HttpResult {
+    let host = get_host(&req);
+
+    info!("GET forum recent-posts [{}]", host.unwrap_or("none"));
+
+    Ok(HttpResponse::NotImplemented().body("forum recent-posts"))
 }
 
-pub async fn forum_redirect_new_thread(category: web::Path<String>) -> HttpResult {
+pub async fn forum_recent_threads(req: HttpRequest) -> HttpResult {
+    let host = get_host(&req);
+
+    info!("GET forum recent-threads [{}]", host.unwrap_or("none"));
+
+    Ok(HttpResponse::NotImplemented().body("forum recent-threads"))
+}
+
+pub async fn forum_category(req: HttpRequest, category: web::Path<String>) -> HttpResult {
+    let host = get_host(&req);
+
+    info!(
+        "GET forum category {} [{}]",
+        category,
+        host.unwrap_or("none"),
+    );
+
+    Ok(HttpResponse::NotImplemented().body(format!("forum category: {}", category)))
+}
+
+pub async fn forum_new_thread(req: HttpRequest, category: web::Path<String>) -> HttpResult {
+    let host = get_host(&req);
+
+    info!(
+        "GET forum new-thread {} [{}]",
+        category,
+        host.unwrap_or("none"),
+    );
+
+    Ok(HttpResponse::NotImplemented().body(format!("forum new thread in category: {}", category)))
+}
+
+pub async fn forum_redirect_new_thread(
+    req: HttpRequest,
+    category: web::Path<String>,
+) -> HttpResult {
+    let host = get_host(&req);
+
     info!("REDIRECT new-thread {}", category);
 
     let url = format!("/forum/new-thread/{}", category);
@@ -43,6 +93,14 @@ pub async fn forum_redirect_new_thread(category: web::Path<String>) -> HttpResul
         .finish();
 
     Ok(resp)
+}
+
+pub async fn forum_thread(req: HttpRequest, thread: web::Path<String>) -> HttpResult {
+    let host = get_host(&req);
+
+    info!("GET forum thread {} [{}]", thread, host.unwrap_or("none"));
+
+    Ok(HttpResponse::NotImplemented().body(format!("forum thread: {}", thread)))
 }
 
 // old handlers, here for future reference
