@@ -48,22 +48,12 @@ impl Server {
                 .service(web::resource("{filename}.{ext}").to(static_file))
                 // Forum redirects
                 .service(web::resource("forum:start").to(|| redirect("/forum")))
-                .service(web::resource("forum:start/").to(|| redirect("/forum")))
                 .service(web::resource("forum:recent-posts").to(|| redirect("/forum/recent-posts")))
-                .service(
-                    web::resource("forum:recent-posts/").to(|| redirect("/forum/recent-posts")),
-                )
                 .service(
                     web::resource("forum:recent-threads").to(|| redirect("/forum/recent-threads")),
                 )
                 .service(
-                    web::resource("forum:recent-threads/").to(|| redirect("/forum/recent-threads")),
-                )
-                .service(
                     web::resource("forum:new-thread/c/{category}").to(forum_redirect_new_thread),
-                )
-                .service(
-                    web::resource("forum:new-thread/c/{category}/").to(forum_redirect_new_thread),
                 )
                 // Forum links
                 .service(web::resource("forum").to(forum_main))
