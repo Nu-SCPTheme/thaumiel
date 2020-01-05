@@ -20,14 +20,6 @@
 
 use super::prelude::*;
 
-pub async fn temp_a(req: HttpRequest) -> HttpResponse {
-    HttpResponse::Ok().body("Page A!")
-}
-
-pub async fn temp_b(req: HttpRequest) -> HttpResponse {
-    HttpResponse::Ok().body("The second page, B!")
-}
-
 pub async fn temp_debug(req: HttpRequest) -> HttpResponse {
     HttpResponse::Ok().body(format!("{:#?}", &req))
 }

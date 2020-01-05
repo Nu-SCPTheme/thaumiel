@@ -58,11 +58,6 @@ pub async fn run(
                     .route("/", web::get().to(forum_page))
                     .route("/c/{category}", web::get().to(forum_category)),
             )
-            .service(
-                web::scope("test")
-                    .route("a", web::get().to(temp_a))
-                    .route("b", web::get().to(temp_b)),
-            )
             .service(web::resource("/{page:.*}").to(temp_debug))
     })
     .server_hostname(&hostname)
