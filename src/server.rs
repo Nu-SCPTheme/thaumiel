@@ -42,6 +42,7 @@ impl Server {
                 .data(Client::default())
                 .data(settings.clone())
                 .wrap(actix_middleware::Compress::default())
+                .wrap(crate_middleware::WikidotNormalizePath::default())
                 .wrap(actix_middleware::Logger::default())
                 // Static files (e.g. favicon, robots.txt)
                 .service(web::resource("{filename}.{ext}").to(static_file))
@@ -60,12 +61,10 @@ impl Server {
                 )
                 .service(
                     web::resource("forum:new-thread/c/{category}")
-                        .wrap(crate_middleware::WikidotNormalizePath::default())
                         .to(forum_redirect_new_thread),
                 )
                 .service(
                     web::resource("forum:new-thread/c/{category}/")
-                        .wrap(crate_middleware::WikidotNormalizePath::default())
                         .to(forum_redirect_new_thread),
                 )
                 // Forum links
@@ -74,17 +73,14 @@ impl Server {
                 // Pages
                 .service(
                     web::resource("{name}")
-                        .wrap(crate_middleware::WikidotNormalizePath::default())
                         .to(temp_debug),
                 )
                 .service(
                     web::resource("{name}/")
-                        .wrap(crate_middleware::WikidotNormalizePath::default())
                         .to(temp_debug),
                 )
                 .service(
                     web::resource("/{name}/{options:.*}")
-                        .wrap(crate_middleware::WikidotNormalizePath::default())
                         .to(temp_debug),
                 )
                 .service(web::resource("/").to(temp_debug))

@@ -26,8 +26,13 @@ use crate::StdResult;
 use actix_web::dev::{Service, ServiceRequest, ServiceResponse, Transform};
 use actix_web::{http, Error, HttpResponse};
 use futures::future::{ok, Either, Ready};
+use regex::Regex;
 use std::task::{Context, Poll};
 use wikidot_path::redirect;
+
+lazy_static! {
+    static ref STATIC_FILE_PATH: Regex = Regex::new(r"\w+\.\w+").unwrap();
+}
 
 /// Middleware to normalize and redirect paths to Wikidot normal form.
 /// See the `wikidot-path` and `wikidot-normal` crates for more information.
@@ -72,6 +77,13 @@ where
     fn call(&mut self, req: ServiceRequest) -> Self::Future {
         let path = req.head().uri.path();
 
+        // Don't apply to static files
+        if STATIC_FILE_PATH.is_match(path) {
+            trace!("Not normalizing static path");
+            return Either::Left(self.service.call(req));
+        }
+
+        // See if the URL needs normalization
         match redirect(path) {
             None => Either::Left(self.service.call(req)),
             Some(new_path) => {

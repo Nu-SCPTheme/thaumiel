@@ -29,8 +29,12 @@ extern crate color_backtrace;
 extern crate futures;
 
 #[macro_use]
+extern crate lazy_static;
+
+#[macro_use]
 extern crate log;
 extern crate pretty_env_logger;
+extern crate regex;
 
 #[macro_use]
 extern crate serde;
