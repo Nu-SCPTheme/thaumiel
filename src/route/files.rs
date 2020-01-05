@@ -21,7 +21,6 @@
 use super::prelude::*;
 use crate::config::RuntimeSettings;
 use actix_files::NamedFile;
-use std::path::PathBuf;
 
 pub async fn static_file(req: HttpRequest, settings: web::Data<RuntimeSettings>) -> HttpResult {
     let info = req.match_info();

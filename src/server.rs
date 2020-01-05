@@ -23,7 +23,7 @@ use crate::middleware as crate_middleware;
 use crate::route::*;
 use actix_web::client::Client;
 use actix_web::middleware as actix_middleware;
-use actix_web::{http, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{web, App, HttpServer};
 use std::io;
 use std::net::SocketAddr;
 

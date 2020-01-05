@@ -25,7 +25,6 @@
 use crate::StdResult;
 use actix_web::dev::{Service, ServiceRequest, ServiceResponse, Transform};
 use actix_web::{http, Error, HttpResponse};
-use bytes::Bytes;
 use futures::future::{ok, Either, Ready};
 use std::task::{Context, Poll};
 use wikidot_normalize::normalize_decode;
@@ -76,7 +75,7 @@ where
         let mut path = orig_path.into();
         normalize_decode(&mut path);
 
-        if (orig_path == path) {
+        if orig_path == path {
             debug!("Path already normalized: {:?}", path);
 
             Either::Left(self.service.call(req))
