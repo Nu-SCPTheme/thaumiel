@@ -37,7 +37,6 @@ extern crate serde;
 extern crate serde_json;
 extern crate structopt;
 extern crate toml;
-extern crate wikidot_normalize;
 extern crate wikidot_path;
 
 #[cfg(test)]

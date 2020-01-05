@@ -20,17 +20,17 @@
 
 //! Middleware to normalize URLs in accordance to Wikidot's redirection rules.
 //!
-//! Uses the `wikidot_normalize` crate.
+//! Uses the `wikidot-path` crate (which in turn uses `wikidot-normalize`) to achieve this.
 
 use crate::StdResult;
 use actix_web::dev::{Service, ServiceRequest, ServiceResponse, Transform};
 use actix_web::{http, Error, HttpResponse};
 use futures::future::{ok, Either, Ready};
 use std::task::{Context, Poll};
-use wikidot_normalize::normalize_decode;
+use wikidot_path::redirect;
 
 /// Middleware to normalize and redirect paths to Wikidot normal form.
-/// See the `wikidot-normalize` crate for more information.
+/// See the `wikidot-path` and `wikidot-normal` crates for more information.
 #[derive(Debug, Copy, Clone, Default)]
 pub struct WikidotNormalizePath;
 
@@ -70,24 +70,21 @@ where
     }
 
     fn call(&mut self, req: ServiceRequest) -> Self::Future {
-        let orig_path = req.head().uri.path();
-        let mut path = orig_path.into();
-        normalize_decode(&mut path);
+        let path = req.head().uri.path();
 
-        if orig_path == path {
-            debug!("Path already normalized");
+        match redirect(path) {
+            None => Either::Left(self.service.call(req)),
+            Some(new_path) => {
+                info!("REDIRECT {}", path);
 
-            Either::Left(self.service.call(req))
-        } else {
-            info!("REDIRECT {}", path);
-
-            // Redirect to normal path, remove query
-            Either::Right(ok(req.into_response(
-                HttpResponse::Found()
-                    .header(http::header::LOCATION, path)
-                    .finish()
-                    .into_body(),
-            )))
+                // Redirect to normal path, remove query
+                Either::Right(ok(req.into_response(
+                    HttpResponse::Found()
+                        .header(http::header::LOCATION, new_path)
+                        .finish()
+                        .into_body(),
+                )))
+            }
         }
     }
 }
