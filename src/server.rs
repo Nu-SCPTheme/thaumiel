@@ -52,10 +52,21 @@ impl Server {
                         .route("/c/{category}", web::get().to(forum_category)),
                 )
                 .service(
-                    web::resource("/{page:.*}")
+                    web::resource("{name}")
                         .wrap(crate_middleware::WikidotNormalizePath::default())
                         .to(temp_debug),
                 )
+                .service(
+                    web::resource("{name}/")
+                        .wrap(crate_middleware::WikidotNormalizePath::default())
+                        .to(temp_debug),
+                )
+                .service(
+                    web::resource("/{name}/{options:.*}")
+                        .wrap(crate_middleware::WikidotNormalizePath::default())
+                        .to(temp_debug),
+                )
+                .service(web::resource("/").to(temp_debug))
         })
         .server_hostname(&self.hostname)
         .keep_alive(self.keep_alive)
