@@ -56,6 +56,8 @@ where
     }
 }
 
+type RedirectFuture<B> = Ready<StdResult<ServiceResponse<B>, Error>>;
+
 pub struct WikidotPathNormalization<S> {
     service: S,
 }
@@ -68,7 +70,7 @@ where
     type Request = ServiceRequest;
     type Response = ServiceResponse<B>;
     type Error = Error;
-    type Future = Either<S::Future, Ready<StdResult<Self::Response, Self::Error>>>;
+    type Future = Either<S::Future, RedirectFuture<B>>;
 
     fn poll_ready(&mut self, ctx: &mut Context<'_>) -> Poll<StdResult<(), Self::Error>> {
         self.service.poll_ready(ctx)
