@@ -47,6 +47,7 @@ impl Server {
                 .service(
                     // TODO
                     web::scope("forum:{page}")
+                        .wrap(crate_middleware::WikidotNormalizePath::default())
                         .route("/", web::get().to(forum_page))
                         .route("/c/{category}", web::get().to(forum_category)),
                 )
