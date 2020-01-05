@@ -80,14 +80,6 @@ impl Server {
 
         HttpServer::new(move || {
             App::new()
-                .server_hostname(&hostname)
-                .keep_alive(60)
-                .data(Client::new())
-                .wrap(middleware::Compress::default())
-                .wrap(middleware::Logger::default())
-                // Miscellaneous
-                .route("favicon.ico", web::get().to(file_get))
-                .route("robots.txt", web::get().to(file_get))
                 // Forum redirects
                 .route("forum:start", web::get().to(|| redirect("/forum")))
                 .route("forum:start/", web::get().to(|| redirect("/forum")))
@@ -142,18 +134,7 @@ impl Server {
                         .route("recent-threads", web::get().to(forum_recent_threads))
                         .route("recent-threads/", web::get().to(forum_recent_threads))
                 )
-                .service(
-                    web::scope("/")
-                        .route("{name}", web::get().to(page_get))
-                        .route("{name}/", web::get().to(page_get))
-                        .route("{name}/{options:.*}", web::get().to(page_get))
-                        .route("/", web::get().to(page_main))
-                        .route("/", web::route().to(HttpResponse::MethodNotAllowed))
-                )
         })
-        .bind(address)
-        .expect("Unable to bind to HTTP socket")
-        .run()
         */
     }
 }
