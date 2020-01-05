@@ -35,9 +35,6 @@ extern crate pretty_env_logger;
 #[macro_use]
 extern crate serde;
 extern crate serde_json;
-
-#[macro_use]
-extern crate str_macro;
 extern crate structopt;
 extern crate toml;
 extern crate wikidot_normalize;
