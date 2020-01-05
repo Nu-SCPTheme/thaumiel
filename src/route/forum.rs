@@ -55,7 +55,7 @@ pub async fn forum_recent_threads(req: HttpRequest) -> HttpResult {
     Ok(HttpResponse::NotImplemented().body("forum recent-threads"))
 }
 
-pub async fn forum_category(req: HttpRequest, category: web::Path<String>) -> HttpResult {
+async fn f_category(req: HttpRequest, category: String) -> HttpResult {
     let host = get_host(&req);
 
     info!(
@@ -65,6 +65,21 @@ pub async fn forum_category(req: HttpRequest, category: web::Path<String>) -> Ht
     );
 
     Ok(HttpResponse::NotImplemented().body(format!("forum category: {}", category)))
+}
+
+pub async fn forum_category(req: HttpRequest, parts: web::Path<String>) -> HttpResult {
+    let category = parts.into_inner();
+
+    f_category(req, category).await
+}
+
+pub async fn forum_category_name(
+    req: HttpRequest,
+    parts: web::Path<(String, String)>,
+) -> HttpResult {
+    let category = parts.into_inner().0;
+
+    f_category(req, category).await
 }
 
 pub async fn forum_new_thread(req: HttpRequest, category: web::Path<String>) -> HttpResult {
@@ -85,7 +100,11 @@ pub async fn forum_redirect_new_thread(
 ) -> HttpResult {
     let host = get_host(&req);
 
-    info!("REDIRECT new-thread {}", category);
+    info!(
+        "REDIRECT new-thread {} [{}]",
+        category,
+        host.unwrap_or("none"),
+    );
 
     let url = format!("/forum/new-thread/{}", category);
     let resp = HttpResponse::Found()
@@ -95,12 +114,27 @@ pub async fn forum_redirect_new_thread(
     Ok(resp)
 }
 
-pub async fn forum_thread(req: HttpRequest, thread: web::Path<String>) -> HttpResult {
+async fn f_thread(req: HttpRequest, thread: String) -> HttpResult {
     let host = get_host(&req);
 
     info!("GET forum thread {} [{}]", thread, host.unwrap_or("none"));
 
     Ok(HttpResponse::NotImplemented().body(format!("forum thread: {}", thread)))
+}
+
+pub async fn forum_thread(req: HttpRequest, parts: web::Path<String>) -> HttpResult {
+    let thread = parts.into_inner();
+
+    f_thread(req, thread).await
+}
+
+pub async fn forum_thread_name(
+    req: HttpRequest,
+    parts: web::Path<(String, String)>,
+) -> HttpResult {
+    let thread = parts.into_inner().0;
+
+    f_thread(req, thread).await
 }
 
 // old handlers, here for future reference
