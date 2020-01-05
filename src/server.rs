@@ -112,68 +112,6 @@ impl Server {
         .expect("Unable to bind to HTTP socket")
         .run()
         .await
-
-        /*
-            original old httpserver that doesn't compile
-
-        HttpServer::new(move || {
-            App::new()
-                // Forum redirects
-                .route("forum:start", web::get().to(|| redirect("/forum")))
-                .route("forum:start/", web::get().to(|| redirect("/forum")))
-                .route(
-                    "forum:new-thread/c/{category}",
-                    web::get().to(forum_redirect_new_thread),
-                )
-                .route(
-                    "forum:new-thread/c/{category}/",
-                    web::get().to(forum_redirect_new_thread),
-                )
-                .route(
-                    "forum:recent-posts",
-                    web::get().to(|| redirect("/forum/recent-posts")),
-                )
-                .route(
-                    "forum:recent-posts/",
-                    web::get().to(|| redirect("/forum/recent-posts")),
-                )
-                .route(
-                    "forum:recent-threads",
-                    web::get().to(|| redirect("/forum/recent-threads")),
-                )
-                .route(
-                    "forum:recent-threads/",
-                    web::get().to(|| redirect("/forum/recent-threads")),
-                )
-                // Forum links
-                .service(
-                    web::scope("forum")
-                        .route("/", web::get().to(forum_main))
-                        .route("c-{category}", web::get().to(forum_category))
-                        .route(
-                            "c-{category}/{name:.*}",
-                            web::get().to(forum_category_name),
-                        )
-                        .route("t-{thread}", web::get().to(forum_thread))
-                        .route(
-                            "t-{thread}/{name:.*}",
-                            web::get().to(forum_thread_name),
-                        )
-                        .route(
-                            "new-thread/{category}",
-                            web::get().to(forum_new_thread),
-                        )
-                        .route(
-                            "new-thread/{category}/",
-                            web::get().to(forum_new_thread),
-                        )
-                        .route("recent-posts", web::get().to(forum_recent_posts))
-                        .route("recent-posts/", web::get().to(forum_recent_posts))
-                        .route("recent-threads", web::get().to(forum_recent_threads))
-                        .route("recent-threads/", web::get().to(forum_recent_threads))
-                )
-        })
-        */
     }
 }
 
