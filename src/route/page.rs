@@ -19,87 +19,37 @@
  */
 
 use super::prelude::*;
-use crate::request::PageRequest;
 use actix_web::client::Client;
 use std::collections::HashMap;
-use wikidot_normalize::{is_normal, normalize_decode as normalize};
+use wikidot_path::Request as PageRequest;
 
 // Public route methods
 
 /// Route handling for pages, with arguments or not.
-pub fn page_get(
-    req: HttpRequest,
-    forwarder: web::Data<Forwarder>,
-    client: web::Data<Client>,
-) -> Box<dyn Future<Item = HttpResponse, Error = Error>> {
+pub async fn page_get(req: HttpRequest, client: web::Data<Client>) -> HttpResult {
     let host = get_host(&req);
-    let uri = req.uri();
-    let mut path = uri.path().to_string();
+    let path = req.uri().path();
 
-    info!("GET page {} [{}]", &path, host.unwrap_or("none"));
+    info!("GET page {} [{}]", path, host.unwrap_or("none"));
 
-    if is_normal(&path, true) {
-        let page_req = PageRequest::parse(host, &path);
-        let future = forwarder.get_page(&*client, &page_req);
-        Box::new(future)
-    } else {
-        let result = redirect_normal(&mut path, uri.query());
-        Box::new(future::ok(result))
-    }
+    let _page_req = PageRequest::parse(path);
+
+    // TODO retrieve page from client
+    Ok(HttpResponse::NotImplemented().finish())
 }
 
 /// Route for root, which is the same as whatever the `main` page is.
-pub fn page_main(
-    req: HttpRequest,
-    forwarder: web::Data<Forwarder>,
-    client: web::Data<Client>,
-) -> impl Future<Item = HttpResponse, Error = Error> {
+pub async fn page_main(req: HttpRequest, client: web::Data<Client>) -> HttpResult {
     let host = get_host(&req);
 
     info!("GET / [{}]", host.unwrap_or("none"));
 
-    let page_req = PageRequest {
-        host,
+    let _page_req = PageRequest {
         slug: "main",
         categories: Vec::new(),
         arguments: HashMap::new(),
     };
 
-    forwarder.get_page(&*client, &page_req)
-}
-
-// Helper functions
-
-/// Gets the client hostname, from URI, then headers if present.
-fn get_host(req: &HttpRequest) -> Option<&str> {
-    if let Some(host) = req.uri().host() {
-        return Some(host);
-    }
-
-    match req.headers().get(http::header::HOST) {
-        Some(value) => value.to_str().ok(),
-        None => None,
-    }
-}
-
-/// Normalizes the path and redirects the user to that URL.
-fn redirect_normal(path: &mut String, query: Option<&str>) -> HttpResponse {
-    normalize(path);
-
-    // Remove empty directories
-    while let Some(idx) = path.find("//") {
-        path.replace_range(idx..=idx, "");
-    }
-
-    // Add query at the end if relevant
-    if let Some(query) = query {
-        path.push('?');
-        path.push_str(query);
-    }
-
-    info!("REDIRECT {}", path);
-
-    HttpResponse::Found()
-        .header(http::header::LOCATION, path.as_str())
-        .finish()
+    // TODO get page request
+    Ok(HttpResponse::NotImplemented().finish())
 }

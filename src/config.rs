@@ -25,6 +25,7 @@ use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr};
 use std::path::{Path, PathBuf};
 use structopt::StructOpt;
 
+const DEFAULT_KEEP_ALIVE: usize = 20;
 const DEFAULT_LOG_LEVEL: LevelFilter = LevelFilter::Info;
 
 // Structopt argument parsing
@@ -51,11 +52,11 @@ pub struct Config {
     // Network
     pub hostname: String,
     pub http_address: SocketAddr,
+    pub keep_alive: usize,
     // Server settings
     pub log_level: LevelFilter,
-    // Forwarder
-    pub file_dir: PathBuf,
-    pub page_host: String,
+    // Runtime settings
+    pub runtime: RuntimeSettings,
 }
 
 impl Config {
@@ -71,6 +72,11 @@ impl Config {
     }
 }
 
+#[derive(Debug, Clone)]
+pub struct RuntimeSettings {
+    pub static_dir: PathBuf,
+}
+
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
 struct App {
@@ -83,13 +89,13 @@ struct Network {
     hostname: String,
     use_ipv6: bool,
     port: Option<u16>,
+    keep_alive: Option<usize>,
 }
 
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
-struct Forwards {
-    file: PathBuf,
-    page: String,
+struct Files {
+    static_dir: PathBuf,
 }
 
 #[serde(rename_all = "kebab-case")]
@@ -97,7 +103,7 @@ struct Forwards {
 struct ConfigFile {
     app: App,
     network: Network,
-    forwards: Forwards,
+    files: Files,
 }
 
 impl ConfigFile {
@@ -108,6 +114,7 @@ impl ConfigFile {
         let _ = file
             .read_to_string(&mut contents)
             .expect("Unable to read config file");
+
         let obj: Self = toml::from_str(&contents).expect("Unable to parse TOML in config file");
 
         obj
@@ -148,16 +155,18 @@ impl Into<Config> for ConfigFile {
         let ConfigFile {
             app,
             network,
-            forwards,
+            files,
         } = self;
 
         let Network {
             hostname,
             use_ipv6,
             port,
+            keep_alive,
         } = network;
 
-        let Forwards { file, page } = forwards;
+        let App { log_level } = app;
+        let Files { static_dir } = files;
 
         let ip_address = if use_ipv6 {
             IpAddr::V6(Ipv6Addr::UNSPECIFIED)
@@ -166,14 +175,17 @@ impl Into<Config> for ConfigFile {
         };
 
         let http_address = SocketAddr::new(ip_address, port.unwrap_or(80));
-        let log_level = app.log_level.as_ref().map(|s| s.as_ref());
+        let keep_alive = keep_alive.unwrap_or(DEFAULT_KEEP_ALIVE);
+        let log_level = log_level.as_ref().map(|s| s.as_ref());
+
+        let runtime = RuntimeSettings { static_dir };
 
         Config {
             hostname,
             http_address,
+            keep_alive,
             log_level: Self::parse_log_level(log_level),
-            file_dir: file,
-            page_host: page,
+            runtime,
         }
     }
 }

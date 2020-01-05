@@ -1,5 +1,5 @@
 /*
- * route/mod.rs
+ * route/api/misc.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -18,24 +18,20 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-mod prelude {
-    pub use super::utils::*;
-    pub use crate::StdResult;
-    pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer};
-    pub use futures::{future, Future};
+use super::prelude::*;
 
-    pub type HttpResult = StdResult<HttpResponse, Error>;
+pub async fn api_info(req: HttpRequest) -> HttpResponse {
+    let path = req.uri().path();
+
+    info!("GET api-info {}", path);
+
+    HttpResponse::Ok().body("Some information about the API here idk")
 }
 
-mod api;
-mod files;
-mod forum;
-mod page;
-mod temp;
-mod utils;
+pub async fn api_ping() -> HttpResponse {
+    info!("API /ping");
 
-pub use self::api::*;
-pub use self::files::*;
-pub use self::forum::*;
-pub use self::page::*;
-pub use self::temp::*;
+    // TODO setup proper JSON API response
+
+    HttpResponse::Ok().body("pong!")
+}

@@ -1,5 +1,5 @@
 /*
- * test/mod.rs
+ * route/files.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -18,4 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-mod request;
+use super::prelude::*;
+use crate::config::RuntimeSettings;
+use actix_files::NamedFile;
+
+pub async fn static_file(req: HttpRequest, settings: web::Data<RuntimeSettings>) -> HttpResult {
+    let info = req.match_info();
+
+    let mut path = settings.static_dir.clone();
+    path.push(info.query("filename"));
+    path.set_extension(info.query("ext"));
+
+    let file = NamedFile::open(&path)?;
+    let resp = file.into_response(&req)?;
+    Ok(resp)
+}

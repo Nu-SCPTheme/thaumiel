@@ -20,65 +20,65 @@
 
 #![deny(missing_debug_implementations)]
 
+extern crate actix_files;
+extern crate actix_identity;
+extern crate actix_rt;
 extern crate actix_web;
+extern crate bytes;
 extern crate color_backtrace;
 extern crate futures;
 
 #[macro_use]
+extern crate lazy_static;
+
+#[macro_use]
 extern crate log;
 extern crate pretty_env_logger;
+extern crate regex;
 
 #[macro_use]
 extern crate serde;
 extern crate serde_json;
-
-#[macro_use]
-extern crate str_macro;
 extern crate structopt;
 extern crate toml;
-extern crate wikidot_normalize;
-
-#[cfg(test)]
-#[macro_use]
-extern crate maplit;
+extern crate wikidot_path;
 
 mod config;
-mod forwarder;
-mod request;
+mod middleware;
 mod route;
 mod server;
 
-#[cfg(test)]
-mod test;
-
 use self::config::Config;
-use self::forwarder::Forwarder;
+use self::server::Server;
 use std::process;
 
 pub type StdResult<T, E> = std::result::Result<T, E>;
 
-fn main() {
+#[actix_rt::main]
+async fn main() {
     color_backtrace::install();
 
     let Config {
         hostname,
         http_address,
+        keep_alive,
         log_level,
-        file_dir,
-        page_host,
+        runtime,
     } = Config::parse_args();
-
-    let forwarder = Forwarder {
-        file_dir,
-        page_host,
-    };
 
     pretty_env_logger::formatted_builder()
         .filter_level(log_level)
         .init();
 
     info!("HTTP server starting on {}", http_address);
-    if let Err(error) = server::run(hostname, http_address, forwarder) {
+
+    let server = Server {
+        hostname,
+        http_address,
+        keep_alive,
+    };
+
+    if let Err(error) = server.run(runtime).await {
         error!("Error running actix web server: {}", error);
         process::exit(1);
     }

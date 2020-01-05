@@ -1,5 +1,5 @@
 /*
- * route/file.rs
+ * route/api/page/mod.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -20,9 +20,4 @@
 
 use super::prelude::*;
 
-pub fn file_get(req: HttpRequest, forwarder: web::Data<Forwarder>) -> impl Responder {
-    let path = req.uri().path();
-    info!("GET file {}", path);
-
-    forwarder.get_file(path)
-}
+// TODO

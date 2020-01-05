@@ -1,5 +1,5 @@
 /*
- * route/session.rs
+ * route/temp.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -20,22 +20,13 @@
 
 use super::prelude::*;
 
-// TODO
-
-pub fn login_get(_: HttpRequest) -> impl Responder {
-    "login page"
+#[allow(dead_code)]
+pub async fn temp_debug(req: HttpRequest) -> HttpResponse {
+    HttpResponse::Ok().body(format!("{:#?}", &req))
 }
 
-pub fn login_post(_: HttpRequest, forwarder: web::Data<Forwarder>) -> impl Responder {
-    forwarder.send_login(());
-    "login result"
-}
+pub async fn temp_api(req: HttpRequest) -> HttpResponse {
+    let path = req.uri().path();
 
-pub fn logout_get(_: HttpRequest) -> impl Responder {
-    "logout page"
-}
-
-pub fn logout_del(_: HttpRequest, forwarder: web::Data<Forwarder>) -> impl Responder {
-    forwarder.send_logout(());
-    "logout result"
+    HttpResponse::NotImplemented().body(format!("API call {}\n{:#?}", path, &req))
 }

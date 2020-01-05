@@ -16,10 +16,10 @@ use-ipv6 = true
 # What port to serve on.
 port = 8000
 
-[forwards]
+# The keep-alive duration in seconds. Use 0 to disable.
+keep-alive = 65
 
-# What directory to get static file requests from.
-file = "/var/www"
+[files]
 
-# Where to send page requests.
-page = "http://localhost:7243"
+# What directory to fetch static files from
+static-dir = "/var/www/static"

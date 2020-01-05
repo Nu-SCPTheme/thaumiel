@@ -1,5 +1,5 @@
 /*
- * request/mod.rs
+ * middleware/mod.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -18,6 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-mod page;
+mod normalize;
 
-pub use self::page::{PageArgumentValue, PageRequest};
+pub use self::normalize::WikidotNormalizePath;

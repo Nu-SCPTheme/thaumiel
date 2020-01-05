@@ -18,103 +18,106 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use crate::forwarder::Forwarder;
+use crate::config::RuntimeSettings;
+use crate::middleware as crate_middleware;
 use crate::route::*;
 use actix_web::client::Client;
-use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::middleware as actix_middleware;
+use actix_web::{http, web, App, HttpResponse, HttpServer};
 use std::io;
 use std::net::SocketAddr;
 
-#[inline]
-fn redirect<S: AsRef<str>>(url: S) -> impl Responder {
-    let url = url.as_ref();
+#[derive(Debug, Clone)]
+pub struct Server {
+    pub hostname: String,
+    pub http_address: SocketAddr,
+    pub keep_alive: usize,
+}
+
+impl Server {
+    #[cold]
+    pub async fn run(&self, settings: RuntimeSettings) -> io::Result<()> {
+        HttpServer::new(move || {
+            App::new()
+                .data(Client::default())
+                .data(settings.clone())
+                .wrap(actix_middleware::Compress::default())
+                .wrap(crate_middleware::WikidotNormalizePath::default())
+                .wrap(actix_middleware::Logger::default())
+                // Static files (e.g. favicon, robots.txt)
+                .service(web::resource("{filename}.{ext}").to(static_file))
+                // Forum redirects
+                .service(web::resource("forum:start").to(|| redirect("/forum")))
+                .service(web::resource("forum:recent-posts").to(|| redirect("/forum/recent-posts")))
+                .service(
+                    web::resource("forum:recent-threads").to(|| redirect("/forum/recent-threads")),
+                )
+                .service(
+                    web::resource("forum:new-thread/c/{category}").to(forum_redirect_new_thread),
+                )
+                // Forum links
+                .service(web::resource("forum").to(forum_main))
+                .service(web::resource("forum/c-{category}").to(forum_category))
+                .service(web::resource("forum/c-{category}/{name:.*}").to(forum_category_name))
+                .service(web::resource("forum/t-{thread}").to(forum_thread))
+                .service(web::resource("forum/t-{thread}/{name:.*}").to(forum_thread_name))
+                .service(web::resource("forum/new-thread/{category}").to(forum_new_thread))
+                .service(web::resource("forum/recent-posts").to(forum_recent_posts))
+                .service(web::resource("forum/recent-threads").to(forum_recent_threads))
+                // API handling
+                .service(
+                    web::scope("api")
+                        .route("/", web::get().to(api_info))
+                        .route("ping", web::get().to(api_ping))
+                        .route("ping", web::post().to(api_ping))
+                        .route("ping", web::put().to(api_ping))
+                        .service(
+                            web::scope("auth")
+                                .route("/", web::get().to(api_info))
+                                .route("login", web::post().to(temp_api))
+                                .route("logout", web::delete().to(temp_api))
+                                .route("register", web::post().to(temp_api))
+                                .route("confirm-register", web::post().to(temp_api))
+                                .route("confirm-reset-password", web::post().to(temp_api))
+                                .route("reset-password", web::post().to(temp_api))
+                                .route("reset-password", web::put().to(temp_api)),
+                        )
+                        .service(
+                            web::scope("page")
+                                .route("/", web::get().to(api_info))
+                                .route("edit-lock", web::post().to(temp_api))
+                                .route("history", web::get().to(temp_api))
+                                .route("parent", web::get().to(temp_api))
+                                .route("parent", web::post().to(temp_api))
+                                .route("rename", web::post().to(temp_api))
+                                .route("revision", web::get().to(temp_api))
+                                .route("source", web::get().to(temp_api))
+                                .route("tags", web::get().to(temp_api))
+                                .route("tags", web::post().to(temp_api))
+                                .route("vote", web::get().to(temp_api))
+                                .route("vote", web::post().to(temp_api))
+                                .route("vote", web::delete().to(temp_api)),
+                        )
+                        .service(web::scope("user").route("info", web::get().to(temp_api))),
+                )
+                // Pages
+                .service(web::resource("{name}").to(page_get))
+                .service(web::resource("/{name}/{options:.*}").to(page_get))
+                .service(web::resource("/").to(page_main))
+        })
+        .server_hostname(&self.hostname)
+        .keep_alive(self.keep_alive)
+        .bind(self.http_address)
+        .expect("Unable to bind to HTTP socket")
+        .run()
+        .await
+    }
+}
+
+async fn redirect(url: &str) -> HttpResponse {
     info!("REDIRECT {}", url);
 
     HttpResponse::Found()
         .header(http::header::LOCATION, url)
         .finish()
-}
-
-#[cold]
-pub fn run(hostname: String, address: SocketAddr, forwarder: Forwarder) -> io::Result<()> {
-    HttpServer::new(move || {
-        App::new()
-            .data(forwarder.clone())
-            .data(Client::new())
-            .hostname(&hostname)
-            .wrap(middleware::Logger::default())
-            // Miscellaneous
-            .route("favicon.ico", web::get().to(file_get))
-            .route("robots.txt", web::get().to(file_get))
-            // Forum redirects
-            .route("forum:start", web::get().to(|| redirect("/forum")))
-            .route("forum:start/", web::get().to(|| redirect("/forum")))
-            .route(
-                "forum:new-thread/c/{category}",
-                web::get().to(forum_redirect_new_thread),
-            )
-            .route(
-                "forum:new-thread/c/{category}/",
-                web::get().to(forum_redirect_new_thread),
-            )
-            .route(
-                "forum:recent-posts",
-                web::get().to(|| redirect("/forum/recent-posts")),
-            )
-            .route(
-                "forum:recent-posts/",
-                web::get().to(|| redirect("/forum/recent-posts")),
-            )
-            .route(
-                "forum:recent-threads",
-                web::get().to(|| redirect("/forum/recent-threads")),
-            )
-            .route(
-                "forum:recent-threads/",
-                web::get().to(|| redirect("/forum/recent-threads")),
-            )
-            // Forum links
-            .route("forum", web::get().to(forum_main))
-            .route("forum/c-{category}", web::get().to(forum_category))
-            .route(
-                "forum/c-{category}/{name:.*}",
-                web::get().to(forum_category_name),
-            )
-            .route("forum/t-{thread}", web::get().to(forum_thread))
-            .route(
-                "forum/t-{thread}/{name:.*}",
-                web::get().to(forum_thread_name),
-            )
-            .route(
-                "forum/new-thread/{category}",
-                web::get().to(forum_new_thread),
-            )
-            .route(
-                "forum/new-thread/{category}/",
-                web::get().to(forum_new_thread),
-            )
-            .route("forum/recent-posts", web::get().to(forum_recent_posts))
-            .route("forum/recent-posts/", web::get().to(forum_recent_posts))
-            .route("forum/recent-threads", web::get().to(forum_recent_threads))
-            .route("forum/recent-threads/", web::get().to(forum_recent_threads))
-            // Session management
-            .route("login", web::get().to(login_get))
-            .route("login", web::post().to(login_post))
-            .route("logout", web::get().to(logout_get))
-            .route("logout", web::delete().to(logout_del))
-            // User
-            .route("user/{id}", web::get().to(user_get))
-            .route("user/{id}", web::post().to(user_set))
-            .route("user/avatars/{id}", web::get().to(user_avatar_get))
-            // Regular pages
-            .route("{name}", web::get().to_async(page_get))
-            .route("{name}/", web::get().to_async(page_get))
-            .route("{name}/{options:.*}", web::get().to_async(page_get))
-            // Main page
-            .route("/", web::get().to_async(page_main))
-            .route("/", web::route().to(HttpResponse::MethodNotAllowed))
-    })
-    .bind(address)
-    .expect("Unable to bind to HTTP socket")
-    .run()
 }

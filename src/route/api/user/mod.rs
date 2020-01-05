@@ -1,5 +1,5 @@
 /*
- * route/user.rs
+ * route/api/user/mod.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -20,22 +20,4 @@
 
 use super::prelude::*;
 
-pub fn user_get(id: web::Path<u64>) -> impl Responder {
-    info!("GET user {}", id);
-
-    // TODO
-    format!("Getting user info for id {}", *id)
-}
-
-pub fn user_set(id: web::Path<u64>) -> impl Responder {
-    info!("POST user {}", id);
-
-    // TODO
-    HttpResponse::Ok()
-}
-
-pub fn user_avatar_get(id: web::Path<u64>) -> impl Responder {
-    info!("GET user/avatars {}", id);
-
-    format!("user-avatar:{}", id)
-}
+// TODO
