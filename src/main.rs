@@ -39,6 +39,7 @@ extern crate serde_json;
 extern crate str_macro;
 extern crate structopt;
 extern crate toml;
+extern crate void;
 extern crate wikidot_normalize;
 extern crate wikidot_path;
 
@@ -47,6 +48,7 @@ extern crate wikidot_path;
 extern crate maplit;
 
 mod config;
+mod middleware;
 mod request;
 mod route;
 mod server;
