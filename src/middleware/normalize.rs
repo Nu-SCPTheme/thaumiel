@@ -76,14 +76,11 @@ where
         normalize_decode(&mut path);
 
         if orig_path == path {
-            debug!("Path already normalized: {:?}", path);
+            debug!("Path already normalized");
 
             Either::Left(self.service.call(req))
         } else {
-            debug!(
-                "Redirecting to normalized path: {:?} -> {:?}",
-                orig_path, &path,
-            );
+            info!("REDIRECT {}", path);
 
             // Redirect to normal path, remove query
             Either::Right(ok(req.into_response(
