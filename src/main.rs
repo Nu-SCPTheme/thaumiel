@@ -43,17 +43,10 @@ extern crate structopt;
 extern crate toml;
 extern crate wikidot_path;
 
-#[cfg(test)]
-#[macro_use]
-extern crate maplit;
-
 mod config;
 mod middleware;
 mod route;
 mod server;
-
-#[cfg(test)]
-mod test;
 
 use self::config::Config;
 use self::server::Server;
