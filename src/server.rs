@@ -49,7 +49,6 @@ pub async fn run(
             .data(Client::default())
             .data(settings.clone())
             .wrap(actix_middleware::Compress::default())
-            .wrap(crate_middleware::WikidotNormalizePath::default())
             .wrap(actix_middleware::Logger::default())
             .service(web::resource("{filename}.{ext}").to(static_file))
             .service(
@@ -58,7 +57,11 @@ pub async fn run(
                     .route("/", web::get().to(forum_page))
                     .route("/c/{category}", web::get().to(forum_category)),
             )
-            .service(web::resource("/{page:.*}").to(temp_debug))
+            .service(
+                web::resource("/{page:.*}")
+                    .wrap(crate_middleware::WikidotNormalizePath::default())
+                    .to(temp_debug)
+            )
     })
     .server_hostname(&hostname)
     .keep_alive(keep_alive)
