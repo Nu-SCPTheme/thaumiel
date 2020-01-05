@@ -69,9 +69,8 @@ where
         self.service.poll_ready(ctx)
     }
 
-    fn call(&mut self, mut req: ServiceRequest) -> Self::Future {
-        let head = req.head_mut();
-        let orig_path = head.uri.path();
+    fn call(&mut self, req: ServiceRequest) -> Self::Future {
+        let orig_path = req.head().uri.path();
         let mut path = orig_path.into();
         normalize_decode(&mut path);
 

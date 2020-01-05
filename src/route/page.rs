@@ -45,7 +45,7 @@ pub async fn page_main(req: HttpRequest, client: web::Data<Client>) -> HttpResul
 
     info!("GET / [{}]", host.unwrap_or("none"));
 
-    let page_req = PageRequest {
+    let _page_req = PageRequest {
         host,
         slug: "main",
         categories: Vec::new(),
