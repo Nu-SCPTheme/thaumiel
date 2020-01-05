@@ -22,12 +22,27 @@ use super::prelude::*;
 
 // TODO
 
+pub async fn forum_main(req: HttpRequest) -> HttpResult {
+    Ok(HttpResponse::NotImplemented().body("forum main page"))
+}
+
 pub async fn forum_page(req: HttpRequest) -> HttpResult {
     Ok(HttpResponse::NotImplemented().body(format!("forum page:\n{:#?}", req)))
 }
 
 pub async fn forum_category(req: HttpRequest, category: web::Path<String>) -> HttpResult {
     Ok(HttpResponse::NotImplemented().body(format!("forum category: {}", &category)))
+}
+
+pub async fn forum_redirect_new_thread(category: web::Path<String>) -> HttpResult {
+    info!("REDIRECT new-thread {}", category);
+
+    let url = format!("/forum/new-thread/{}", category);
+    let resp = HttpResponse::Found()
+        .header(http::header::LOCATION, url)
+        .finish();
+
+    Ok(resp)
 }
 
 // old handlers, here for future reference
@@ -68,15 +83,6 @@ mod old {
     #[inline]
     pub fn forum_category_name(category: web::Path<(String, String)>) -> impl Responder {
         get_category(category.into_inner().0)
-    }
-
-    pub fn forum_redirect_new_thread(category: web::Path<String>) -> impl Responder {
-        info!("REDIRECT new-thread {}", category);
-        let url = format!("/forum/new-thread/{}", category);
-
-        HttpResponse::Found()
-            .header(http::header::LOCATION, url)
-            .finish()
     }
 
     pub fn forum_new_thread(category: web::Path<String>) -> impl Responder {

@@ -23,7 +23,7 @@ use crate::middleware as crate_middleware;
 use crate::route::*;
 use actix_web::client::Client;
 use actix_web::middleware as actix_middleware;
-use actix_web::{web, App, HttpServer};
+use actix_web::{http, web, App, HttpResponse, HttpServer};
 use std::io;
 use std::net::SocketAddr;
 
@@ -43,14 +43,35 @@ impl Server {
                 .data(settings.clone())
                 .wrap(actix_middleware::Compress::default())
                 .wrap(actix_middleware::Logger::default())
+                // Static files (e.g. favicon, robots.txt)
                 .service(web::resource("{filename}.{ext}").to(static_file))
+                // Forum redirects
+                .service(web::resource("forum:start").to(|| redirect("/forum")))
+                .service(web::resource("forum:start/").to(|| redirect("/forum")))
+                .service(web::resource("forum:recent-posts").to(|| redirect("/forum/recent-posts")))
                 .service(
-                    // TODO
-                    web::scope("forum:{page}")
-                        .wrap(crate_middleware::WikidotNormalizePath::default())
-                        .route("/", web::get().to(forum_page))
-                        .route("/c/{category}", web::get().to(forum_category)),
+                    web::resource("forum:recent-posts/").to(|| redirect("/forum/recent-posts")),
                 )
+                .service(
+                    web::resource("forum:recent-threads").to(|| redirect("/forum/recent-threads")),
+                )
+                .service(
+                    web::resource("forum:recent-threads/").to(|| redirect("/forum/recent-threads")),
+                )
+                .service(
+                    web::resource("forum:new-thread/c/{category}")
+                        .wrap(crate_middleware::WikidotNormalizePath::default())
+                        .to(forum_redirect_new_thread),
+                )
+                .service(
+                    web::resource("forum:new-thread/c/{category}/")
+                        .wrap(crate_middleware::WikidotNormalizePath::default())
+                        .to(forum_redirect_new_thread),
+                )
+                // Forum links
+                .service(web::resource("forum").to(forum_main))
+                .service(web::resource("forum/c-{category}").to(forum_category))
+                // Pages
                 .service(
                     web::resource("{name}")
                         .wrap(crate_middleware::WikidotNormalizePath::default())
@@ -137,4 +158,12 @@ impl Server {
         })
         */
     }
+}
+
+async fn redirect(url: &str) -> HttpResponse {
+    info!("REDIRECT {}", url);
+
+    HttpResponse::Found()
+        .header(http::header::LOCATION, url)
+        .finish()
 }
