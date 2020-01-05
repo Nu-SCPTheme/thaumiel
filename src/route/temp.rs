@@ -20,6 +20,7 @@
 
 use super::prelude::*;
 
+#[allow(dead_code)]
 pub async fn temp_debug(req: HttpRequest) -> HttpResponse {
     HttpResponse::Ok().body(format!("{:#?}", &req))
 }

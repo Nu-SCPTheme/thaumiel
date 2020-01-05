@@ -101,10 +101,9 @@ impl Server {
                         .service(web::scope("user").route("info", web::get().to(temp_api))),
                 )
                 // Pages
-                .service(web::resource("{name}").to(temp_debug))
-                .service(web::resource("{name}/").to(temp_debug))
-                .service(web::resource("/{name}/{options:.*}").to(temp_debug))
-                .service(web::resource("/").to(temp_debug))
+                .service(web::resource("{name}").to(page_get))
+                .service(web::resource("/{name}/{options:.*}").to(page_get))
+                .service(web::resource("/").to(page_main))
         })
         .server_hostname(&self.hostname)
         .keep_alive(self.keep_alive)

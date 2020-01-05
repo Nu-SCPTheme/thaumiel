@@ -49,7 +49,6 @@ extern crate maplit;
 
 mod config;
 mod middleware;
-mod request;
 mod route;
 mod server;
 

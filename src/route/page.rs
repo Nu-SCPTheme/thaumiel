@@ -19,9 +19,9 @@
  */
 
 use super::prelude::*;
-use crate::request::PageRequest;
 use actix_web::client::Client;
 use std::collections::HashMap;
+use wikidot_path::Request as PageRequest;
 
 // Public route methods
 
@@ -32,7 +32,7 @@ pub async fn page_get(req: HttpRequest, client: web::Data<Client>) -> HttpResult
 
     info!("GET page {} [{}]", path, host.unwrap_or("none"));
 
-    let _page_req = PageRequest::parse(host, path);
+    let _page_req = PageRequest::parse(path);
 
     // TODO retrieve page from client
     Ok(HttpResponse::NotImplemented().finish())
@@ -45,7 +45,6 @@ pub async fn page_main(req: HttpRequest, client: web::Data<Client>) -> HttpResul
     info!("GET / [{}]", host.unwrap_or("none"));
 
     let _page_req = PageRequest {
-        host,
         slug: "main",
         categories: Vec::new(),
         arguments: HashMap::new(),

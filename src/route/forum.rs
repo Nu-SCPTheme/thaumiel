@@ -30,15 +30,6 @@ pub async fn forum_main(req: HttpRequest) -> HttpResponse {
     HttpResponse::NotImplemented().body("forum main page")
 }
 
-pub async fn forum_page(req: HttpRequest) -> HttpResponse {
-    let host = get_host(&req);
-    let path = req.uri().path();
-
-    info!("GET forum {} [{}]", path, host.unwrap_or("none"));
-
-    HttpResponse::NotImplemented().body(format!("forum page:\n{:#?}", req))
-}
-
 pub async fn forum_recent_posts(req: HttpRequest) -> HttpResponse {
     let host = get_host(&req);
 

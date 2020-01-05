@@ -28,7 +28,7 @@ pub async fn api_info(req: HttpRequest) -> HttpResponse {
     HttpResponse::Ok().body("Some information about the API here idk")
 }
 
-pub async fn api_ping(req: HttpRequest) -> HttpResponse {
+pub async fn api_ping() -> HttpResponse {
     info!("API /ping");
 
     // TODO setup proper JSON API response
