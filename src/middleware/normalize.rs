@@ -27,10 +27,9 @@ use actix_web::dev::{Service, ServiceRequest, ServiceResponse, Transform};
 use actix_web::Error;
 use futures::future::{ok, Ready};
 use std::task::{Context, Poll};
-use void::Void;
 use wikidot_normalize::normalize;
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Default)]
 pub struct WikidotNormalizePath;
 
 impl<S, B> Transform<S> for WikidotNormalizePath
@@ -41,7 +40,7 @@ where
     type Request = ServiceRequest;
     type Response = ServiceResponse<B>;
     type Error = Error;
-    type InitError = Void;
+    type InitError = ();
     type Transform = WikidotPathNormalization<S>;
     type Future = Ready<StdResult<Self::Transform, Self::InitError>>;
 

@@ -19,9 +19,11 @@
  */
 
 use crate::config::RuntimeSettings;
+use crate::middleware as crate_middleware;
 use crate::route::*;
 use actix_web::client::Client;
-use actix_web::{http, middleware, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::middleware as actix_middleware;
+use actix_web::{http, web, App, HttpResponse, HttpServer, Responder};
 use std::io;
 use std::net::SocketAddr;
 
@@ -46,8 +48,9 @@ pub async fn run(
         App::new()
             .data(Client::default())
             .data(settings.clone())
-            .wrap(middleware::Compress::default())
-            .wrap(middleware::Logger::default())
+            .wrap(actix_middleware::Compress::default())
+            .wrap(crate_middleware::WikidotNormalizePath::default())
+            .wrap(actix_middleware::Logger::default())
             .service(web::resource("{filename}.{ext}").to(static_file))
             .service(
                 // TODO
