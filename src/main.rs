@@ -24,6 +24,7 @@ extern crate actix_files;
 extern crate actix_identity;
 extern crate actix_rt;
 extern crate actix_web;
+extern crate bytes;
 extern crate color_backtrace;
 extern crate futures;
 

@@ -60,7 +60,7 @@ pub async fn run(
             .service(
                 web::resource("/{page:.*}")
                     .wrap(crate_middleware::WikidotNormalizePath::default())
-                    .to(temp_debug)
+                    .to(temp_debug),
             )
     })
     .server_hostname(&hostname)

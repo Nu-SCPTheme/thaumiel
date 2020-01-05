@@ -24,11 +24,14 @@
 
 use crate::StdResult;
 use actix_web::dev::{Service, ServiceRequest, ServiceResponse, Transform};
-use actix_web::Error;
-use futures::future::{ok, Ready};
+use actix_web::{http, Error, HttpResponse};
+use bytes::Bytes;
+use futures::future::{ok, Either, Ready};
 use std::task::{Context, Poll};
-use wikidot_normalize::normalize;
+use wikidot_normalize::normalize_decode;
 
+/// Middleware to normalize and redirect paths to Wikidot normal form.
+/// See the `wikidot-normalize` crate for more information.
 #[derive(Debug, Copy, Clone, Default)]
 pub struct WikidotNormalizePath;
 
@@ -61,7 +64,7 @@ where
     type Request = ServiceRequest;
     type Response = ServiceResponse<B>;
     type Error = Error;
-    type Future = S::Future;
+    type Future = Either<S::Future, Ready<StdResult<Self::Response, Self::Error>>>;
 
     fn poll_ready(&mut self, ctx: &mut Context<'_>) -> Poll<StdResult<(), Self::Error>> {
         self.service.poll_ready(ctx)
@@ -69,10 +72,27 @@ where
 
     fn call(&mut self, mut req: ServiceRequest) -> Self::Future {
         let head = req.head_mut();
-        let path = head.uri.path();
+        let orig_path = head.uri.path();
+        let mut path = orig_path.into();
+        normalize_decode(&mut path);
 
-        // TODO
+        if (orig_path == path) {
+            debug!("Path already normalized: {:?}", path);
 
-        self.service.call(req)
+            Either::Left(self.service.call(req))
+        } else {
+            debug!(
+                "Redirecting to normalized path: {:?} -> {:?}",
+                orig_path, &path,
+            );
+
+            // Redirect to normal path, remove query
+            Either::Right(ok(req.into_response(
+                HttpResponse::Found()
+                    .header(http::header::LOCATION, path)
+                    .finish()
+                    .into_body(),
+            )))
+        }
     }
 }
