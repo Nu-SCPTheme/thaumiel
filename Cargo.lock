@@ -897,7 +897,7 @@ dependencies = [
  "serde_json 1.0.44 (registry+https://github.com/rust-lang/crates.io-index)",
  "structopt 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "toml 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "wikidot-path 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "wikidot-path 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -1877,7 +1877,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "wikidot-normalize"
-version = "0.3.0"
+version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1888,14 +1888,14 @@ dependencies = [
 
 [[package]]
 name = "wikidot-path"
-version = "0.0.2"
+version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "maplit 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "wikidot-normalize 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "wikidot-normalize 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -2175,8 +2175,8 @@ dependencies = [
 "checksum web-sys 0.3.33 (registry+https://github.com/rust-lang/crates.io-index)" = "2fb60433d0dc12c803b9b017b3902d80c9451bab78d27bc3210bf2a7b96593f1"
 "checksum weedle 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)" = "3bb43f70885151e629e2a19ce9e50bd730fd436cfd4b666894c9ce4de9141164"
 "checksum widestring 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "effc0e4ff8085673ea7b9b2e3c73f6bd4d118810c9009ed8f1e16bd96c331db6"
-"checksum wikidot-normalize 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "8cfc27351d71bdeb883a184d82dfd0f3aa5712182933ef66649f78aac47743f3"
-"checksum wikidot-path 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "d3a7a068b039e94a54ea4b6351784c81cac47f74b452f5558485db9c50ea2d12"
+"checksum wikidot-normalize 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)" = "dae99faba38f690f966dd4ebf9e4e6c7d8bbcd9e3dbf4a7498cc0e981196b777"
+"checksum wikidot-path 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "b0d7e7e93496dd4627a9560cfda23c7f7bad4499b40c2b6d7c0ad76ce6fc05bb"
 "checksum winapi 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)" = "167dc9d6949a9b857f3451275e911c3f44255842c1f7a76f33c55103a909087a"
 "checksum winapi 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)" = "8093091eeb260906a183e6ae1abdba2ef5ef2257a21801128899c3fc699229c6"
 "checksum winapi-build 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "2d315eee3b34aca4797b2da6b13ed88266e6d612562a0c46390af8299fc699bc"
