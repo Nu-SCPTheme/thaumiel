@@ -128,10 +128,7 @@ pub async fn forum_thread(req: HttpRequest, parts: web::Path<String>) -> HttpRes
     f_thread(req, thread).await
 }
 
-pub async fn forum_thread_name(
-    req: HttpRequest,
-    parts: web::Path<(String, String)>,
-) -> HttpResult {
+pub async fn forum_thread_name(req: HttpRequest, parts: web::Path<(String, String)>) -> HttpResult {
     let thread = parts.into_inner().0;
 
     f_thread(req, thread).await

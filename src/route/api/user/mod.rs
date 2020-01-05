@@ -1,5 +1,5 @@
 /*
- * route/temp.rs
+ * route/api/user/mod.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -20,12 +20,4 @@
 
 use super::prelude::*;
 
-pub async fn temp_debug(req: HttpRequest) -> HttpResponse {
-    HttpResponse::Ok().body(format!("{:#?}", &req))
-}
-
-pub async fn temp_api(req: HttpRequest) -> HttpResponse {
-    let path = req.uri().path();
-
-    HttpResponse::NotImplemented().body(format!("API call {}\n{:#?}", path, &req))
-}
+// TODO

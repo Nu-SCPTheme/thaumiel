@@ -64,6 +64,35 @@ impl Server {
                 .service(web::resource("forum/new-thread/{category}").to(forum_new_thread))
                 .service(web::resource("forum/recent-posts").to(forum_recent_posts))
                 .service(web::resource("forum/recent-threads").to(forum_recent_threads))
+                // API handling
+                .service(
+                    web::scope("api")
+                        .service(
+                            web::scope("auth")
+                                .route("login", web::post().to(temp_api))
+                                .route("logout", web::delete().to(temp_api))
+                                .route("register", web::post().to(temp_api))
+                                .route("confirm-register", web::post().to(temp_api))
+                                .route("confirm-reset-password", web::post().to(temp_api))
+                                .route("reset-password", web::post().to(temp_api)),
+                        )
+                        .service(
+                            web::scope("page")
+                                .route("edit-lock", web::post().to(temp_api))
+                                .route("history", web::get().to(temp_api))
+                                .route("parent", web::get().to(temp_api))
+                                .route("parent", web::post().to(temp_api))
+                                .route("rename", web::post().to(temp_api))
+                                .route("revision", web::get().to(temp_api))
+                                .route("source", web::get().to(temp_api))
+                                .route("tags", web::get().to(temp_api))
+                                .route("tags", web::post().to(temp_api))
+                                .route("vote", web::get().to(temp_api))
+                                .route("vote", web::post().to(temp_api))
+                                .route("vote", web::delete().to(temp_api)),
+                        )
+                        .service(web::scope("user").route("info", web::get().to(temp_api))),
+                )
                 // Pages
                 .service(web::resource("{name}").to(temp_debug))
                 .service(web::resource("{name}/").to(temp_debug))

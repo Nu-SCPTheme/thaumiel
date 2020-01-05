@@ -1,5 +1,5 @@
 /*
- * route/temp.rs
+ * route/api/mod.rs
  *
  * kant-router - Wikidot-compatible router for web applications
  * Copyright (C) 2019 Ammon Smith
@@ -18,14 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use super::prelude::*;
+use super::prelude;
 
-pub async fn temp_debug(req: HttpRequest) -> HttpResponse {
-    HttpResponse::Ok().body(format!("{:#?}", &req))
-}
+mod auth;
+mod page;
+mod user;
 
-pub async fn temp_api(req: HttpRequest) -> HttpResponse {
-    let path = req.uri().path();
-
-    HttpResponse::NotImplemented().body(format!("API call {}\n{:#?}", path, &req))
-}
+pub use self::auth::*;
+pub use self::page::*;
+pub use self::user::*;
