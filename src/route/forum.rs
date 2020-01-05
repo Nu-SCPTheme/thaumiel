@@ -22,40 +22,40 @@ use super::prelude::*;
 
 // TODO
 
-pub async fn forum_main(req: HttpRequest) -> HttpResult {
+pub async fn forum_main(req: HttpRequest) -> HttpResponse {
     let host = get_host(&req);
 
     info!("GET forum main [{}]", host.unwrap_or("none"));
 
-    Ok(HttpResponse::NotImplemented().body("forum main page"))
+    HttpResponse::NotImplemented().body("forum main page")
 }
 
-pub async fn forum_page(req: HttpRequest) -> HttpResult {
+pub async fn forum_page(req: HttpRequest) -> HttpResponse {
     let host = get_host(&req);
     let path = req.uri().path();
 
     info!("GET forum {} [{}]", path, host.unwrap_or("none"));
 
-    Ok(HttpResponse::NotImplemented().body(format!("forum page:\n{:#?}", req)))
+    HttpResponse::NotImplemented().body(format!("forum page:\n{:#?}", req))
 }
 
-pub async fn forum_recent_posts(req: HttpRequest) -> HttpResult {
+pub async fn forum_recent_posts(req: HttpRequest) -> HttpResponse {
     let host = get_host(&req);
 
     info!("GET forum recent-posts [{}]", host.unwrap_or("none"));
 
-    Ok(HttpResponse::NotImplemented().body("forum recent-posts"))
+    HttpResponse::NotImplemented().body("forum recent-posts")
 }
 
-pub async fn forum_recent_threads(req: HttpRequest) -> HttpResult {
+pub async fn forum_recent_threads(req: HttpRequest) -> HttpResponse {
     let host = get_host(&req);
 
     info!("GET forum recent-threads [{}]", host.unwrap_or("none"));
 
-    Ok(HttpResponse::NotImplemented().body("forum recent-threads"))
+    HttpResponse::NotImplemented().body("forum recent-threads")
 }
 
-async fn f_category(req: HttpRequest, category: String) -> HttpResult {
+async fn f_category(req: HttpRequest, category: String) -> HttpResponse {
     let host = get_host(&req);
 
     info!(
@@ -64,10 +64,10 @@ async fn f_category(req: HttpRequest, category: String) -> HttpResult {
         host.unwrap_or("none"),
     );
 
-    Ok(HttpResponse::NotImplemented().body(format!("forum category: {}", category)))
+    HttpResponse::NotImplemented().body(format!("forum category: {}", category))
 }
 
-pub async fn forum_category(req: HttpRequest, parts: web::Path<String>) -> HttpResult {
+pub async fn forum_category(req: HttpRequest, parts: web::Path<String>) -> HttpResponse {
     let category = parts.into_inner();
 
     f_category(req, category).await
@@ -76,13 +76,13 @@ pub async fn forum_category(req: HttpRequest, parts: web::Path<String>) -> HttpR
 pub async fn forum_category_name(
     req: HttpRequest,
     parts: web::Path<(String, String)>,
-) -> HttpResult {
+) -> HttpResponse {
     let category = parts.into_inner().0;
 
     f_category(req, category).await
 }
 
-pub async fn forum_new_thread(req: HttpRequest, category: web::Path<String>) -> HttpResult {
+pub async fn forum_new_thread(req: HttpRequest, category: web::Path<String>) -> HttpResponse {
     let host = get_host(&req);
 
     info!(
@@ -91,13 +91,13 @@ pub async fn forum_new_thread(req: HttpRequest, category: web::Path<String>) -> 
         host.unwrap_or("none"),
     );
 
-    Ok(HttpResponse::NotImplemented().body(format!("forum new thread in category: {}", category)))
+    HttpResponse::NotImplemented().body(format!("forum new thread in category: {}", category))
 }
 
 pub async fn forum_redirect_new_thread(
     req: HttpRequest,
     category: web::Path<String>,
-) -> HttpResult {
+) -> HttpResponse {
     let host = get_host(&req);
 
     info!(
@@ -107,28 +107,27 @@ pub async fn forum_redirect_new_thread(
     );
 
     let url = format!("/forum/new-thread/{}", category);
-    let resp = HttpResponse::Found()
-        .header(http::header::LOCATION, url)
-        .finish();
 
-    Ok(resp)
+    HttpResponse::Found()
+        .header(http::header::LOCATION, url)
+        .finish()
 }
 
-async fn f_thread(req: HttpRequest, thread: String) -> HttpResult {
+async fn f_thread(req: HttpRequest, thread: String) -> HttpResponse {
     let host = get_host(&req);
 
     info!("GET forum thread {} [{}]", thread, host.unwrap_or("none"));
 
-    Ok(HttpResponse::NotImplemented().body(format!("forum thread: {}", thread)))
+    HttpResponse::NotImplemented().body(format!("forum thread: {}", thread))
 }
 
-pub async fn forum_thread(req: HttpRequest, parts: web::Path<String>) -> HttpResult {
+pub async fn forum_thread(req: HttpRequest, parts: web::Path<String>) -> HttpResponse {
     let thread = parts.into_inner();
 
     f_thread(req, thread).await
 }
 
-pub async fn forum_thread_name(req: HttpRequest, parts: web::Path<(String, String)>) -> HttpResult {
+pub async fn forum_thread_name(req: HttpRequest, parts: web::Path<(String, String)>) -> HttpResponse {
     let thread = parts.into_inner().0;
 
     f_thread(req, thread).await
