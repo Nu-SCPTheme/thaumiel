@@ -57,6 +57,7 @@ mod server;
 mod test;
 
 use self::config::Config;
+use self::server::Server;
 use std::process;
 
 pub type StdResult<T, E> = std::result::Result<T, E>;
@@ -78,9 +79,14 @@ async fn main() {
         .init();
 
     info!("HTTP server starting on {}", http_address);
-    let server_result = server::run(hostname, http_address, keep_alive, runtime).await;
 
-    if let Err(error) = server_result {
+    let server = Server {
+        hostname,
+        http_address,
+        keep_alive,
+    };
+
+    if let Err(error) = server.run(runtime).await {
         error!("Error running actix web server: {}", error);
         process::exit(1);
     }
