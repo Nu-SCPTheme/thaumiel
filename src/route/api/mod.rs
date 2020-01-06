@@ -18,11 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use super::prelude;
+mod prelude {
+    pub use super::super::prelude::*;
+    pub use super::types::*;
+}
 
 mod auth;
 mod misc;
 mod page;
+mod types;
 mod user;
 
 pub use self::auth::*;

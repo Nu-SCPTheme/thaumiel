@@ -19,6 +19,7 @@ actix-rt = "1"
 actix-web = "2"
 bytes = "*"
 color-backtrace = "0.3"
+deepwell = { version = "0.0.7", git = "https://github.com/Nu-SCPTheme/deepwell" }
 futures = "*"
 lazy_static = "1"
 log = "0.4"
