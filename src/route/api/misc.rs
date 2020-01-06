@@ -20,18 +20,16 @@
 
 use super::prelude::*;
 
-pub async fn api_info(req: HttpRequest) -> HttpResponse {
-    let path = req.uri().path();
+pub async fn api_route() -> HttpResponse {
+    info!("REDIRECT / [from api]");
 
-    info!("GET api-info {}", path);
-
-    HttpResponse::Ok().body("Some information about the API here idk")
+    HttpResponse::Found()
+        .header(http::header::LOCATION, "/")
+        .finish()
 }
 
 pub async fn api_ping() -> HttpResponse {
     info!("API /ping");
 
-    // TODO setup proper JSON API response
-
-    HttpResponse::Ok().body("pong!")
+    HttpResponse::Ok().json(Success::from("pong!"))
 }

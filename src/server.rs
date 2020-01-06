@@ -67,13 +67,13 @@ impl Server {
                 // API handling
                 .service(
                     web::scope("api")
-                        .route("/", web::get().to(api_info))
+                        .route("", web::get().to(api_route))
                         .route("ping", web::get().to(api_ping))
                         .route("ping", web::post().to(api_ping))
                         .route("ping", web::put().to(api_ping))
                         .service(
                             web::scope("auth")
-                                .route("/", web::get().to(api_info))
+                                .route("", web::get().to(api_route))
                                 .route("login", web::post().to(temp_api))
                                 .route("logout", web::delete().to(temp_api))
                                 .route("register", web::post().to(temp_api))
@@ -84,7 +84,7 @@ impl Server {
                         )
                         .service(
                             web::scope("page")
-                                .route("/", web::get().to(api_info))
+                                .route("", web::get().to(api_route))
                                 .route("edit-lock", web::post().to(temp_api))
                                 .route("history", web::get().to(temp_api))
                                 .route("parent", web::get().to(temp_api))
