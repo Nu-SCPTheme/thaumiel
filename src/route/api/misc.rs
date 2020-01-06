@@ -19,6 +19,7 @@
  */
 
 use super::prelude::*;
+use std::time::SystemTime;
 
 pub async fn api_route() -> HttpResponse {
     info!("REDIRECT / [from api]");
@@ -32,4 +33,16 @@ pub async fn api_ping() -> HttpResponse {
     info!("API /ping");
 
     HttpResponse::Ok().json(Success::from("pong!"))
+}
+
+pub async fn api_time() -> HttpResponse {
+    info!("API /time");
+
+    let now = SystemTime::now();
+    let unix_time = now
+        .duration_since(SystemTime::UNIX_EPOCH)
+        .expect("System time before epoch")
+        .as_secs_f64();
+
+    HttpResponse::Ok().json(Success::from(unix_time))
 }
