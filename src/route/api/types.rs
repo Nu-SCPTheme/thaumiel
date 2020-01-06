@@ -37,6 +37,7 @@
 //! }
 //! ```
 
+use deepwell_core::Error as DeepwellError;
 use serde::Serialize;
 use std::fmt::Debug;
 
@@ -66,9 +67,9 @@ pub struct Failure {
     message: String,
 }
 
-impl From<&'_ deepwell::Error> for Failure {
+impl From<&'_ DeepwellError> for Failure {
     #[inline]
-    fn from(error: &deepwell::Error) -> Self {
+    fn from(error: &DeepwellError) -> Self {
         Failure {
             error: error.fixed_name(),
             message: error.to_string(),

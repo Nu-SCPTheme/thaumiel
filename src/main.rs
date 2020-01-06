@@ -26,7 +26,7 @@ extern crate actix_rt;
 extern crate actix_web;
 extern crate bytes;
 extern crate color_backtrace;
-extern crate deepwell;
+extern crate deepwell_core;
 extern crate futures;
 
 #[macro_use]
