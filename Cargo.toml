@@ -4,8 +4,8 @@ description = "Wikidot-like web server to provide pages, forums, and other servi
 repository = "https://github.com/Nu-SCPTheme/thaumiel"
 readme = "README.md"
 license = "AGPL-3.0-or-later"
-keywords = ["wikidot", "router", "web", "nuscp"]
-categories = ["web-programming::http-server"]
+keywords = ["wikidot", "web", "server", "nuscp"]
+categories = ["web-programming::http-server", "asynchronous"]
 exclude = [".gitignore", ".travis.yml"]
 
 version = "0.0.6"
