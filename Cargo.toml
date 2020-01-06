@@ -1,7 +1,7 @@
 [package]
-name = "kant-router"
-description = "A Wikidot-compatible router for web applications"
-repository = "https://github.com/Nu-SCPTheme/kant-router"
+name = "thaumiel"
+description = "Wikidot-like web server to provide pages, forums, and other services"
+repository = "https://github.com/Nu-SCPTheme/thaumiel"
 readme = "README.md"
 license = "AGPL-3.0-or-later"
 keywords = ["wikidot", "router", "web", "nuscp"]

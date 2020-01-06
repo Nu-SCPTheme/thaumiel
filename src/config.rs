@@ -1,7 +1,7 @@
 /*
  * config.rs
  *
- * kant-router - Wikidot-compatible router for web applications
+ * thaumiel - Wikidot-like web server to provide pages, forums, and other services
  * Copyright (C) 2019 Ammon Smith
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,8 +32,8 @@ const DEFAULT_LOG_LEVEL: LevelFilter = LevelFilter::Info;
 
 #[derive(Debug, StructOpt)]
 #[structopt(
-    name = "kant-router",
-    about = "Wikidot-compatible router for web applications"
+    name = "thaumiel",
+    about = "Wikidot-like web server to provide pages, forums, and other services"
 )]
 struct Options {
     /// Logging level to use.
