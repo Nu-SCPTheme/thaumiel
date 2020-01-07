@@ -27,6 +27,7 @@ extern crate actix_web;
 extern crate bytes;
 extern crate color_backtrace;
 extern crate deepwell_core;
+extern crate dns_lookup;
 extern crate futures;
 
 #[macro_use]
@@ -64,6 +65,7 @@ async fn main() {
         http_address,
         keep_alive,
         log_level,
+        deepwell_address,
         runtime,
     } = Config::parse_args();
 

@@ -23,3 +23,11 @@ keep-alive = 65
 
 # What directory to fetch static files from
 static-dir = "/var/www/static"
+
+[deepwell]
+
+# IP address or hostname to connect to
+address = "localhost"
+
+# What port the server is hosted on
+port = 2747

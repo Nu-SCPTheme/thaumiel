@@ -18,9 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crate::StdResult;
+use dns_lookup::lookup_host;
 use log::LevelFilter;
+use std::convert::TryInto;
 use std::fs::File;
-use std::io::Read;
+use std::io::{self, Read};
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr};
 use std::path::{Path, PathBuf};
 use structopt::StructOpt;
@@ -55,6 +58,8 @@ pub struct Config {
     pub keep_alive: usize,
     // Server settings
     pub log_level: LevelFilter,
+    // Remote servers
+    pub deepwell_address: SocketAddr,
     // Runtime settings
     pub runtime: RuntimeSettings,
 }
@@ -100,10 +105,32 @@ struct Files {
 
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
+struct Deepwell {
+    address: String,
+    port: u16,
+}
+
+impl TryInto<SocketAddr> for Deepwell {
+    type Error = io::Error;
+
+    fn try_into(self) -> StdResult<SocketAddr, io::Error> {
+        let Deepwell { address, port } = self;
+        let addresses = lookup_host(&address)?;
+
+        assert!(!addresses.is_empty(), "No addresses returned");
+
+        let address = addresses[0];
+        Ok(SocketAddr::new(address, port))
+    }
+}
+
+#[serde(rename_all = "kebab-case")]
+#[derive(Deserialize, Debug)]
 struct ConfigFile {
     app: App,
     network: Network,
     files: Files,
+    deepwell: Deepwell,
 }
 
 impl ConfigFile {
@@ -156,6 +183,7 @@ impl Into<Config> for ConfigFile {
             app,
             network,
             files,
+            deepwell,
         } = self;
 
         let Network {
@@ -167,6 +195,10 @@ impl Into<Config> for ConfigFile {
 
         let App { log_level } = app;
         let Files { static_dir } = files;
+
+        let deepwell_address = deepwell
+            .try_into()
+            .expect("Unable to parse address for DEEPWELL server");
 
         let ip_address = if use_ipv6 {
             IpAddr::V6(Ipv6Addr::UNSPECIFIED)
@@ -185,6 +217,7 @@ impl Into<Config> for ConfigFile {
             http_address,
             keep_alive,
             log_level: Self::parse_log_level(log_level),
+            deepwell_address,
             runtime,
         }
     }
