@@ -1,4 +1,4 @@
-# Sample configuration for kant-router
+# Sample configuration for thaumiel
 
 [app]
 
@@ -8,7 +8,7 @@ log-level = "debug"
 [network]
 
 # What hostname the server uses.
-hostname = "kant"
+hostname = "thaumiel"
 
 # Whether to use IPv6 or not.
 use-ipv6 = true
