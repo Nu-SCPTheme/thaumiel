@@ -114,7 +114,7 @@ impl TryInto<SocketAddr> for Deepwell {
     type Error = io::Error;
 
     fn try_into(self) -> StdResult<SocketAddr, io::Error> {
-        let Deepwell { address, port } = self;
+        let Self { address, port } = self;
         let addresses = lookup_host(&address)?;
 
         assert!(!addresses.is_empty(), "No addresses returned");

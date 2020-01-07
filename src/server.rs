@@ -32,14 +32,23 @@ pub struct Server {
     pub hostname: String,
     pub http_address: SocketAddr,
     pub keep_alive: usize,
+    pub deepwell: (),
 }
 
 impl Server {
     #[cold]
-    pub async fn run(&self, settings: RuntimeSettings) -> io::Result<()> {
+    pub async fn run(self, settings: RuntimeSettings) -> io::Result<()> {
+        let Self {
+            hostname,
+            http_address,
+            keep_alive,
+            deepwell,
+        } = self;
+
         HttpServer::new(move || {
             App::new()
                 .data(Client::default())
+                .data(deepwell)
                 .data(settings.clone())
                 .wrap(actix_middleware::Compress::default())
                 .wrap(crate_middleware::WikidotNormalizePath::default())
@@ -106,9 +115,9 @@ impl Server {
                 .service(web::resource("/{name}/{options:.*}").to(page_get))
                 .service(web::resource("/").to(page_main))
         })
-        .server_hostname(&self.hostname)
-        .keep_alive(self.keep_alive)
-        .bind(self.http_address)
+        .server_hostname(&hostname)
+        .keep_alive(keep_alive)
+        .bind(http_address)
         .expect("Unable to bind to HTTP socket")
         .run()
         .await

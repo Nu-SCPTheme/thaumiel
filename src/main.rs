@@ -73,12 +73,18 @@ async fn main() {
         .filter_level(log_level)
         .init();
 
+    info!("Initializing DEEPWELL client");
+
+    // TODO deepwell
+    let deepwell = ();
+
     info!("HTTP server starting on {}", http_address);
 
     let server = Server {
         hostname,
         http_address,
         keep_alive,
+        deepwell,
     };
 
     if let Err(error) = server.run(runtime).await {
