@@ -34,6 +34,7 @@ pub struct Server {
     pub hostname: String,
     pub http_address: SocketAddr,
     pub keep_alive: usize,
+    pub cookie_secure: bool,
     pub cookie_max_age: i64,
     pub cookie_same_site: SameSite,
     pub cookie_key: Box<[u8]>,
@@ -47,6 +48,7 @@ impl Server {
             hostname,
             http_address,
             keep_alive,
+            cookie_secure,
             cookie_max_age,
             cookie_same_site,
             cookie_key,
@@ -64,7 +66,7 @@ impl Server {
                 .wrap(IdentityService::new(
                     CookieIdentityPolicy::new(&cookie_key)
                         .name("thaumiel-auth")
-                        .secure(false) // HTTPS exists at the proxy level
+                        .secure(cookie_secure)
                         .max_age(cookie_max_age)
                         .same_site(cookie_same_site),
                 ))

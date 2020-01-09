@@ -21,6 +21,10 @@ keep-alive = 65
 
 [security]
 
+# Whether the cookie should be HTTP-only (false) or HTTPS-only (true).
+# This should be set when in production! It should only be false for local testing!
+cookie-secure = false
+
 # How long a cookie lives, in seconds.
 # This setting cannot be disabled; if you want sessions to exist
 # for a long time, set this to a high number.

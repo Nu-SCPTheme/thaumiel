@@ -63,6 +63,7 @@ pub struct Config {
     pub keep_alive: usize,
     // Server settings
     pub log_level: LevelFilter,
+    pub cookie_secure: bool,
     pub cookie_max_age: i64,
     pub cookie_same_site: SameSite,
     pub cookie_key: Box<[u8]>,
@@ -122,6 +123,7 @@ struct Network {
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
 struct Security {
+    cookie_secure: bool,
     cookie_max_age: i64,
     cookie_same_site: String,
     cookie_key_path: PathBuf,
@@ -259,6 +261,7 @@ impl Into<Config> for ConfigFile {
         } = network;
 
         let Security {
+            cookie_secure,
             cookie_max_age,
             cookie_same_site,
             cookie_key_path,
@@ -288,6 +291,7 @@ impl Into<Config> for ConfigFile {
             http_address,
             keep_alive,
             log_level: Self::parse_log_level(log_level),
+            cookie_secure,
             cookie_max_age,
             cookie_same_site: Self::parse_same_site(&cookie_same_site),
             cookie_key: Self::read_cookie_key(&cookie_key_path),
