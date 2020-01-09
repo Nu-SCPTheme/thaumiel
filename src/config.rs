@@ -43,6 +43,10 @@ struct Options {
     #[structopt(short, long)]
     level: Option<LevelFilter>,
 
+    /// Override which path to read the cookie key from.
+    #[structopt(short, long, name = "KEY_FILE", parse(from_os_str))]
+    cookie_key_path: Option<PathBuf>,
+
     /// Configuration file.
     #[structopt(name = "CONFIG_FILE", parse(from_os_str))]
     config_file: PathBuf,
@@ -68,11 +72,23 @@ pub struct Config {
 impl Config {
     #[cold]
     pub fn parse_args() -> Self {
-        let opts = Options::from_args();
-        let mut config: Self = ConfigFile::read(&opts.config_file).into();
+        let Options {
+            level,
+            cookie_key_path,
+            config_file,
+        } = Options::from_args();
 
-        // Override settings from arguments
-        if let Some(level) = opts.level {
+        // Build configuration from file
+        let mut config = ConfigFile::read(&config_file);
+
+        if let Some(cookie_key_path) = cookie_key_path {
+            config.security.cookie_key_path = cookie_key_path;
+        }
+
+        // Convert into final config object
+        let mut config: Self = config.into();
+
+        if let Some(level) = level {
             config.log_level = level;
         }
 

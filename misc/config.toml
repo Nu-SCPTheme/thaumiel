@@ -23,7 +23,7 @@ keep-alive = 65
 
 # Where to find the session key for encrypting cookies
 # Must be at least 32 bytes
-cookie-key-path = "/tmp/thaumiel-cookie.key"
+cookie-key-path = "thaumiel-cookie.key"
 
 [files]
 
