@@ -101,8 +101,9 @@ impl Server {
                         .service(
                             web::scope("auth")
                                 .route("", web::get().to(api_route))
-                                .route("login", web::post().to(temp_api))
-                                .route("logout", web::delete().to(temp_api))
+                                .route("login", web::post().to(api_login))
+                                .route("logout", web::post().to(api_logout))
+                                .route("logout", web::delete().to(api_logout))
                                 .route("register", web::post().to(temp_api))
                                 .route("confirm-register", web::post().to(temp_api))
                                 .route("confirm-reset-password", web::post().to(temp_api))
