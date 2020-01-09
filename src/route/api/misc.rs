@@ -19,10 +19,29 @@
  */
 
 use super::prelude::*;
+use crate::build;
 use std::time::SystemTime;
 
+lazy_static! {
+    static ref CRATE_VERSION: &'static str =
+        build::GIT_VERSION.unwrap_or(env!("CARGO_PKG_VERSION"));
+    //
+    static ref CRATE_BUILD: String = {
+        use std::fmt::Write;
+
+        format!(
+            "{} {}\n{} on {}\nBuilt {}",
+            env!("CARGO_PKG_NAME"),
+            *CRATE_VERSION,
+            build::RUSTC_VERSION,
+            build::TARGET,
+            build::BUILT_TIME_UTC,
+        )
+    };
+}
+
 pub async fn api_route() -> HttpResponse {
-    info!("REDIRECT / [from api]");
+    info!("REDIRECT / [api]");
 
     HttpResponse::Found()
         .header(http::header::LOCATION, "/")
@@ -45,4 +64,16 @@ pub async fn api_time() -> HttpResponse {
         .as_secs_f64();
 
     HttpResponse::Ok().json(Success::from(unix_time))
+}
+
+pub async fn api_version() -> HttpResponse {
+    info!("API /version");
+
+    HttpResponse::Ok().json(Success::from(*CRATE_VERSION))
+}
+
+pub async fn api_build() -> HttpResponse {
+    info!("API /build");
+
+    HttpResponse::Ok().json(Success::from(&*CRATE_BUILD))
 }

@@ -45,6 +45,11 @@ extern crate structopt;
 extern crate toml;
 extern crate wikidot_path;
 
+mod build {
+    #![allow(unused)]
+    include!(concat!(env!("OUT_DIR"), "/built.rs"));
+}
+
 mod config;
 mod middleware;
 mod route;

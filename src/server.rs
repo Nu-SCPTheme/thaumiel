@@ -81,6 +81,8 @@ impl Server {
                         .route("ping", web::post().to(api_ping))
                         .route("ping", web::put().to(api_ping))
                         .route("time", web::get().to(api_time))
+                        .route("version", web::get().to(api_version))
+                        .route("build", web::get().to(api_build))
                         .service(
                             web::scope("auth")
                                 .route("", web::get().to(api_route))
