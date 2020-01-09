@@ -55,9 +55,11 @@ impl Server {
 
         HttpServer::new(move || {
             App::new()
+                // Shared data and clients
                 .data(Client::default())
                 .data(deepwell)
                 .data(settings.clone())
+                // Middleware
                 .wrap(actix_middleware::Compress::default())
                 .wrap(IdentityService::new(
                     CookieIdentityPolicy::new(&cookie_key)
