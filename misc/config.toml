@@ -21,7 +21,7 @@ keep-alive = 65
 
 [security]
 
-# Whether the cookie should be HTTP-only (false) or HTTPS-only (true).
+# Whether the cookie should be HTTPS-only or not.
 # This should be set when in production! It should only be false for local testing!
 cookie-secure = false
 
