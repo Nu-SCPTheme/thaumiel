@@ -100,6 +100,7 @@ impl Server {
                         .route("time", web::get().to(api_time))
                         .route("version", web::get().to(api_version))
                         .route("build", web::get().to(api_build))
+                        .route("debug", web::to(api_debug))
                         .service(
                             web::scope("auth")
                                 .route("", web::get().to(api_route))

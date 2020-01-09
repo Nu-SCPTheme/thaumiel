@@ -75,3 +75,12 @@ pub async fn api_build() -> HttpResponse {
 
     HttpResponse::Ok().json(Success::from(&*CRATE_BUILD))
 }
+
+/// Echoes the user's request back to them, to help with API debugging.
+pub async fn api_debug(req: HttpRequest) -> HttpResponse {
+    info!("API /debug");
+
+    let output = format!("{:#?}", &req);
+
+    HttpResponse::Ok().body(output)
+}
