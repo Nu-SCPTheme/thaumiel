@@ -2,7 +2,7 @@
  * route/api/user/mod.rs
  *
  * thaumiel - Wikidot-like web server to provide pages, forums, and other services
- * Copyright (C) 2019 Ammon Smith
+ * Copyright (C) 2019-2020 Ammon Smith
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
