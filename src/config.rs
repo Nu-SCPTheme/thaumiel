@@ -106,7 +106,7 @@ struct Files {
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
 struct Deepwell {
-    address: String,
+    host: String,
     port: u16,
 }
 
@@ -114,13 +114,9 @@ impl TryInto<SocketAddr> for Deepwell {
     type Error = io::Error;
 
     fn try_into(self) -> StdResult<SocketAddr, io::Error> {
-        let Self { address, port } = self;
-        let addresses = lookup_host(&address)?;
+        let Self { host, port } = self;
 
-        assert!(!addresses.is_empty(), "No addresses returned");
-
-        let address = addresses[0];
-        Ok(SocketAddr::new(address, port))
+        get_address(&host, port)
     }
 }
 
@@ -221,4 +217,13 @@ impl Into<Config> for ConfigFile {
             runtime,
         }
     }
+}
+
+fn get_address(host: &str, port: u16) -> io::Result<SocketAddr> {
+    let addresses = lookup_host(&host)?;
+
+    assert!(!addresses.is_empty(), "No addresses returned");
+
+    let address = addresses[0];
+    Ok(SocketAddr::new(address, port))
 }
