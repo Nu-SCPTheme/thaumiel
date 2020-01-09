@@ -70,6 +70,7 @@ async fn main() {
         http_address,
         keep_alive,
         log_level,
+        cookie_key,
         deepwell_address,
         runtime,
     } = Config::parse_args();
@@ -89,6 +90,7 @@ async fn main() {
         hostname,
         http_address,
         keep_alive,
+        cookie_key,
         deepwell,
     };
 

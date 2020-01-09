@@ -58,6 +58,7 @@ pub struct Config {
     pub keep_alive: usize,
     // Server settings
     pub log_level: LevelFilter,
+    pub cookie_key: Box<[u8]>,
     // Remote servers
     pub deepwell_address: SocketAddr,
     // Runtime settings
@@ -69,6 +70,8 @@ impl Config {
     pub fn parse_args() -> Self {
         let opts = Options::from_args();
         let mut config: Self = ConfigFile::read(&opts.config_file).into();
+
+        // Override settings from arguments
         if let Some(level) = opts.level {
             config.log_level = level;
         }
@@ -99,6 +102,12 @@ struct Network {
 
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
+struct Security {
+    cookie_key_path: PathBuf,
+}
+
+#[serde(rename_all = "kebab-case")]
+#[derive(Deserialize, Debug)]
 struct Files {
     static_dir: PathBuf,
 }
@@ -125,6 +134,7 @@ impl TryInto<SocketAddr> for Deepwell {
 struct ConfigFile {
     app: App,
     network: Network,
+    security: Security,
     files: Files,
     deepwell: Deepwell,
 }
@@ -170,6 +180,23 @@ impl ConfigFile {
 
         panic!("No such log level for '{}'", log_level);
     }
+
+    #[cold]
+    fn read_cookie_key(path: &Path) -> Box<[u8]> {
+        let mut file = File::open(path).expect("Unable to open cookie key file");
+        let mut contents = Vec::new();
+        let len = file
+            .read_to_end(&mut contents)
+            .expect("Unable to read bytes from cookie key file");
+
+        assert!(
+            len > 32,
+            "Cookie key file did not contain enough bytes ({} < 32)",
+            len,
+        );
+
+        contents.into_boxed_slice()
+    }
 }
 
 impl Into<Config> for ConfigFile {
@@ -178,6 +205,7 @@ impl Into<Config> for ConfigFile {
         let ConfigFile {
             app,
             network,
+            security,
             files,
             deepwell,
         } = self;
@@ -190,6 +218,7 @@ impl Into<Config> for ConfigFile {
         } = network;
 
         let App { log_level } = app;
+        let Security { cookie_key_path } = security;
         let Files { static_dir } = files;
 
         let deepwell_address = deepwell
@@ -205,6 +234,7 @@ impl Into<Config> for ConfigFile {
         let http_address = SocketAddr::new(ip_address, port.unwrap_or(80));
         let keep_alive = keep_alive.unwrap_or(DEFAULT_KEEP_ALIVE);
         let log_level = log_level.as_ref().map(|s| s.as_ref());
+        let cookie_key = Self::read_cookie_key(&cookie_key_path);
 
         let runtime = RuntimeSettings { static_dir };
 
@@ -213,6 +243,7 @@ impl Into<Config> for ConfigFile {
             http_address,
             keep_alive,
             log_level: Self::parse_log_level(log_level),
+            cookie_key,
             deepwell_address,
             runtime,
         }

@@ -32,6 +32,7 @@ pub struct Server {
     pub hostname: String,
     pub http_address: SocketAddr,
     pub keep_alive: usize,
+    pub cookie_key: Box<[u8]>,
     pub deepwell: (),
 }
 
@@ -42,6 +43,7 @@ impl Server {
             hostname,
             http_address,
             keep_alive,
+            cookie_key,
             deepwell,
         } = self;
 
