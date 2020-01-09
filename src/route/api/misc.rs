@@ -38,6 +38,7 @@ lazy_static! {
     };
 }
 
+/// Redirects invalid `/api` routes to prevent users from seeing invalid pages.
 pub async fn api_route() -> HttpResponse {
     info!("REDIRECT / [api]");
 
@@ -46,12 +47,15 @@ pub async fn api_route() -> HttpResponse {
         .finish()
 }
 
+/// No-op call to determine if a connection to the server can be established.
 pub async fn api_ping() -> HttpResponse {
     info!("API /ping");
 
     HttpResponse::Ok().json(Success::from("pong!"))
 }
 
+/// Returns the current, local time on the web server.
+/// This is neither monotonic nor in any particular timezone.
 pub async fn api_time() -> HttpResponse {
     info!("API /time");
 
@@ -64,12 +68,14 @@ pub async fn api_time() -> HttpResponse {
     HttpResponse::Ok().json(Success::from(unix_time))
 }
 
+/// Returns what crate version the current web server has.
 pub async fn api_version() -> HttpResponse {
     info!("API /version");
 
     HttpResponse::Ok().json(Success::from(*CRATE_VERSION))
 }
 
+/// Returns build information about the current web server.
 pub async fn api_build() -> HttpResponse {
     info!("API /build");
 
