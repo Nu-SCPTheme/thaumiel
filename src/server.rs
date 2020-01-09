@@ -21,7 +21,9 @@
 use crate::config::RuntimeSettings;
 use crate::middleware as crate_middleware;
 use crate::route::*;
+use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web::client::Client;
+use actix_web::cookie::SameSite;
 use actix_web::middleware as actix_middleware;
 use actix_web::{http, web, App, HttpResponse, HttpServer};
 use std::io;
@@ -32,6 +34,8 @@ pub struct Server {
     pub hostname: String,
     pub http_address: SocketAddr,
     pub keep_alive: usize,
+    pub cookie_max_age: i64,
+    pub cookie_same_site: SameSite,
     pub cookie_key: Box<[u8]>,
     pub deepwell: (),
 }
@@ -43,6 +47,8 @@ impl Server {
             hostname,
             http_address,
             keep_alive,
+            cookie_max_age,
+            cookie_same_site,
             cookie_key,
             deepwell,
         } = self;
@@ -53,6 +59,13 @@ impl Server {
                 .data(deepwell)
                 .data(settings.clone())
                 .wrap(actix_middleware::Compress::default())
+                .wrap(IdentityService::new(
+                    CookieIdentityPolicy::new(&cookie_key)
+                        .name("thaumiel-auth")
+                        .secure(false) // HTTPS exists at the proxy level
+                        .max_age(cookie_max_age)
+                        .same_site(cookie_same_site),
+                ))
                 .wrap(crate_middleware::WikidotNormalizePath::default())
                 .wrap(actix_middleware::Logger::default())
                 // Static files (e.g. favicon, robots.txt)

@@ -70,6 +70,8 @@ async fn main() {
         http_address,
         keep_alive,
         log_level,
+        cookie_max_age,
+        cookie_same_site,
         cookie_key,
         deepwell_address,
         runtime,
@@ -90,6 +92,8 @@ async fn main() {
         hostname,
         http_address,
         keep_alive,
+        cookie_max_age,
+        cookie_same_site,
         cookie_key,
         deepwell,
     };

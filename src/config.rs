@@ -19,6 +19,7 @@
  */
 
 use crate::StdResult;
+use actix_web::cookie::SameSite;
 use dns_lookup::lookup_host;
 use log::LevelFilter;
 use std::convert::TryInto;
@@ -62,6 +63,8 @@ pub struct Config {
     pub keep_alive: usize,
     // Server settings
     pub log_level: LevelFilter,
+    pub cookie_max_age: i64,
+    pub cookie_same_site: SameSite,
     pub cookie_key: Box<[u8]>,
     // Remote servers
     pub deepwell_address: SocketAddr,
@@ -119,6 +122,8 @@ struct Network {
 #[serde(rename_all = "kebab-case")]
 #[derive(Deserialize, Debug)]
 struct Security {
+    cookie_max_age: i64,
+    cookie_same_site: String,
     cookie_key_path: PathBuf,
 }
 
@@ -194,7 +199,27 @@ impl ConfigFile {
             }
         }
 
-        panic!("No such log level for '{}'", log_level);
+        panic!("No log level for '{}'", log_level);
+    }
+
+    #[cold]
+    fn parse_same_site(same_site: &str) -> SameSite {
+        const POLICIES: [(&str, SameSite); 6] = [
+            ("", SameSite::None),
+            ("strict", SameSite::Strict),
+            ("always", SameSite::Strict),
+            ("lax", SameSite::Lax),
+            ("none", SameSite::None),
+            ("disabled", SameSite::None),
+        ];
+
+        for (text, policy) in &POLICIES {
+            if same_site.eq_ignore_ascii_case(text) {
+                return *policy;
+            }
+        }
+
+        panic!("No same-site cookie policy for '{}'", same_site);
     }
 
     #[cold]
@@ -233,8 +258,13 @@ impl Into<Config> for ConfigFile {
             keep_alive,
         } = network;
 
+        let Security {
+            cookie_max_age,
+            cookie_same_site,
+            cookie_key_path,
+        } = security;
+
         let App { log_level } = app;
-        let Security { cookie_key_path } = security;
         let Files { static_dir } = files;
 
         let deepwell_address = deepwell
@@ -250,7 +280,6 @@ impl Into<Config> for ConfigFile {
         let http_address = SocketAddr::new(ip_address, port.unwrap_or(80));
         let keep_alive = keep_alive.unwrap_or(DEFAULT_KEEP_ALIVE);
         let log_level = log_level.as_ref().map(|s| s.as_ref());
-        let cookie_key = Self::read_cookie_key(&cookie_key_path);
 
         let runtime = RuntimeSettings { static_dir };
 
@@ -259,7 +288,9 @@ impl Into<Config> for ConfigFile {
             http_address,
             keep_alive,
             log_level: Self::parse_log_level(log_level),
-            cookie_key,
+            cookie_max_age,
+            cookie_same_site: Self::parse_same_site(&cookie_same_site),
+            cookie_key: Self::read_cookie_key(&cookie_key_path),
             deepwell_address,
             runtime,
         }

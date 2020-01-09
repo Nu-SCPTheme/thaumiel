@@ -21,19 +21,28 @@ keep-alive = 65
 
 [security]
 
-# Where to find the session key for encrypting cookies
-# Must be at least 32 bytes
+# How long a cookie lives, in seconds.
+# This setting cannot be disabled; if you want sessions to exist
+# for a long time, set this to a high number.
+cookie-max-age = 604800
+
+# The same-site policy for cookies.
+# Can either be "strict", "lax", or "none".
+cookie-same-site = "strict"
+
+# Where to find the session key for encrypting cookies.
+# Must be at least 32 bytes.
 cookie-key-path = "thaumiel-cookie.key"
 
 [files]
 
-# What directory to fetch static files from
+# What directory to fetch static files from.
 static-dir = "/var/www/static"
 
 [deepwell]
 
-# IP address or hostname to connect to
+# IP address or hostname to connect to.
 host = "localhost"
 
-# What port the server is hosted on
+# What port the server is hosted on.
 port = 2747
