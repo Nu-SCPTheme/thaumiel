@@ -27,8 +27,6 @@ lazy_static! {
         build::GIT_VERSION.unwrap_or(env!("CARGO_PKG_VERSION"));
     //
     static ref CRATE_BUILD: String = {
-        use std::fmt::Write;
-
         format!(
             "{} {}\n{} on {}\nBuilt {}",
             env!("CARGO_PKG_NAME"),
