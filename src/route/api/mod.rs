@@ -21,7 +21,7 @@
 mod prelude {
     pub use super::super::prelude::*;
     pub use super::types::*;
-    pub use deepwell_core::Error as DeepwellError;
+    pub use deepwell_core::Error;
 }
 
 mod auth;

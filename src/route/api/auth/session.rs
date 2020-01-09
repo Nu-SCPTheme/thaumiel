@@ -55,7 +55,7 @@ pub async fn api_login(req: HttpRequest, id: Identity, arg: web::Json<LoginInput
     } else {
         debug!("Failed login attempt for user '{}'", username);
 
-        let error = DeepwellError::AuthenticationFailed;
+        let error = Error::AuthenticationFailed;
 
         HttpResponse::Unauthorized().json(Failure::from(&error))
     }
@@ -86,7 +86,7 @@ pub async fn api_logout(req: HttpRequest, id: Identity) -> HttpResponse {
         None => {
             debug!("Cannot logout, no session cookie");
 
-            let error = DeepwellError::NotLoggedIn;
+            let error = Error::NotLoggedIn;
 
             HttpResponse::Unauthorized().json(Failure::from(&error))
         }
