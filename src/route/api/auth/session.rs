@@ -19,7 +19,6 @@
  */
 
 use super::prelude::*;
-use actix_identity::Identity;
 
 #[derive(Deserialize, Debug)]
 pub struct LoginInput {
