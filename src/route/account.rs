@@ -1,5 +1,5 @@
 /*
- * route/mod.rs
+ * route/account.rs
  *
  * thaumiel - Wikidot-like web server to provide pages, forums, and other services
  * Copyright (C) 2019-2020 Ammon Smith
@@ -18,26 +18,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-mod prelude {
-    pub use super::utils::*;
-    pub use crate::StdResult;
-    pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer};
-    pub use futures::{future, Future};
+use super::prelude::*;
 
-    pub type HttpResult = StdResult<HttpResponse, Error>;
+pub async fn verify_email(req: HttpRequest, token: web::Path<String>) -> HttpResult {
+    let host = get_host(&req);
+
+    info!("GET /verify-email [{}]", host.unwrap_or("none"));
+
+    // TODO set account verification field
+    Ok(HttpResponse::NotImplemented().finish())
 }
-
-mod account;
-mod api;
-mod files;
-mod forum;
-mod page;
-mod temp;
-mod utils;
-
-pub use self::account::*;
-pub use self::api::*;
-pub use self::files::*;
-pub use self::forum::*;
-pub use self::page::*;
-pub use self::temp::*;

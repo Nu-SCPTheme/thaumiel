@@ -92,6 +92,8 @@ impl Server {
                 .service(web::resource("forum/new-thread/{category}").to(forum_new_thread))
                 .service(web::resource("forum/recent-posts").to(forum_recent_posts))
                 .service(web::resource("forum/recent-threads").to(forum_recent_threads))
+                // Other special routes
+                .service(web::resource("verify-email/{token}").to(verify_email))
                 // API handling
                 .service(
                     web::scope("api")
