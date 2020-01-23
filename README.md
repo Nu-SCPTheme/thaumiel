@@ -9,7 +9,14 @@ Available under the terms of the GNU Affero General Public License. See [LICENSE
 This library targets the latest stable Rust. At time of writing, that is 1.40.0
 
 ```sh
+$ sudo apt install libpq-dev
 $ cargo build --release
+```
+
+Before running the binary, create a cookie key by using 512 bytes of random data:
+
+```sh
+$ head -c 512 /dev/urandom > thaumiel-cookie.key
 ```
 
 This will create the final `thaumiel` binary, which can be executed using the following:

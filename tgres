@@ -1,0 +1,1589 @@
+Sorting...
+Full Text Search...
+akonadi-backend-postgresql/bionic,bionic 4:17.12.3-0ubuntu3 all
+  PostgreSQL storage backend for Akonadi
+
+algol68g/bionic 2.8-2build1 amd64
+  Implementation of Algol 68 as defined by the Revised Report
+
+aolserver4-nspostgres/bionic 4.5+20110709-2 amd64
+  AOLserver 4 module: Postgres connector
+
+apgdiff/bionic,bionic 2.5.0~alpha.2-75-gcaaaed9-1 all
+  Another PostgreSQL Diff Tool
+
+autopostgresqlbackup/bionic,bionic 1.0-7 all
+  Automated tool to make periodic backups of PostgreSQL databases
+
+backupninja/bionic,bionic 1.0.2-1 all
+  lightweight, extensible meta-backup system
+
+bacula-common-pgsql/bionic 9.0.6-1build1 amd64
+  network backup service - PostgreSQL common files
+
+bacula-director-pgsql/bionic 9.0.6-1build1 amd64
+  network backup service - PostgreSQL storage for Director
+
+bandwidthd-pgsql/bionic 2.0.1+cvs20090917-10ubuntu1 amd64
+  Tracks usage of TCP/IP and builds html files with graphs
+
+barman/bionic,bionic 2.3-2 all
+  Backup and Recovery Manager for PostgreSQL
+
+barman-cli/bionic,bionic 1.2-1 all
+  Client utilities for the integration of Barman in PostgreSQL clusters
+
+beancounter/bionic,bionic 0.8.10 all
+  A stock portfolio performance monitoring tool
+
+bucardo/bionic,bionic 5.4.1-2 all
+  asynchronous replication system for PostgreSQL
+
+cedar-backup2/bionic,bionic 2.27.0-2 all
+  local and remote backups to CD/DVD media or Amazon S3 storage
+
+cedar-backup2-doc/bionic,bionic 2.27.0-2 all
+  local and remote backups to CD/DVD media or Amazon S3 storage (documentation)
+
+cedar-backup3/bionic,bionic 3.1.12-2 all
+  local and remote backups to CD/DVD media or Amazon S3 storage
+
+cedar-backup3-doc/bionic,bionic 3.1.12-2 all
+  local and remote backups to CD/DVD media or Amazon S3 storage (documentation)
+
+check-postgres/bionic,bionic 2.23.0-1 all
+  script for monitoring PostgreSQL databases
+
+cl-pg/bionic,bionic 1:20061216-5 all
+  Common Lisp library that provides a socket level postgresql interface
+
+cl-pgloader/bionic,bionic 3.4.1+dfsg-1 all
+  extract, transform and load data into PostgreSQL
+
+cl-postgres/bionic,bionic 20170403-1 all
+  Low-level client library for PosgreSQL
+
+cl-postmodern/bionic,bionic 20170403-1 all
+  Common Lisp library for interacting with PostgreSQL databases
+
+cl-simple-date/bionic,bionic 20170403-1 all
+  Common Lisp types for dates, timestamps, and intervals
+
+cl-sql-postgresql/bionic,bionic 6.7.0-1.1 all
+  CLSQL database backend, PostgreSQL via library
+
+cl-sql-postgresql-socket/bionic,bionic 6.7.0-1.1 all
+  CLSQL database backend, PostgreSQL via sockets
+
+cl-sql-tests/bionic,bionic 6.7.0-1.1 all
+  Testing suite for CLSQL
+
+clisp-module-postgresql/bionic 1:2.49.20170913-4build1 amd64
+  clisp module that adds a PostgreSQL interface
+
+collectd-core/bionic-updates 5.7.2-2ubuntu1.1 amd64
+  statistics collection and monitoring daemon (core system)
+
+coturn/bionic-updates,bionic-security 4.5.0.7-1ubuntu2.18.04.1 amd64
+  TURN and STUN server for VoIP
+
+courier-authlib-postgresql/bionic-updates 0.68.0-4ubuntu0.1 amd64
+  PostgreSQL support for the Courier authentication library
+
+courier-webadmin/bionic 0.78.0-2ubuntu2 amd64
+  Courier mail server - web-based administration frontend
+
+cvm-pgsql/bionic 0.97-0.1 amd64
+  Credential Validation Modules (PostgreSQL)
+
+dbconfig-common/bionic,bionic 2.0.9 all
+  framework that helps packages to manage databases
+
+dbconfig-pgsql/bionic,bionic 2.0.9 all
+  dbconfig-common PostgreSQL support
+
+devscripts/bionic-updates,bionic-security 2.17.12ubuntu1.1 amd64
+  scripts to make the life of a Debian Package maintainer easier
+
+diaspora-installer/bionic,bionic 0.7.3.1+debian2ubuntu2 all
+  distributed social networking service - installer
+
+dovecot-pgsql/bionic-updates,bionic-security 1:2.2.33.2-1ubuntu4.5 amd64
+  secure POP3/IMAP server - PostgreSQL support
+
+dpm-copy-server-postgres/bionic 1.10.0-2 amd64
+  DPM copy server with postgres database backend
+
+dpm-name-server-postgres/bionic 1.10.0-2 amd64
+  DPM nameserver server with postgres database backend
+
+dpm-server-postgres/bionic 1.10.0-2 amd64
+  Disk Pool Manager (DPM) server with postgres database backend
+
+dpm-srm-server-postgres/bionic 1.10.0-2 amd64
+  DPM SRM server with postgres database backend
+
+eekboek/bionic,bionic 2.02.05+dfsg-2 all
+  Bookkeeping software for small and medium-size businesses
+
+eekboek-db-postgresql/bionic,bionic 2.02.05+dfsg-2 all
+  PostgreSQL database driver for EekBoek
+
+erlang-p1-pgsql/bionic 1.1.4-2 amd64
+  Pure Erlang PostgreSQL driver
+
+exim4-daemon-heavy/bionic-updates,bionic-security 4.90.1-1ubuntu1.4 amd64
+  Exim MTA (v4) daemon with extended features, including exiscan-acl
+
+ferret/bionic,bionic 0.7-2 all
+  CASE tool for data model editing
+
+fp-units-db/bionic-updates 3.0.4+dfsg-18ubuntu2 amd64
+  Free Pascal - database-library units dependency package
+
+fp-units-db-3.0.4/bionic-updates 3.0.4+dfsg-18ubuntu2 amd64
+  Free Pascal - database-library units
+
+freeradius-postgresql/bionic-updates,bionic-security 3.0.16+dfsg-1ubuntu3.1 amd64
+  PostgreSQL module for FreeRADIUS server
+
+fsgateway/bionic 0.1.1-5 amd64
+  FUSE module to browse database's metadata, sugar datastores and xml files
+
+fusionforge-db-local/bionic,bionic 6.0.5-2ubuntu1 all
+  collaborative development tool - database (using PostgreSQL)
+
+fusionforge-scm/bionic,bionic 6.0.5-2ubuntu1 all
+  collaborative development tool - shell accounts (using PostgreSQL)
+
+fusionforge-shell/bionic,bionic 6.0.5-2ubuntu1 all
+  collaborative development tool - shell accounts (using PostgreSQL)
+
+gforge-db-postgresql/bionic,bionic 6.0.5-2ubuntu1 all
+  Dummy upgrade package for FusionForge
+
+gforge-shell-postgresql/bionic,bionic 6.0.5-2ubuntu1 all
+  Dummy upgrade package for FusionForge
+
+gnokii-smsd-pgsql/bionic 0.6.31+dfsg-2ubuntu6 amd64
+  SMSD plugin for PostgreSQL storage backend
+
+gnumed-server/bionic,bionic 21.15-1 all
+  medical practice management - server
+
+gnustep-dl2-postgresql-adaptor/bionic 0.12.0-15.1build2 amd64
+  gnustep-dl2 adaptor to connect to PostgreSQL
+
+goiardi/bionic 0.11.7-1 amd64
+  Chef server written in Go
+
+goiardi-doc/bionic,bionic 0.11.7-1 all
+  Documentation for Goiardi
+
+golang-github-boltdb-bolt-dev/bionic,bionic 1.3.1-5 all
+  low-level key/value database for Go
+
+golang-github-coreos-bbolt-dev/bionic,bionic 1.3.1-coreos.5-1 all
+  low-level key/value database for Go, especially CoreOS's etcd
+
+golang-github-ctdk-goiardi-dev/bionic,bionic 0.11.7-1 all
+  Golang library to interact with a chef server
+
+golang-github-go-macaron-session-dev/bionic,bionic 0.0~git20151014.0.66031fc-2 all
+  session management middleware for Macaron
+
+golang-github-go-xorm-builder-dev/bionic,bionic 0.0~git20170519.0.c8871c8-4 all
+  SQL builder for XORM written in Go
+
+golang-github-go-xorm-core-dev/bionic,bionic 0.5.7+git20170909.0.da1adaf-4 all
+  lightweight & compatible wrapper of database/sql
+
+golang-github-go-xorm-xorm-dev/bionic,bionic 0.6.4-3 all
+  Simple and Powerful ORM for Go, support mysql/sqlite3/postgres/mssql/oracle
+
+golang-github-lib-pq-dev/bionic,bionic 0.0~git20151007.0.ffe986a-1 all
+  pure Go postgres driver for Go’s database/sql package
+
+golang-gopkg-pg.v5-dev/bionic,bionic 5.3.3-2 all
+  PostgreSQL client and ORM for Golang
+
+golang-gopkg-testfixtures.v2-dev/bionic,bionic 2.2.0-2 all
+  Rails-like test fixtures for Go
+
+hashcat/bionic 4.0.1-1 amd64
+  World's fastest and most advanced password recovery utility
+
+hobbit-plugins/bionic,bionic 20170628 all
+  plugins for the Xymon network monitor
+
+homer-api-postgresql/bionic 5.0.6+dfsg2-3 amd64
+  HOMER Capture Node REST API
+
+hoteldruid/bionic,bionic 2.2.2-1 all
+  web-based property management system for hotels or B&Bs
+
+hydra/bionic 8.6-1build1 amd64
+  very fast network logon cracker
+
+hydra-gtk/bionic 8.6-1build1 amd64
+  very fast network logon cracker - GTK+ based GUI
+
+icinga2-ido-pgsql/bionic 2.8.1-0ubuntu2 amd64
+  host and network monitoring system - PostgreSQL support
+
+imposm/bionic,bionic 2.6.0+ds-4 all
+  importer for OpenStreetMap data
+
+kamailio-postgres-modules/bionic 5.1.2-1ubuntu2 amd64
+  PostgreSQL database connectivity module for the Kamailio SIP server
+
+kea-dhcp4-server/bionic 1.1.0-1build2 amd64
+  ISC KEA IPv4 DHCP server
+
+kea-dhcp6-server/bionic 1.1.0-1build2 amd64
+  ISC KEA IPv6 DHCP server
+
+kexi-postgresql-driver/bionic 1:3.1.0-2 amd64
+  PostgreSQL support for kexi
+
+lavapdu-daemon/bionic,bionic 0.0.5-1 all
+  LAVA PDU control daemon
+
+lfc-server-postgres/bionic 1.10.0-2 amd64
+  LCG File Catalog (LFC) server with postgres database backend
+
+libanyevent-dbd-pg-perl/bionic,bionic 0.03-5 all
+  AnyEvent interface to DBD::Pg's async interface
+
+libapache2-mod-auth-pgsql/bionic 2.0.3-6.1ubuntu1 amd64
+  Module for Apache2 which provides PostgreSQL authentication
+
+libaprutil1-dbd-pgsql/bionic 1.6.1-2 amd64
+  Apache Portable Runtime Utility Library - PostgreSQL Driver
+
+libclass-dbi-loader-perl/bionic,bionic 0.34-2 all
+  Perl module for dynamic definition of Class::DBI sub classes
+
+libclass-dbi-pg-perl/bionic,bionic 0.09-5 all
+  Class::DBI extension for Postgres
+
+libcppdb-dev/bionic 0.3.1+dfsg-6 amd64
+  SQL Connectivity Library (development files)
+
+libcppdb-mysql0/bionic 0.3.1+dfsg-6 amd64
+  SQL Connectivity Library (MySQL backend)
+
+libcppdb-odbc0/bionic 0.3.1+dfsg-6 amd64
+  SQL Connectivity Library (odbc backend)
+
+libcppdb-postgresql0/bionic 0.3.1+dfsg-6 amd64
+  SQL Connectivity Library (PostgreSQL backend)
+
+libcppdb-sqlite3-0/bionic 0.3.1+dfsg-6 amd64
+  SQL Connectivity Library (sqlite3 backend)
+
+libcppdb0/bionic 0.3.1+dfsg-6 amd64
+  SQL Connectivity Library (core library)
+
+libdatetime-format-dbi-perl/bionic,bionic 0.041-2 all
+  abstraction layer for DateTime over some database vendors
+
+libdatetime-format-pg-perl/bionic,bionic 0.16013-1 all
+  module for parsing and formatting PostgreSQL dates and times
+
+libdbd-pg-perl/bionic 3.7.0-1 amd64
+  Perl DBI driver for the PostgreSQL database server
+
+libdbd-pgsql/bionic 0.9.0-5ubuntu2 amd64
+  PostgreSQL database server driver for libdbi
+
+libdbd-sqlite2-perl/bionic 2:0.37-1build3 amd64
+  Perl DBI driver with a self-contained RDBMS (SQLite2 version)
+
+libdbd-sqlite3-perl/bionic 1.56-1 amd64
+  Perl DBI driver with a self-contained RDBMS
+
+libdbi-perl/bionic,now 1.640-1 amd64 [installed]
+  Perl Database Interface (DBI)
+
+libdbix-class-perl/bionic,bionic 0.082840-3 all
+  extensible and flexible object <-> relational mapper
+
+libdbix-class-schema-loader-perl/bionic,bionic 0.07048-1 all
+  module to automate definition of a DBIx::Class::Schema
+
+libdbix-datasource-perl/bionic,bionic 0.02-5 all
+  database-independent module to create and drop functions
+
+libdbix-dbschema-perl/bionic,bionic 0.45-1 all
+  Perl module to manipulate schemas independently of databases
+
+libdbix-introspector-perl/bionic,bionic 0.001005-1 all
+  module to detect what database code is connected to
+
+libecpg-compat3/bionic-updates,bionic-security 10.10-0ubuntu0.18.04.1 amd64
+  older version of run-time library for ECPG programs
+
+libecpg-dev/bionic-updates,bionic-security 10.10-0ubuntu0.18.04.1 amd64
+  development files for ECPG (Embedded PostgreSQL for C)
+
+libecpg6/bionic-updates,bionic-security 10.10-0ubuntu0.18.04.1 amd64
+  run-time library for ECPG programs
+
+libeigenbase-farrago-java/bionic,bionic 0.9.0-2 all
+  Java framework for constructing RDBMS services
+
+libgda-5.0-postgres/bionic-updates 5.2.4-9ubuntu0.1 amd64
+  PostgreSQL provider for libgda database abstraction library
+
+libghc-hdbc-dev/bionic 2.4.0.2-1 amd64
+  Haskell Database Connectivity, GHC package
+
+libghc-hdbc-doc/bionic,bionic 2.4.0.2-1 all
+  Haskell Database Connectivity, Documentation
+
+libghc-hdbc-odbc-dev/bionic 2.3.1.1-8build3 amd64
+  unixODBC HDBC (Haskell Database Connectivity) Driver for GHC
+
+libghc-hdbc-odbc-doc/bionic,bionic 2.3.1.1-8build3 all
+  unixODBC HDBC (Haskell Database Connectivity) Documentation
+
+libghc-hdbc-odbc-prof/bionic 2.3.1.1-8build3 amd64
+  unixODBC Haskell Database Connectivity Driver; profiling libraries
+
+libghc-hdbc-postgresql-dev/bionic 2.3.2.4-3build4 amd64
+  PostgreSQL HDBC (Haskell Database Connectivity) Driver for GHC
+
+libghc-hdbc-postgresql-doc/bionic,bionic 2.3.2.4-3build4 all
+  PostgreSQL HDBC (Haskell Database Connectivity) documentation
+
+libghc-hdbc-postgresql-prof/bionic 2.3.2.4-3build4 amd64
+  PostgreSQL HDBC Driver for GHC; profiling libraries
+
+libghc-hdbc-sqlite3-dev/bionic 2.3.3.1-4build3 amd64
+  Sqlite v3 HDBC (Haskell Database Connectivity) Driver for GHC
+
+libghc-hdbc-sqlite3-doc/bionic,bionic 2.3.3.1-4build3 all
+  Sqlite v3 HDBC (Haskell Database Connectivity) Documentation
+
+libghc-hdbc-sqlite3-prof/bionic 2.3.3.1-4build3 amd64
+  Sqlite v3 HDBC Driver for GHC; profiling libraries
+
+libghc-highlighting-kate-dev/bionic 0.6.4-1build2 amd64
+  syntax highlighting library based on Kate syntax descriptions
+
+libghc-highlighting-kate-doc/bionic,bionic 0.6.4-1build2 all
+  library documentation for highlighting-kate; documentation
+
+libghc-highlighting-kate-prof/bionic 0.6.4-1build2 amd64
+  highlighting-kate library with profiling enabled; profiling libraries
+
+libghc-persistable-types-hdbc-pg-dev/bionic 0.0.1.5-1build3 amd64
+  Relational-Record instances of PostgreSQL extended types
+
+libghc-persistable-types-hdbc-pg-doc/bionic,bionic 0.0.1.5-1build3 all
+  Relational-Record instances of PostgreSQL extended types; documentation
+
+libghc-persistable-types-hdbc-pg-prof/bionic 0.0.1.5-1build3 amd64
+  Relational-Record instances of PostgreSQL extended types; profiling libraries
+
+libghc-persistent-postgresql-dev/bionic 2.6.2.1-1 amd64
+  backend for the persistent library using PostgreSQL
+
+libghc-persistent-postgresql-doc/bionic,bionic 2.6.2.1-1 all
+  backend for the persistent library using PostgreSQL; documentation
+
+libghc-persistent-postgresql-prof/bionic 2.6.2.1-1 amd64
+  backend for the persistent library using PostgreSQL; profiling libraries
+
+libghc-postgresql-libpq-dev/bionic 0.9.3.1-1 amd64
+  low-level binding to libpq
+
+libghc-postgresql-libpq-doc/bionic,bionic 0.9.3.1-1 all
+  low-level binding to libpq; documentation
+
+libghc-postgresql-libpq-prof/bionic 0.9.3.1-1 amd64
+  low-level binding to libpq; profiling libraries
+
+libghc-postgresql-simple-dev/bionic 0.5.3.0-1build5 amd64
+  mid-level PostgreSQL client library
+
+libghc-postgresql-simple-doc/bionic,bionic 0.5.3.0-1build5 all
+  mid-level PostgreSQL client library; documentation
+
+libghc-postgresql-simple-prof/bionic 0.5.3.0-1build5 amd64
+  mid-level PostgreSQL client library; profiling libraries
+
+libghc-relational-schemas-dev/bionic 0.1.4.2-1build1 amd64
+  RDBMSs' schema templates for relational-query
+
+libghc-relational-schemas-doc/bionic,bionic 0.1.4.2-1build1 all
+  RDBMSs' schema templates for relational-query; documentation
+
+libghc-relational-schemas-prof/bionic 0.1.4.2-1build1 amd64
+  RDBMSs' schema templates for relational-query; profiling libraries
+
+libghc-text-postgresql-dev/bionic 0.0.2.3-1build1 amd64
+  Parser and Printer of PostgreSQL extended types
+
+libghc-text-postgresql-doc/bionic,bionic 0.0.2.3-1build1 all
+  Parser and Printer of PostgreSQL extended types; documentation
+
+libghc-text-postgresql-prof/bionic 0.0.2.3-1build1 amd64
+  Parser and Printer of PostgreSQL extended types; profiling libraries
+
+libh2-java/bionic,bionic 1.4.196-2 all
+  H2 Database Engine
+
+libh2-java-doc/bionic,bionic 1.4.196-2 all
+  H2 Database Engine (documentation)
+
+libhoel-dev/bionic 1.3.1-1 amd64
+  database abstraction library written in C - development
+
+libhoel1.3/bionic 1.3.1-1 amd64
+  database abstraction library written in C
+
+libkdb3-driver-postgresql/bionic 3.1.0-2 amd64
+  PostgreSQL driver for KDb
+
+libkiokudb-backend-dbi-perl/bionic,bionic 1.23-2 all
+  DBI backend for KiokuDB
+
+liblwgeom-2.4-0/bionic 2.4.3+dfsg-4 amd64
+  PostGIS "Lightweight Geometry" library
+
+liblwgeom-dev/bionic 2.4.3+dfsg-4 amd64
+  PostGIS "Lightweight Geometry" library - Development files
+
+libminion-perl/bionic,bionic 7.05-1 all
+  job queue for Mojolicious
+
+libmojo-pg-perl/bionic,bionic 4.04-1 all
+  module to make PostgreSQL fun to use with Mojolicious
+
+libnetsds-perl/bionic,bionic 1.301-3 all
+  Service Delivery Suite framework
+
+libnpgsql-cil-dev/bionic,bionic 2.2.7+dfsg3-1 all
+  PostgreSQL connection library for Mono - devel package
+
+libnpgsql2.2-cil/bionic,bionic 2.2.7+dfsg3-1 all
+  PostgreSQL connection library for Mono
+
+libnss-pgsql2/bionic 1.4.0debian-8 amd64
+  NSS module for using PostgreSQL as a naming service
+
+libodb-pgsql-2.4/bionic 2.4.0-1build1 amd64
+  ODB Runtime Library for PostgreSQL
+
+libodb-pgsql-dev/bionic 2.4.0-1build1 amd64
+  ODB Runtime Library for PostgreSQL (development)
+
+libopendbx1-pgsql/bionic 1.4.6-11 amd64
+  PostgreSQL backend for OpenDBX
+
+libopenrpt-dev/bionic 3.3.12-2 amd64
+  graphical SQL report writer, designer and rendering engine (development)
+
+libopenrpt1v5/bionic 3.3.12-2 amd64
+  graphical SQL report writer, designer and rendering library
+
+libpam-pgsql/bionic 0.7.3.2-1 amd64
+  PAM module to authenticate using a PostgreSQL database
+
+libpdal-base5/bionic 1.6.0-1build2 amd64
+  Point Data Abstraction Library - libpdal_base
+
+libpdal-dev/bionic 1.6.0-1build2 amd64
+  Point Data Abstraction Library - development files
+
+libpdal-plugin-greyhound/bionic 1.6.0-1build2 amd64
+  Point Data Abstraction Library - Greyhound plugin
+
+libpdal-plugin-icebridge/bionic 1.6.0-1build2 amd64
+  Point Data Abstraction Library - Icebridge plugin
+
+libpdal-plugin-pgpointcloud/bionic 1.6.0-1build2 amd64
+  Point Data Abstraction Library - PostgreSQL PointCloud plugin
+
+libpdal-plugin-python/bionic 1.6.0-1build2 amd64
+  Point Data Abstraction Library - Python plugin
+
+libpdal-plugin-sqlite/bionic 1.6.0-1build2 amd64
+  Point Data Abstraction Library - SQLite plugin
+
+libpdal-plugins/bionic 1.6.0-1build2 amd64
+  Point Data Abstraction Library - plugins
+
+libpdal-util5/bionic 1.6.0-1build2 amd64
+  Point Data Abstraction Library - libpdal_util
+
+libpg-hstore-perl/bionic 1.06-1build2 amd64
+  Perl module for working with PostgreSQLs HSTORE data type
+
+libpg-perl/bionic 1:2.1.1-5build4 amd64
+  Perl modules for PostgreSQL
+
+libpgobject-perl/bionic,bionic 2.000002-1 all
+  base class for PG Object subclasses
+
+libpgobject-simple-perl/bionic,bionic 3.000002-1 all
+  minimalist stored procedure mapper based on LedgerSMB's DBObject
+
+libpgobject-simple-role-perl/bionic,bionic 2.000002-1 all
+  Moo/Moose mappers for minimalist PGObject framework
+
+libpgobject-type-datetime-perl/bionic,bionic 2.000001-1 all
+  DateTime Wrappers for PGObject
+
+libpgobject-util-dbadmin-perl/bionic,bionic 0.100.0-1 all
+  PostgreSQL Database Management Facilities for PGObject
+
+libpgobject-util-dbchange-perl/bionic,bionic 0.050.2-1 all
+  module to track applied change files in the PostgreSQL database
+
+libpgocaml-ocaml/bionic 2.2-2build1 amd64
+  OCaml type-safe bindings for PostgreSQL (runtime)
+
+libpgocaml-ocaml-dev/bionic 2.2-2build1 amd64
+  OCaml type-safe bindings for PostgreSQL (development)
+
+libpgtcl/bionic 1:1.9+git20120911-4 amd64
+  Tcl client library binding for PostgreSQL
+
+libpgtcl-dev/bionic 1:1.9+git20120911-4 amd64
+  Tcl client library binding for PostgreSQL - development files
+
+libpgtypes3/bionic-updates,bionic-security 10.10-0ubuntu0.18.04.1 amd64
+  shared library libpgtypes for PostgreSQL 10
+
+libphp-adodb/bionic,bionic 5.20.9-1 all
+  ADOdb is a PHP database abstraction layer library
+
+libpostgis-java/bionic,bionic 1:2.2.1-6 all
+  Geographic objects support for PostgreSQL -- JDBC support
+
+libpostgresql-gst/bionic,bionic 3.2.5-1.1 all
+  PostgreSQL bindings for GNU Smalltalk
+
+libpostgresql-jdbc-java/bionic,bionic 9.4.1212-1 all
+  Java database (JDBC) driver for PostgreSQL
+
+libpostgresql-jdbc-java-doc/bionic,bionic 9.4.1212-1 all
+  Java database (JDBC) driver for PostgreSQL (documentation)
+
+libpostgresql-ocaml/bionic 2.0.5-3build1 amd64
+  OCaml bindings to PostgreSQL's libpq (runtime)
+
+libpostgresql-ocaml-dev/bionic 2.0.5-3build1 amd64
+  OCaml bindings to PostgreSQL's libpq
+
+libpq-dev/bionic-updates,bionic-security 10.10-0ubuntu0.18.04.1 amd64
+  header files for libpq5 (PostgreSQL library)
+
+libpq5/bionic-updates,bionic-security,now 10.10-0ubuntu0.18.04.1 amd64 [installed,automatic]
+  PostgreSQL C client library
+
+libpqxx-4.0v5/bionic 4.0.1+dfsg3-8 amd64
+  C++ library to connect to PostgreSQL
+
+libpqxx-dev/bionic 4.0.1+dfsg3-8 amd64
+  C++ library to connect to PostgreSQL (development files)
+
+libpqxx-doc/bionic,bionic 4.0.1+dfsg3-8 all
+  C++ library to connect to PostgreSQL (documentation)
+
+libpqxx3-dev/bionic,bionic 4.0.1+dfsg3-8 all
+  Transitional dummy package for libpqxx-dev
+
+libqt4-sql-psql/bionic 4:4.8.7+dfsg-7ubuntu1 amd64
+  Qt 4 PostgreSQL database driver
+
+libqt5sql5-psql/bionic-updates 5.9.5+dfsg-0ubuntu2.4 amd64
+  Qt 5 PostgreSQL database driver
+
+librdf-storage-postgresql/bionic 1.0.17-1.1 amd64
+  RDF library, PostGreSQL backend
+
+librdf0/bionic,now 1.0.17-1.1 amd64 [installed]
+  Redland Resource Description Framework (RDF) library
+
+libreoffice-base-drivers/bionic-updates,bionic-security 1:6.0.7-0ubuntu0.18.04.10 amd64
+  Database connectivity drivers for LibreOffice
+
+libreoffice-sdbc-postgresql/bionic-updates,bionic-security 1:6.0.7-0ubuntu0.18.04.10 amd64
+  PostgreSQL SDBC driver for LibreOffice
+
+libsasl2-modules-sql/bionic 2.1.27~101-g0780600+dfsg-3ubuntu2 amd64
+  Cyrus SASL - pluggable authentication modules (SQL)
+
+libsoci-postgresql3.2v5/bionic 3.2.3-2ubuntu2 amd64
+  C++ Database Access Library (PostgreSQL backend)
+
+libsql-reservedwords-perl/bionic,bionic 0.8-2 all
+  Perl extension that indicates if words are reserved by SQL
+
+libsqlclient-dev/bionic 1.8.1-3 amd64
+  SQL client library for GNUstep (development files)
+
+libsqlclient1.8/bionic 1.8.1-3 amd64
+  SQL client library for GNUstep (runtime library)
+
+libtap-parser-sourcehandler-pgtap-perl/bionic,bionic 3.33-2 all
+  Unit testing tools for pgTAP
+
+libterralib-dev/bionic 4.3.0+dfsg.2-11 amd64
+  C++ library for Geographical Information Systems -- development package
+
+libterralib-doc/bionic,bionic 4.3.0+dfsg.2-11 all
+  C++ library for Geographical Information Systems -- documentation package
+
+libterralib3/bionic 4.3.0+dfsg.2-11 amd64
+  C++ library for Geographical Information Systems
+
+libtest-postgresql-perl/bionic,bionic 1.23-2 all
+  sets up and destroys temporary PostgreSQL instances for testing
+
+libtntdb-dev/bionic 1.3-4 amd64
+  Development headers for tntdb
+
+libtntdb4v5/bionic 1.3-4 amd64
+  C++ class library for easy database access
+
+libur-perl/bionic,bionic 0.450-1 all
+  object/relation mapper library
+
+liburi-db-perl/bionic,bionic 0.18-1 all
+  module to support database URI standard
+
+libuser-simple-perl/bionic,bionic 1.45-2 all
+  module for simple user sessions management
+
+libxtuplecommon-dev/bionic 4.10.1-1 amd64
+  multi-user accounting / CRM / ERP suite (development package)
+
+libxtuplecommon1/bionic 4.10.1-1 amd64
+  multi-user accounting / CRM / ERP suite (shared libraries)
+
+libzdb-dev/bionic 3.1-0.2 amd64
+  Zild Database Library [devel]
+
+libzdb11/bionic 3.1-0.2 amd64
+  Zild Database Library [runtime]
+
+ltsp-cluster-control/bionic,bionic 2.0.3-0ubuntu3 all
+  Web based thin-client configuration management
+
+lua-dbi-postgresql/bionic 0.5.hg5ba1dd988961-4 amd64
+  DBI library for the Lua language, PostgreSQL backend
+
+lua-dbi-postgresql-dbg/bionic 0.5.hg5ba1dd988961-4 amd64
+  DBI library for the Lua language, PostgreSQL backend debug symbols
+
+lua-dbi-postgresql-dev/bionic 0.5.hg5ba1dd988961-4 amd64
+  DBI library for the Lua language, PostgreSQL development files
+
+lua-sql-postgres/bionic 2.3.4-1 amd64
+  luasql library for the Lua language
+
+lua-sql-postgres-dev/bionic 2.3.4-1 amd64
+  luasql development files for the Lua language
+
+maas-region-api/bionic-updates,bionic-updates 2.4.2-7034-g2f5deb8b8-0ubuntu1 all
+  Region controller API service for MAAS
+
+maas-region-controller/bionic-updates,bionic-updates 2.4.2-7034-g2f5deb8b8-0ubuntu1 all
+  Region Controller for MAAS
+
+mailman3/bionic,bionic 3.1.1-9 all
+  Mailing list management system
+
+mailman3-web/bionic,bionic 0+20170523-14 all
+  Django project integrating Mailman3 Postorius and HyperKitty
+
+mini-dinstall/bionic,bionic 0.6.31ubuntu1 all
+  daemon for updating Debian packages in a repository
+
+mosquitto-auth-plugin/bionic 0.0.7-2.1ubuntu3 amd64
+  Authentication plugin for Mosquitto with multiple back-ends
+
+nova-ajax-console-proxy/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - AJAX console proxy - transitional package
+
+nova-api/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - API frontend
+
+nova-cells/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  Openstack Compute - cells
+
+nova-common/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - common files
+
+nova-compute/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - compute node base
+
+nova-compute-kvm/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - compute node (KVM)
+
+nova-compute-libvirt/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - compute node libvirt support
+
+nova-compute-lxc/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - compute node (LXC)
+
+nova-compute-lxd/bionic-updates,bionic-updates 17.0.1-0ubuntu1 all
+  Openstack Compute - LXD container hypervisor support
+
+nova-compute-qemu/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - compute node (QEmu)
+
+nova-compute-vmware/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - compute node (VMware)
+
+nova-compute-xen/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - compute node (Xen)
+
+nova-conductor/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - conductor service
+
+nova-console/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - Console
+
+nova-consoleauth/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - Console Authenticator
+
+nova-doc/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - documentation
+
+nova-network/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - Network manager
+
+nova-novncproxy/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - NoVNC proxy
+
+nova-scheduler/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - virtual machine scheduler
+
+nova-serialproxy/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - serial proxy
+
+nova-spiceproxy/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - spice html5 proxy
+
+nova-volume/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - storage
+
+nova-xvpvncproxy/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute - XVP VNC proxy
+
+oar-server-pgsql/bionic 2.5.7-3 amd64
+  OAR batch scheduler PostgreSQL server backend package
+
+oar-user-pgsql/bionic 2.5.7-3 amd64
+  OAR batch scheduler PostgreSQL user backend package
+
+odbc-postgresql/bionic 1:10.01.0000-1 amd64
+  ODBC driver for PostgreSQL
+
+openrpt/bionic 3.3.12-2 amd64
+  graphical SQL report writer, designer and rendering engine
+
+opensips-postgres-module/bionic 2.2.2-3build4 amd64
+  PostgreSQL database connectivity module for OpenSIPS
+
+opensmtpd-extras/bionic 5.7.1-3.1build1 amd64
+  addons for the OpenSMTPD SMTP server
+
+orthanc-postgresql/bionic 2.0-5 amd64
+  Plugins to use PostgreSQL as a database back-end to Orthanc
+
+osm2pgsql/bionic 0.94.0+ds-1 amd64
+  OpenStreetMap data to PostgreSQL converter
+
+patator/bionic,bionic 0.6-3 all
+  Multi-purpose brute-forcer
+
+patroni/bionic,bionic 1.4.2-2ubuntu1 all
+  Template for PostgreSQL High Availability
+
+pdal/bionic 1.6.0-1build2 amd64
+  Point Data Abstraction Library
+
+pdal-doc/bionic,bionic 1.6.0-1build2 all
+  Point Data Abstraction Library - documentation
+
+pdns-backend-pgsql/bionic 4.1.1-1 amd64
+  generic PostgreSQL backend for PowerDNS
+
+peewee/bionic,bionic 2.10.2+dfsg-2 all
+  Command line Tools for python peewee (Python 3)
+
+perdition/bionic 2.2-3ubuntu2 amd64
+  POP3 and IMAP4 Proxy server
+
+perdition-postgresql/bionic 2.2-3ubuntu2 amd64
+  Library to allow perdition to access PostgreSQL based popmaps
+
+pfm/bionic,bionic 2.0.8-2 all
+  PostgreSQL graphical client using Tcl/Tk
+
+pg-activity/bionic,bionic 1.4.0-1 all
+  Realtime PostgreSQL database server monitoring tool
+
+pg-backup-ctl/bionic,bionic 0.8 all
+  backup and recover PostgreSQL using log archiving
+
+pg-cloudconfig/bionic,bionic 0.8 all
+  Set optimized defaults for PostgreSQL in virtual environments
+
+pg-rage-terminator-10/bionic 0.1.6-2 amd64
+  PostgreSQL background worker that kill random sessions.
+
+pgadmin3/bionic 1.22.2-4 amd64
+  graphical administration tool for PostgreSQL
+
+pgadmin3-data/bionic,bionic 1.22.2-4 all
+  graphical administration tool for PostgreSQL - documentation
+
+pgagent/bionic 3.4.1-5build1 amd64
+  job scheduler for PostgreSQL
+
+pgbackrest/bionic 1.25-1 amd64
+  Reliable PostgreSQL Backup & Restore
+
+pgbackrest-doc/bionic,bionic 1.25-1 all
+  Documentation package for pgbackrest
+
+pgbadger/bionic,bionic 9.2-1 all
+  Fast PostgreSQL log analysis report
+
+pgbouncer/bionic 1.8.1-1build1 amd64
+  lightweight connection pooler for PostgreSQL
+
+pgcharts/bionic 1.0-2 amd64
+  turn your PostgreSQL queries into charts
+
+pgcli/bionic,bionic 1.6.0-1 all
+  CLI for Postgres
+
+pgdbf/bionic 0.6.2-1.1build1 amd64
+  converter of XBase / FoxPro tables to PostgreSQL
+
+pglistener/bionic,bionic 4 all
+  Postgres listener
+
+pgloader/bionic 3.4.1+dfsg-1 amd64
+  extract, transform and load data into PostgreSQL
+
+pgmodeler/bionic 0.9.1~beta-1 amd64
+  PostgreSQL database modeler GUI interface
+
+pgmodeler-common/bionic,bionic 0.9.1~beta-1 all
+  pgmodeler's binary independent common files
+
+pgqd/bionic 3.3-1 amd64
+  Queue maintenance daemon for PgQ
+
+pgreplay/bionic 1.2.0-2ubuntu2 amd64
+  replay PostgreSQL log files
+
+pgtap/bionic,bionic 0.97.0-3ubuntu1 all
+  Unit testing framework for PostgreSQL - metapackage
+
+pgtap-doc/bionic,bionic 0.97.0-3ubuntu1 all
+  Unit testing framework for PostgreSQL - documentation
+
+pgtop/bionic 3.7.0-2build2 amd64
+  PostgreSQL performance monitoring tool akin to top
+
+pgxnclient/bionic,bionic 1.2.1-3 all
+  command line client for the PostgreSQL Extension Network
+
+php-mdb2-driver-pgsql/bionic,bionic 1.5.0b4-2 all
+  pgsql MDB2 driver
+
+php-pgsql/bionic,bionic 1:7.2+60ubuntu1 all
+  PostgreSQL module for PHP [default]
+
+php-zend-db/bionic,bionic 2.8.1-1 all
+  Zend Framework - Db component
+
+php7.2-pgsql/bionic-updates,bionic-security 7.2.24-0ubuntu0.18.04.1 amd64
+  PostgreSQL module for PHP
+
+phppgadmin/bionic,bionic 5.1+ds-3 all
+  web-based administration tool for PostgreSQL
+
+pike7.8-core/bionic 7.8.866-8.1 amd64
+  Powerful interpreted programming language
+
+pike7.8-pg/bionic 7.8.866-8.1 amd64
+  PostgreSQL modules for Pike
+
+pike8.0-core/bionic 8.0.498-1build1 amd64
+  Powerful interpreted programming language
+
+pike8.0-pg/bionic 8.0.498-1build1 amd64
+  PostgreSQL modules for Pike
+
+postbooks/bionic 4.10.1-1 amd64
+  multi-user accounting / CRM / ERP suite (GUI)
+
+postbooks-schema-common/bionic,bionic 1:4.10.1-1 all
+  multi-user accounting / CRM / ERP suite (demo database)
+
+postbooks-schema-demo/bionic,bionic 1:4.10.1-1 all
+  multi-user accounting / CRM / ERP suite (demo database)
+
+postbooks-schema-empty/bionic,bionic 1:4.10.1-1 all
+  multi-user accounting / CRM / ERP suite (empty database)
+
+postbooks-schema-quickstart/bionic,bionic 1:4.10.1-1 all
+  multi-user accounting / CRM / ERP suite (quickstart database)
+
+postbooks-updater/bionic 2.4.0-5 amd64
+  multi-user accounting / CRM / ERP suite (database update manager)
+
+postfix-pgsql/bionic-updates 3.3.0-1ubuntu0.2 amd64
+  PostgreSQL map support for Postfix
+
+postgis/bionic 2.4.3+dfsg-4 amd64
+  Geographic objects support for PostgreSQL
+
+postgis-doc/bionic,bionic 2.4.3+dfsg-4 all
+  Geographic objects support for PostgreSQL -- documentation
+
+postgis-gui/bionic 2.4.3+dfsg-4 amd64
+  Geographic objects support for PostgreSQL -- GUI programs
+
+postgresql/bionic-updates,bionic-updates,bionic-security,bionic-security,now 10+190ubuntu0.1 all [installed]
+  object-relational SQL database (supported version)
+
+postgresql-10/bionic-updates,bionic-security,now 10.10-0ubuntu0.18.04.1 amd64 [installed,automatic]
+  object-relational SQL database, version 10 server
+
+postgresql-10-amcheck/bionic 1.3-1 amd64
+  PostgreSQL extension that verifies indexes
+
+postgresql-10-asn1oid/bionic 1.2-1 amd64
+  ASN.1 OID data type for PostgreSQL
+
+postgresql-10-bgw-replstatus/bionic 1.0.2 amd64
+  report whether PostgreSQL node is master or standby
+
+postgresql-10-citus/bionic 7.0.3.PGDG-1 amd64
+  sharding and distributed joins for PostgreSQL
+
+postgresql-10-cron/bionic 1.0.2-1 amd64
+  Run periodic jobs in PostgreSQL
+
+postgresql-10-debversion/bionic 1.1-1 amd64
+  Debian version number type for PostgreSQL
+
+postgresql-10-dirtyread/bionic 1.3 amd64
+  Read dead but unvacuumed tuples from a PostgreSQL relation
+
+postgresql-10-ip4r/bionic 2.2-2 amd64
+  IPv4 and IPv6 types for PostgreSQL 10
+
+postgresql-10-jsquery/bionic 1.0.1-1 amd64
+  PostgreSQL JSON query language with GIN indexing support
+
+postgresql-10-mimeo/bionic,bionic 1.5.1-2 all
+  specialized, per-table replication between PostgreSQL instances
+
+postgresql-10-mysql-fdw/bionic 2.3.0-2 amd64
+  Postgres 10 Foreign Data Wrapper for MySQL
+
+postgresql-10-ogr-fdw/bionic 1.0.5-2 amd64
+  PostgreSQL foreign data wrapper for OGR
+
+postgresql-10-orafce/bionic 3.6.1-1 amd64
+  Oracle support functions for PostgreSQL 10
+
+postgresql-10-partman/bionic 3.1.2-1 amd64
+  PostgreSQL Partition Manager
+
+postgresql-10-pgaudit/bionic 1.2.0-1 amd64
+  PostgreSQL Audit Extension
+
+postgresql-10-pgextwlist/bionic 1.6-1 amd64
+  PostgreSQL Extension Whitelisting
+
+postgresql-10-pgfincore/bionic 1.2.1-1 amd64
+  set of PostgreSQL functions to manage blocks in memory
+
+postgresql-10-pglogical/bionic 2.1.1-1 amd64
+  Logical Replication Extension for PostgreSQL
+
+postgresql-10-pgmemcache/bionic 2.3.0-4 amd64
+  PostgreSQL interface to memcached
+
+postgresql-10-pgmp/bionic 1.0.2-5 amd64
+  arbitrary precision integers and rationals for PostgreSQL 10
+
+postgresql-10-pgq-node/bionic,bionic 3.2.5-1 all
+  Cascaded queueing on top of PgQ
+
+postgresql-10-pgq3/bionic 3.2.6-7 amd64
+  Generic queue for PostgreSQL
+
+postgresql-10-pgrouting/bionic 2.5.2-1build1 amd64
+  Routing functionality support for PostgreSQL/PostGIS
+
+postgresql-10-pgrouting-doc/bionic,bionic 2.5.2-1build1 all
+  Routing functionality support for PostgreSQL/PostGIS (Documentation)
+
+postgresql-10-pgrouting-scripts/bionic,bionic 2.5.2-1build1 all
+  Routing functionality support for PostgreSQL/PostGIS - SQL scripts
+
+postgresql-10-pgtap/bionic,bionic 0.97.0-3ubuntu1 all
+  Unit testing framework extension for PostgreSQL 10
+
+postgresql-10-pldebugger/bionic 1:1.0-3-g71ac998-1 amd64
+  PostgreSQL pl/pgsql Debugger API
+
+postgresql-10-pllua/bionic 1:1.1.0-2 amd64
+  Lua procedural language for PostgreSQL 10
+
+postgresql-10-plproxy/bionic 2.8-1 amd64
+  database partitioning system for PostgreSQL 10
+
+postgresql-10-plr/bionic 1:8.3.0.17-3 amd64
+  Procedural language interface between PostgreSQL and R
+
+postgresql-10-plsh/bionic 1.20171014-1 amd64
+  PL/sh procedural language for PostgreSQL 10
+
+postgresql-10-plv8/bionic 1:1.4.10.ds-2 amd64
+  Procedural language interface between PostgreSQL and JavaScript
+
+postgresql-10-postgis-2.4/bionic 2.4.3+dfsg-4 amd64
+  Geographic objects support for PostgreSQL 10
+
+postgresql-10-postgis-2.4-scripts/bionic,bionic 2.4.3+dfsg-4 all
+  Geographic objects support for PostgreSQL 10 -- SQL scripts
+
+postgresql-10-postgis-scripts/bionic,bionic 2.4.3+dfsg-4 all
+  transitional dummy package
+
+postgresql-10-powa/bionic 3.1.1 amd64
+  PostgreSQL Workload Analyzer -- PostgreSQL 10 extension
+
+postgresql-10-prefix/bionic 1.2.7-1 amd64
+  Prefix Range module for PostgreSQL
+
+postgresql-10-preprepare/bionic 0.9-1 amd64
+  pre prepare your PostgreSQL statements server side
+
+postgresql-10-prioritize/bionic 1.0.4-3 amd64
+  Get and set the nice priorities of PostgreSQL backends
+
+postgresql-10-python-multicorn/bionic 1.3.4-1 amd64
+  multicorn extension for Postgres 10 to write FDWs with python2
+
+postgresql-10-python3-multicorn/bionic 1.3.4-1 amd64
+  multicorn extension for Postgres 10 to write FDWs with python3
+
+postgresql-10-repack/bionic 1.4.2-2 amd64
+  reorganize tables in PostgreSQL databases with minimal locks
+
+postgresql-10-repmgr/bionic 4.0.3-1 amd64
+  replication manager for PostgreSQL 10
+
+postgresql-10-rum/bionic 1.2.0-1 amd64
+  PostgreSQL RUM access method
+
+postgresql-10-similarity/bionic 1.0~20160916-1 amd64
+  PostgreSQL similarity functions extension
+
+postgresql-10-slony1-2/bionic 2.2.6-1 amd64
+  replication system for PostgreSQL: PostgreSQL 10 server plug-in
+
+postgresql-10-unit/bionic 5.0-1 amd64
+  SI Units for PostgreSQL
+
+postgresql-all/bionic-updates,bionic-updates,bionic-security,bionic-security 10+190ubuntu0.1 all
+  metapackage depending on all PostgreSQL server packages
+
+postgresql-autodoc/bionic,bionic 1.40-3 all
+  Utility to create a PostgreSQL database schema overview in HTML, DOT and XML
+
+postgresql-client/bionic-updates,bionic-updates,bionic-security,bionic-security 10+190ubuntu0.1 all
+  front-end programs for PostgreSQL (supported version)
+
+postgresql-client-10/bionic-updates,bionic-security,now 10.10-0ubuntu0.18.04.1 amd64 [installed,automatic]
+  front-end programs for PostgreSQL 10
+
+postgresql-client-common/bionic-updates,bionic-updates,bionic-security,bionic-security,now 190ubuntu0.1 all [installed,automatic]
+  manager for multiple PostgreSQL client versions
+
+postgresql-common/bionic-updates,bionic-updates,bionic-security,bionic-security,now 190ubuntu0.1 all [installed,automatic]
+  PostgreSQL database-cluster manager
+
+postgresql-comparator/bionic 2.3.0-2 amd64
+  efficient PostgreSQL table content comparison and synchronization
+
+postgresql-contrib/bionic-updates,bionic-updates,bionic-security,bionic-security 10+190ubuntu0.1 all
+  additional facilities for PostgreSQL (supported version)
+
+postgresql-doc/bionic-updates,bionic-updates,bionic-security,bionic-security 10+190ubuntu0.1 all
+  documentation for the PostgreSQL database management system
+
+postgresql-doc-10/bionic-updates,bionic-updates,bionic-security,bionic-security 10.10-0ubuntu0.18.04.1 all
+  documentation for the PostgreSQL database management system
+
+postgresql-filedump/bionic 10.0-1build1 amd64
+  Utility to format PostgreSQL files
+
+postgresql-hll/bionic 2.7-2.1 amd64
+  HyperLogLog extension for PostgreSQL
+
+postgresql-pgsphere/bionic 1.1.1+2017.08.30-1build1 amd64
+  Spherical data types for PostgreSQL
+
+postgresql-plperl-10/bionic-updates,bionic-security 10.10-0ubuntu0.18.04.1 amd64
+  PL/Perl procedural language for PostgreSQL 10
+
+postgresql-plpython-10/bionic-updates,bionic-security 10.10-0ubuntu0.18.04.1 amd64
+  PL/Python procedural language for PostgreSQL 10
+
+postgresql-plpython3-10/bionic-updates,bionic-security 10.10-0ubuntu0.18.04.1 amd64
+  PL/Python 3 procedural language for PostgreSQL 10
+
+postgresql-pltcl-10/bionic-updates,bionic-security 10.10-0ubuntu0.18.04.1 amd64
+  PL/Tcl procedural language for PostgreSQL 10
+
+postgresql-q3c/bionic 1.5.0-3build1 amd64
+  PostgreSQL extension used for indexing the sky
+
+postgresql-server-dev-10/bionic-updates,bionic-security 10.10-0ubuntu0.18.04.1 amd64
+  development files for PostgreSQL 10 server-side programming
+
+postgresql-server-dev-all/bionic-updates,bionic-updates,bionic-security,bionic-security 190ubuntu0.1 all
+  extension build tool for multiple PostgreSQL versions
+
+proftpd-mod-pgsql/bionic 1.3.5e-1build1 amd64
+  Versatile, virtual-hosting FTP daemon - PostgreSQL module
+
+prometheus-apache-exporter/bionic 0.5.0+ds-1 amd64
+  Prometheus exporter for Apache server metrics
+
+prometheus-bind-exporter/bionic 0.2~git20161221+dfsg-1 amd64
+  Prometheus exporter for Bind server metrics
+
+prometheus-postgres-exporter/bionic 0.4.1+ds-2 amd64
+  Prometheus exporter for PostgreSQL server metrics
+
+prometheus-sql-exporter/bionic 0.2.0.ds-3 amd64
+  Flexible SQL Exporter for Prometheus
+
+pspg/bionic 0.9.3-1 amd64
+  PostgreSQL pager
+
+puppet-module-puppetlabs-postgresql/bionic,bionic 5.3.0-1 all
+  Puppet module for PostgreSQL database
+
+pure-ftpd-postgresql/bionic 1.0.46-1build1 amd64
+  Secure and efficient FTP server with PostgreSQL user authentication
+
+pybit-common/bionic,bionic 1.0.0-3 all
+  Common objects for pybit
+
+python-djorm-ext-pgarray/bionic,bionic 1.2-0ubuntu2 all
+  PostgreSQL native array fields extension for Django
+
+python-imposm/bionic 2.6.0+ds-4 amd64
+  importer for OpenStreetMap data - Python module
+
+python-logilab-common/bionic,bionic 1.4.1-1 all
+  useful miscellaneous modules used by Logilab projects
+
+python-migrate/bionic,bionic 0.11.0-2 all
+  Database schema migration for SQLAlchemy - Python 2.7
+
+python-migrate-doc/bionic,bionic 0.11.0-2 all
+  Database schema migration for SQLAlchemy - doc
+
+python-multicorn/bionic 1.3.4-1 amd64
+  multicorn utility module for postgresql-X.Y-python-multicorn
+
+python-nova/bionic-updates,bionic-updates 2:17.0.12-0ubuntu1 all
+  OpenStack Compute Python libraries
+
+python-nova-lxd/bionic-updates,bionic-updates 17.0.1-0ubuntu1 all
+  OpenStack Compute Python libraries - LXD driver
+
+python-novaclient/bionic,bionic 2:9.1.1-0ubuntu1 all
+  client library for OpenStack Compute API - Python 2.7
+
+python-novaclient-doc/bionic,bionic 2:9.1.1-0ubuntu1 all
+  client library for OpenStack Compute API - doc
+
+python-pdal/bionic 1.6.0+ds-1 amd64
+  Point Data Abstraction Library - Python 2 extension
+
+python-peewee/bionic 2.10.2+dfsg-2 amd64
+  Simple ORM for PostgreSQL, MySQL and SQLite (Python 2)
+
+python-peewee-doc/bionic,bionic 2.10.2+dfsg-2 all
+  Documentation pyhton peewee simple ORM
+
+python-pg8000/bionic,bionic 1.10.6-1 all
+  Pure-Python PostgreSQL Driver (Python 2)
+
+python-pg8000-doc/bionic,bionic 1.10.6-1 all
+  Pure-Python PostgreSQL Driver (documentation)
+
+python-pgspecial/bionic,bionic 1.9.0-1 all
+  Meta-commands handler for Postgres Database (Python 2)
+
+python-prettytable/bionic,bionic 0.7.2-3 all
+  library to represent tabular data in visually appealing ASCII tables
+
+python-psycopg2/bionic 2.7.4-1 amd64
+  Python module for PostgreSQL
+
+python-psycopg2-dbg/bionic 2.7.4-1 amd64
+  Python module for PostgreSQL (debug extension)
+
+python-psycopg2-doc/bionic,bionic 2.7.4-1 all
+  Python module for PostgreSQL (documentation package)
+
+python-pygresql/bionic 1:5.0.4-1 amd64
+  PostgreSQL module for Python
+
+python-pygresql-doc/bionic,bionic 1:5.0.4-1 all
+  Python Pygresql (common documentation)
+
+python-setproctitle/bionic 1.1.10-1build2 amd64
+  Setproctitle implementation for Python 2
+
+python-storm/bionic 0.19-2 amd64
+  object-relational mapper (ORM) for Python
+
+python-storm-dbg/bionic 0.19-2 amd64
+  object-relational mapper (ORM) for Python - debugging files
+
+python-testing.postgresql/bionic,bionic 1.3.0-1 all
+  Python testing.* framework - PostgreSQL helpers (Python 2)
+
+python3-aiopg/bionic,bionic 0.13.2-1 all
+  PostgreSQL integration with asyncio
+
+python3-anosql/bionic,bionic 0.2.0-1 all
+  Manage your raw SQL Queries in an elegant manner
+
+python3-asyncpg/bionic 0.13.0-1ubuntu3 amd64
+  asyncio PosgtreSQL driver
+
+python3-django-netfields/bionic,bionic 0.8-1 all
+  Django PostgreSQL netfields implementation (Python3 version)
+
+python3-djorm-ext-pgarray/bionic,bionic 1.2-0ubuntu2 all
+  PostgreSQL native array fields extension for Django (python3)
+
+python3-logilab-common/bionic,bionic 1.4.1-1 all
+  useful miscellaneous modules used by Logilab projects (Python3)
+
+python3-londiste/bionic,bionic 3.3.0-1 all
+  Database replication for PostgreSQL based on PgQ
+
+python3-migrate/bionic,bionic 0.11.0-2 all
+  Database schema migration for SQLAlchemy - Python 3.x
+
+python3-multicorn/bionic 1.3.4-1 amd64
+  multicorn utility module for postgresql-X.Y-python3-multicorn
+
+python3-novaclient/bionic,bionic 2:9.1.1-0ubuntu1 all
+  client library for OpenStack Compute API - 3.x
+
+python3-peewee/bionic 2.10.2+dfsg-2 amd64
+  Simple ORM for PostgreSQL, MySQL and SQLite (Python 3)
+
+python3-pg8000/bionic,bionic 1.10.6-1 all
+  Pure-Python PostgreSQL Driver (Python 3)
+
+python3-pgq/bionic,bionic 3.3.0-1 all
+  PgQ queue processing for Python
+
+python3-pgspecial/bionic,bionic 1.9.0-1 all
+  Meta-commands handler for Postgres Database (Python 3)
+
+python3-postgresql/bionic 1.1.0-2build4 amd64
+  pgsql driver, cluster management tools, and client tools
+
+python3-prettytable/bionic,bionic 0.7.2-3 all
+  library to represent tabular data in visually appealing ASCII tables (Python3)
+
+python3-psycopg2/bionic 2.7.4-1 amd64
+  Python 3 module for PostgreSQL
+
+python3-psycopg2-dbg/bionic 2.7.4-1 amd64
+  Python 3 module for PostgreSQL (debug extension)
+
+python3-pygresql/bionic 1:5.0.4-1 amd64
+  PostgreSQL module for Python3
+
+python3-setproctitle/bionic 1.1.10-1build2 amd64
+  Setproctitle implementation for Python 3
+
+python3-skytools/bionic 3.3-2 amd64
+  Skytools Python modules
+
+python3-testing.postgresql/bionic,bionic 1.3.0-1 all
+  Python testing.* framework - PostgreSQL helpers (Python 3)
+
+qgis/bionic 2.18.17+dfsg-1 amd64
+  Geographic Information System (GIS)
+
+r-cran-rodbc/bionic 1.3-15-1build1 amd64
+  GNU R package for ODBC database access
+
+r-cran-rpostgresql/bionic 0.4-1build1 amd64
+  GNU R package providing database interface and driver for PostgreSQL
+
+redmine-pgsql/bionic-updates,bionic-updates,bionic-security,bionic-security 3.4.4-1ubuntu0.1 all
+  metapackage providing PostgreSQL dependencies for Redmine
+
+repmgr/bionic,bionic 4.0.3-1 all
+  replication manager for PostgreSQL (metapackage)
+
+repmgr-common/bionic,bionic 4.0.3-1 all
+  replication manager for PostgreSQL common files
+
+request-tracker4/bionic,bionic 4.4.2-2 all
+  extensible trouble-ticket tracking system
+
+resiprocate-turn-server-psql/bionic 1:1.11.0~beta5-1 amd64
+  reSIProcate SIP stack - ICE/TURN server
+
+resource-agents/bionic-updates 1:4.1.0~rc1-1ubuntu1.2 amd64
+  Cluster Resource Agents
+
+resource-agents-paf/bionic,bionic 2.2.0-2 all
+  PostgreSQL resource agent for Pacemaker
+
+roundcube-pgsql/bionic,bionic 1.3.6+dfsg.1-1 all
+  metapackage providing PostgreSQL dependencies for RoundCube
+
+rsyslog/bionic,now 8.32.0-1ubuntu4 amd64 [installed]
+  reliable system and kernel logging daemon
+
+rsyslog-pgsql/bionic 8.32.0-1ubuntu4 amd64
+  PostgreSQL output plugin for rsyslog
+
+rt4-db-postgresql/bionic,bionic 4.4.2-2 all
+  PostgreSQL database backend for request-tracker4
+
+rt4-db-sqlite/bionic,bionic 4.4.2-2 all
+  SQLite database backend for request-tracker4
+
+ruby-dataobjects/bionic,bionic 0.10.16-1 all
+  Unified interface to various databases for Ruby
+
+ruby-dataobjects-postgres/bionic 0.10.16-1build6 amd64
+  PostgreSQL adapter for ruby-dataobjects
+
+ruby-peek-pg/bionic,bionic 1.3.0-1 all
+  Take a peek into the Postgres queries made during your application's requests
+
+ruby-pg/bionic 0.19.0-2build1 amd64
+  PostgreSQL interface for Ruby
+
+ruby-sequel/bionic,bionic 5.6.0-1 all
+  Simple, flexible, and powerful SQL database access toolkit for Ruby
+
+ruby-sequel-pg/bionic 1.6.16-1build2 amd64
+  Faster SELECTs when using Sequel with pg
+
+sagan/bionic 1.1.2-0.3 amd64
+  Real-time System & Event Log Monitoring System
+
+sagan-rules/bionic,bionic 1:20160923-0.1 all
+  Real-time System & Event Log Monitoring System [rules]
+
+sgml-spell-checker/bionic,bionic 0.0.20040919-3 all
+  spell checker for SGML documents
+
+sisu-complete/bionic,bionic 7.1.11-1 all
+  installs all SiSU related packages
+
+sisu-postgresql/bionic,bionic 7.1.11-1 all
+  SiSU dependencies for use with PostgreSQL database
+
+skytools3-ticker/bionic,bionic 3.3-1 all
+  Transitional package to pull in pgqd
+
+slony1-2-bin/bionic 2.2.6-1 amd64
+  replication system for PostgreSQL: daemon and administration tools
+
+slony1-2-doc/bionic,bionic 2.2.6-1 all
+  Slony-I documentation
+
+sphinxsearch/bionic 2.2.11-2 amd64
+  Fast standalone full-text SQL search engine
+
+sqlgrey/bionic,bionic 1:1.8.0-1 all
+  Postfix Greylisting Policy Server
+
+sqlsmith/bionic 1.0-1build4 amd64
+  random SQL query generator
+
+sympa/bionic 6.2.24~dfsg-1 amd64
+  Modern mailing list manager
+
+syslog-ng/bionic,bionic 3.13.2-3 all
+  Enhanced system logging daemon (metapackage)
+
+syslog-ng-core/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (core)
+
+syslog-ng-dbg/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (debug symbols)
+
+syslog-ng-dev/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (development files)
+
+syslog-ng-mod-add-contextual-data/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (add-contextual-data plugin)
+
+syslog-ng-mod-amqp/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (AMQP plugin)
+
+syslog-ng-mod-basicfuncs-plus/bionic 0.6.2-0.1 amd64
+  Enhanced system logging daemon (extra template functions)
+
+syslog-ng-mod-extra/bionic,bionic 3.13.2-3 all
+  Enhanced system logging daemon (extra plugins)
+
+syslog-ng-mod-geoip/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (GeoIP plugin)
+
+syslog-ng-mod-getent/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (getent plugin)
+
+syslog-ng-mod-graphite/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (graphite plugin)
+
+syslog-ng-mod-grok/bionic 0.6.2-0.1 amd64
+  Enhanced system logging daemon (Grok parser support)
+
+syslog-ng-mod-journal/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (systemd journal plugin)
+
+syslog-ng-mod-json/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (JSON plugin)
+
+syslog-ng-mod-kafka/bionic 0.6.2-0.1 amd64
+  Enhanced system logging daemon (kafka destination)
+
+syslog-ng-mod-lua/bionic 0.6.2-0.1 amd64
+  Enhanced system logging daemon (Lua destination)
+
+syslog-ng-mod-map-value-pairs/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (map-value-pairs plugin)
+
+syslog-ng-mod-mongodb/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (MongoDB plugin)
+
+syslog-ng-mod-perl/bionic 0.6.2-0.1 amd64
+  Enhanced system logging daemon (Perl destination)
+
+syslog-ng-mod-python/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (Python plugin)
+
+syslog-ng-mod-redis/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (Redis plugin)
+
+syslog-ng-mod-riemann/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (Riemann destination)
+
+syslog-ng-mod-rss/bionic 0.6.2-0.1 amd64
+  Enhanced system logging daemon (RSS destination)
+
+syslog-ng-mod-smtp/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (SMTP plugin)
+
+syslog-ng-mod-snmptrapd-parser/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (snmptrapd-parser plugin)
+
+syslog-ng-mod-sql/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (SQL plugin)
+
+syslog-ng-mod-stardate/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (stardate plugin)
+
+syslog-ng-mod-stomp/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (STOMP plugin)
+
+syslog-ng-mod-tag-parser/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (tag parser plugin)
+
+syslog-ng-mod-trigger/bionic 0.6.2-0.1 amd64
+  Enhanced system logging daemon (trigger source)
+
+syslog-ng-mod-xml-parser/bionic 3.13.2-3 amd64
+  Enhanced system logging daemon (xml parser plugin)
+
+syslog-ng-mod-zmq/bionic 0.6.2-0.1 amd64
+  Enhanced system logging daemon (ZeroMQ destination)
+
+tarantool-lts-postgresql-module/bionic 1.5.5.37.g1687c02-1 amd64
+  Tarantool in-memory database - PostgreSQL connector
+
+tcl8.6-tdbc-postgres/bionic 1.0.6-1 amd64
+  Tcl Database Connectivity
+
+tinyows/bionic 1.1.1-4 amd64
+  lightweight and fast WFS-T server
+
+tntdb-postgresql4v5/bionic 1.3-4 amd64
+  PostgreSQL backend for tntdb database access library
+
+tora/bionic 2.1.3-4 amd64
+  graphical toolkit for database developers and administrators
+
+tora-dbg/bionic 2.1.3-4 amd64
+  graphical toolkit for databaseis - debugging symbols
+
+tryton-server/bionic,bionic 4.6.3-2 all
+  Tryton Application Platform (Server)
+
+tryton-server-doc/bionic,bionic 4.6.3-2 all
+  Tryton Application Platform (Server Documentation)
+
+tsung/bionic 1.7.0-3 amd64
+  distributed multi-protocol load testing tool
+
+ulogd2/bionic 2.0.5-5 amd64
+  Netfilter Userspace Logging Daemon
+
+ulogd2-pgsql/bionic 2.0.5-5 amd64
+  PostgreSQL extension to ulogd
+
+uwsgi-infrastructure-plugins/bionic-updates,bionic-security 2.0.15-10.2ubuntu2.1 amd64
+  infrastructure plugins for uWSGI
+
+uwsgi-plugin-emperor-pg/bionic-updates,bionic-security 2.0.15-10.2ubuntu2.1 amd64
+  Emperor PostgreSQL plugin for uWSGI
+
+vbackup/bionic,bionic 1.0.1-1 all
+  modular backup utility
+
+vmm/bionic,bionic 0.6.2-2 all
+  manage mail domains/accounts/aliases for Dovecot and Postfix
+
+vmm-doc/bionic,bionic 0.6.2-2 all
+  Documentation for the Virtual Mail Manager
+
+w1retap-pgsql/bionic 1.4.4-3 amd64
+  Data logger for 1-Wire weather sensors (PostgreSQL plugin)
+
+zabbix-proxy-pgsql/bionic 1:3.0.12+dfsg-1 amd64
+  network monitoring solution - proxy (using PostgreSQL)
+
+zabbix-server-pgsql/bionic 1:3.0.12+dfsg-1 amd64
+  network monitoring solution - server (using PostgreSQL)
+
