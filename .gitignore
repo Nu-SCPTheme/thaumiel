@@ -5,8 +5,11 @@ target/
 config.toml
 *.key
 
+# Editors and IDEs
+.*.sw?
+.idea
+
 # Misc
 *.bak
 *~
 *.rs.bak
-.*.sw?
