@@ -143,6 +143,8 @@ impl Server {
                 .service(web::resource("{name}").to(page_get))
                 .service(web::resource("/{name}/{options:.*}").to(page_get))
                 .service(web::resource("/").to(page_main))
+                .service(web::resource("/_default:{name}").to(page_get))
+                .service(web::resource("/default:{name}/{options:.*}").to(page_get))
         })
         .server_hostname(&hostname)
         .keep_alive(keep_alive)
