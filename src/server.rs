@@ -143,6 +143,15 @@ impl Server {
                 .service(web::resource("{name}").to(page_get))
                 .service(web::resource("/{name}/{options:.*}").to(page_get))
                 .service(web::resource("/").to(page_main))
+                .service(
+                    web::resource("/_default:{name}")
+                        .to(|name: web::Path<String>| redirect(format!("/{}", name))),
+                )
+                .service(web::resource("/_default:{name}/{options:.*}").to(
+                    |parts: web::Path<(String, String)>| {
+                        redirect(format!("{}/{}", parts.0, parts.1))
+                    },
+                ))
         })
         .server_hostname(&hostname)
         .keep_alive(keep_alive)
@@ -153,7 +162,9 @@ impl Server {
     }
 }
 
-async fn redirect(url: &str) -> HttpResponse {
+async fn redirect<S: AsRef<str> + http::header::IntoHeaderValue + std::fmt::Display>(
+    url: S,
+) -> HttpResponse {
     info!("REDIRECT {}", url);
 
     HttpResponse::Found()
