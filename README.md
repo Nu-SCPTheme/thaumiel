@@ -23,7 +23,7 @@ $ cargo build --release
 Before running the binary, create a cookie key by using 512 bytes of random data:
 
 ```sh
-$ head -c 512 /dev/urandom > thaumiel-cookie.key
+$ head -c 32 /dev/urandom > thaumiel-cookie.key
 ```
 
 `thaumiel-cookie.key` is not a set path and can be modified in the configuration.
