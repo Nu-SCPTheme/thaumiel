@@ -96,7 +96,7 @@ impl Server {
                 .service(web::resource("verify-email/{token}").to(verify_email))
                 // API handling
                 .service(
-                    web::scope("api")
+                    web::scope("api/v0")
                         .route("", web::get().to(api_route))
                         .route("ping", web::get().to(api_ping))
                         .route("ping", web::post().to(api_ping))

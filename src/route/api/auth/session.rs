@@ -33,7 +33,7 @@ pub struct LoginOutput<'a> {
 }
 
 pub async fn api_login(req: HttpRequest, id: Identity, arg: web::Json<LoginInput>) -> HttpResponse {
-    info!("API /auth/login");
+    info!("API /api/v0/auth/login");
 
     let LoginInput { username, password } = &*arg;
 
@@ -67,7 +67,7 @@ pub struct LogoutOutput<'a> {
 }
 
 pub async fn api_logout(req: HttpRequest, id: Identity) -> HttpResponse {
-    info!("API /auth/logout");
+    info!("API /api/v0/auth/logout");
 
     match id.identity() {
         Some(username) => {
