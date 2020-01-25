@@ -31,6 +31,8 @@ extern crate deepwell_core;
 extern crate deepwell_rpc;
 extern crate dns_lookup;
 extern crate ftml_rpc;
+
+#[macro_use]
 extern crate futures;
 
 #[macro_use]
@@ -60,6 +62,7 @@ mod route;
 mod server;
 
 use self::config::Config;
+use self::remote::{DeepwellPool, FtmlPool};
 use self::server::Server;
 use std::process;
 
@@ -79,6 +82,9 @@ async fn main() {
         cookie_same_site,
         cookie_key,
         deepwell_address,
+        deepwell_pool_size,
+        ftml_address,
+        ftml_pool_size,
         runtime,
     } = Config::parse_args();
 
@@ -86,15 +92,10 @@ async fn main() {
         .filter_level(log_level)
         .init();
 
-    info!("Initializing DEEPWELL client");
-
-    // TODO deepwell
-    let deepwell = ();
-
-    info!("Initializing ftml client");
-
-    // TODO ftml
-    let ftml = ();
+    let (deepwell, ftml) = join!(
+        DeepwellPool::connect(deepwell_address, deepwell_pool_size),
+        FtmlPool::connect(ftml_address, ftml_pool_size),
+    );
 
     info!("HTTP server starting on {}", http_address);
 

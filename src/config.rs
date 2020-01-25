@@ -69,6 +69,9 @@ pub struct Config {
     pub cookie_key: Box<[u8]>,
     // Remote servers
     pub deepwell_address: SocketAddr,
+    pub deepwell_pool_size: usize,
+    pub ftml_address: SocketAddr,
+    pub ftml_pool_size: usize,
     // Runtime settings
     pub runtime: RuntimeSettings,
 }
@@ -140,15 +143,42 @@ struct Files {
 struct Deepwell {
     host: String,
     port: u16,
+    pool_size: usize,
 }
 
-impl TryInto<SocketAddr> for Deepwell {
+impl TryInto<(SocketAddr, usize)> for Deepwell {
     type Error = io::Error;
 
-    fn try_into(self) -> StdResult<SocketAddr, io::Error> {
-        let Self { host, port } = self;
+    fn try_into(self) -> StdResult<(SocketAddr, usize), io::Error> {
+        let Self {
+            host,
+            port,
+            pool_size,
+        } = self;
 
-        get_address(&host, port)
+        get_address(&host, port, pool_size)
+    }
+}
+
+#[serde(rename_all = "kebab-case")]
+#[derive(Deserialize, Debug)]
+struct Ftml {
+    host: String,
+    port: u16,
+    pool_size: usize,
+}
+
+impl TryInto<(SocketAddr, usize)> for Ftml {
+    type Error = io::Error;
+
+    fn try_into(self) -> StdResult<(SocketAddr, usize), io::Error> {
+        let Self {
+            host,
+            port,
+            pool_size,
+        } = self;
+
+        get_address(&host, port, pool_size)
     }
 }
 
@@ -160,6 +190,7 @@ struct ConfigFile {
     security: Security,
     files: Files,
     deepwell: Deepwell,
+    ftml: Ftml,
 }
 
 impl ConfigFile {
@@ -251,6 +282,7 @@ impl Into<Config> for ConfigFile {
             security,
             files,
             deepwell,
+            ftml,
         } = self;
 
         let Network {
@@ -270,9 +302,13 @@ impl Into<Config> for ConfigFile {
         let App { log_level } = app;
         let Files { static_dir } = files;
 
-        let deepwell_address = deepwell
+        let (deepwell_address, deepwell_pool_size) = deepwell
             .try_into()
-            .expect("Unable to parse address for DEEPWELL server");
+            .expect("Unable to parse configuration for DEEPWELL connection");
+
+        let (ftml_address, ftml_pool_size) = ftml
+            .try_into()
+            .expect("Unable to parse configuration for ftml connection");
 
         let ip_address = if use_ipv6 {
             IpAddr::V6(Ipv6Addr::UNSPECIFIED)
@@ -296,16 +332,23 @@ impl Into<Config> for ConfigFile {
             cookie_same_site: Self::parse_same_site(&cookie_same_site),
             cookie_key: Self::read_cookie_key(&cookie_key_path),
             deepwell_address,
+            deepwell_pool_size,
+            ftml_address,
+            ftml_pool_size,
             runtime,
         }
     }
 }
 
-fn get_address(host: &str, port: u16) -> io::Result<SocketAddr> {
+fn get_address(host: &str, port: u16, pool_size: usize) -> io::Result<(SocketAddr, usize)> {
+    assert_ne!(pool_size, 0, "Connection pool size set to zero");
+
     let addresses = lookup_host(&host)?;
 
     assert!(!addresses.is_empty(), "No addresses returned");
 
     let address = addresses[0];
-    Ok(SocketAddr::new(address, port))
+    let socket = SocketAddr::new(address, port);
+
+    Ok((socket, pool_size))
 }

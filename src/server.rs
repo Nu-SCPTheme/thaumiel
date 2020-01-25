@@ -20,6 +20,7 @@
 
 use crate::config::RuntimeSettings;
 use crate::middleware as crate_middleware;
+use crate::remote::{DeepwellPool, FtmlPool};
 use crate::route::*;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web::client::Client;
@@ -38,8 +39,8 @@ pub struct Server {
     pub cookie_max_age: i64,
     pub cookie_same_site: SameSite,
     pub cookie_key: Box<[u8]>,
-    pub deepwell: (),
-    pub ftml: (),
+    pub deepwell: DeepwellPool,
+    pub ftml: FtmlPool,
 }
 
 impl Server {
@@ -57,12 +58,15 @@ impl Server {
             ftml,
         } = self;
 
+        let deepwell = web::Data::new(deepwell);
+        let ftml = web::Data::new(ftml);
+
         HttpServer::new(move || {
             App::new()
                 // Shared data and clients
                 .data(Client::default())
-                .data(deepwell)
-                .data(ftml)
+                .data(deepwell.clone())
+                .data(ftml.clone())
                 .data(settings.clone())
                 // Middleware
                 .wrap(actix_middleware::Compress::default())

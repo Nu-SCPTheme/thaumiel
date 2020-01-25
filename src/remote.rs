@@ -37,11 +37,24 @@ impl<T> RemotePool<T> {
     }
 }
 
-impl RemotePool<DeepwellClient> {
-    pub async fn connect(address: SocketAddr, workers: usize) -> Self {
-        let pool = Pool::new(workers);
+impl<T> Clone for RemotePool<T> {
+    #[inline]
+    fn clone(&self) -> Self {
+        let pool = self.pool.clone();
 
-        for _ in 0..workers {
+        Self { pool }
+    }
+}
+
+pub type DeepwellPool = RemotePool<DeepwellClient>;
+
+impl RemotePool<DeepwellClient> {
+    pub async fn connect(address: SocketAddr, size: usize) -> Self {
+        info!("Initializing DEEPWELL client");
+
+        let pool = Pool::new(size);
+
+        for _ in 0..size {
             let worker = DeepwellClient::new(address)
                 .await
                 .expect("Unable to create new DEEPWELL client");
@@ -53,11 +66,15 @@ impl RemotePool<DeepwellClient> {
     }
 }
 
-impl RemotePool<FtmlClient> {
-    pub async fn connect(address: SocketAddr, workers: usize) -> Self {
-        let pool = Pool::new(workers);
+pub type FtmlPool = RemotePool<FtmlClient>;
 
-        for _ in 0..workers {
+impl RemotePool<FtmlClient> {
+    pub async fn connect(address: SocketAddr, size: usize) -> Self {
+        info!("Initializing ftml client");
+
+        let pool = Pool::new(size);
+
+        for _ in 0..size {
             let worker = FtmlClient::new(address)
                 .await
                 .expect("Unable to create new ftml client");
