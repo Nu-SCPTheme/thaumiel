@@ -58,9 +58,6 @@ impl Server {
             ftml,
         } = self;
 
-        let deepwell = web::Data::new(deepwell);
-        let ftml = web::Data::new(ftml);
-
         HttpServer::new(move || {
             App::new()
                 // Shared data and clients
