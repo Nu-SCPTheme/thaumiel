@@ -21,6 +21,7 @@ actix-rt = "1"
 actix-web = "2"
 bytes = "*"
 color-backtrace = "0.3"
+deadpool = { version = "0.5", features = ["unmanaged"] }
 deepwell-core = "0.0.2"
 deepwell-rpc = "0.0.2"
 dns-lookup = "1"
