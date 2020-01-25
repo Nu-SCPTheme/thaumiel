@@ -39,6 +39,7 @@ pub struct Server {
     pub cookie_same_site: SameSite,
     pub cookie_key: Box<[u8]>,
     pub deepwell: (),
+    pub ftml: (),
 }
 
 impl Server {
@@ -53,6 +54,7 @@ impl Server {
             cookie_same_site,
             cookie_key,
             deepwell,
+            ftml,
         } = self;
 
         HttpServer::new(move || {
@@ -60,6 +62,7 @@ impl Server {
                 // Shared data and clients
                 .data(Client::default())
                 .data(deepwell)
+                .data(ftml)
                 .data(settings.clone())
                 // Middleware
                 .wrap(actix_middleware::Compress::default())

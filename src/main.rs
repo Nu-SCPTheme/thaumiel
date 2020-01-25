@@ -87,6 +87,11 @@ async fn main() {
     // TODO deepwell
     let deepwell = ();
 
+    info!("Initializing ftml client");
+
+    // TODO ftml
+    let ftml = ();
+
     info!("HTTP server starting on {}", http_address);
 
     let server = Server {
@@ -98,6 +103,7 @@ async fn main() {
         cookie_same_site,
         cookie_key,
         deepwell,
+        ftml,
     };
 
     if let Err(error) = server.run(runtime).await {
