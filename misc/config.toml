@@ -50,3 +50,17 @@ host = "localhost"
 
 # What port the server is hosted on.
 port = 2747
+
+# How many connections to keep open to the service
+pool-size = 4
+
+[ftml]
+
+# IP address or hostname to connect to.
+host = "localhost"
+
+# What port the server is hosted on.
+port = 3865
+
+# How many connections to keep open to the service
+pool-size = 2
