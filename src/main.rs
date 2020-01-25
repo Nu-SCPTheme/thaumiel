@@ -27,7 +27,9 @@ extern crate actix_web;
 extern crate bytes;
 extern crate color_backtrace;
 extern crate deepwell_core;
+extern crate deepwell_rpc;
 extern crate dns_lookup;
+extern crate ftml_rpc;
 extern crate futures;
 
 #[macro_use]
@@ -55,6 +57,8 @@ mod middleware;
 mod route;
 mod server;
 
+use deepwell_rpc::Client as DeepwellClient;
+use ftml_rpc::Client as FtmlClient;
 use self::config::Config;
 use self::server::Server;
 use std::process;
