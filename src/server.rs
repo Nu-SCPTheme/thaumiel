@@ -141,7 +141,7 @@ impl Server {
                 )
                 // Pages
                 .service(web::resource("{name}").to(page_get))
-                .service(web::resource("/{name}/{options:.*}").to(page_get))
+                .service(web::resource("{name}/{options:.*}").to(page_get))
                 .service(web::resource("/").to(page_main))
         })
         .server_hostname(&hostname)
