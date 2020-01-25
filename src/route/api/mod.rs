@@ -21,6 +21,7 @@
 mod prelude {
     pub use super::super::prelude::*;
     pub use super::types::*;
+    pub use crate::remote::*;
     pub use actix_identity::Identity;
     pub use deepwell_core::Error;
 }

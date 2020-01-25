@@ -90,3 +90,37 @@ pub async fn api_debug(req: HttpRequest) -> HttpResponse {
 
     HttpResponse::Ok().body(output)
 }
+
+/// Pings remote services and reports on their statuses.
+pub async fn api_services(
+    deepwell: web::Data<DeepwellPool>,
+    ftml: web::Data<FtmlPool>,
+) -> HttpResponse {
+    info!("API /services");
+
+    #[derive(Serialize, Debug)]
+    struct Status {
+        deepwell: bool,
+        ftml: bool,
+    }
+
+    // Get the remote handles
+    let (mut deepwell, mut ftml) = join!(
+        deepwell.get(), //
+        ftml.get(),
+    );
+
+    // Ping the services
+    let (deepwell, ftml) = join!(
+        deepwell.ping(), //
+        ftml.ping(),
+    );
+
+    // Build status
+    let status = Status {
+        deepwell: deepwell.is_ok(),
+        ftml: ftml.is_ok(),
+    };
+
+    HttpResponse::Ok().json(Success::from(status))
+}
