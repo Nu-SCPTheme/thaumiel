@@ -13,8 +13,6 @@ matrix:
     - rust: nightly
   fast_finish: true
 
-cache: cargo
-
 before_script:
   - rustup component add rustfmt
 
