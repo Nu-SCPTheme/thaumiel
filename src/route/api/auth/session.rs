@@ -32,7 +32,12 @@ pub struct LoginOutput<'a> {
     success: bool,
 }
 
-pub async fn api_login(req: HttpRequest, id: Identity, arg: web::Json<LoginInput>) -> HttpResponse {
+pub async fn api_login(
+    req: HttpRequest,
+    id: Identity,
+    arg: web::Json<LoginInput>,
+    deepwell: web::Data<DeepwellPool>,
+) -> HttpResponse {
     info!("API v0 /auth/login");
 
     let LoginInput { username, password } = &*arg;

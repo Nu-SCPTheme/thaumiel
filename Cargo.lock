@@ -677,13 +677,13 @@ dependencies = [
 
 [[package]]
 name = "deepwell"
-version = "0.0.7"
+version = "0.0.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "arrayvec 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "async-std 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "chrono 0.4.10 (registry+https://github.com/rust-lang/crates.io-index)",
- "deepwell-core 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "deepwell-core 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "diesel 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "either 1.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -691,16 +691,17 @@ dependencies = [
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.7.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ref-map 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "regex 1.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "rust-crypto 0.2.36 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "subprocess 0.1.20 (registry+https://github.com/rust-lang/crates.io-index)",
- "wikidot-normalize 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "wikidot-normalize 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "deepwell-core"
-version = "0.0.1"
+version = "0.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "diesel 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -712,7 +713,7 @@ dependencies = [
 
 [[package]]
 name = "deepwell-core"
-version = "0.0.2"
+version = "0.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "diesel 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -724,15 +725,18 @@ dependencies = [
 
 [[package]]
 name = "deepwell-rpc"
-version = "0.0.2"
+version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
+ "async-std 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "color-backtrace 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "deepwell 0.0.7 (registry+https://github.com/rust-lang/crates.io-index)",
- "deepwell-core 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "deepwell 0.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "deepwell-core 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ipnetwork 0.15.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "pretty_env_logger 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ref-map 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.45 (registry+https://github.com/rust-lang/crates.io-index)",
  "str-macro 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1820,6 +1824,11 @@ version = "0.1.56"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "ref-map"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "regex"
 version = "1.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2194,8 +2203,8 @@ dependencies = [
  "bytes 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "color-backtrace 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "deadpool 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "deepwell-core 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "deepwell-rpc 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "deepwell-core 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "deepwell-rpc 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "dns-lookup 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ftml-rpc 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2571,17 +2580,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "wikidot-normalize"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "percent-encoding 2.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "regex 1.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "wikidot-normalize"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
@@ -2728,10 +2726,10 @@ dependencies = [
 "checksum crossbeam-queue 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "c695eeca1e7173472a32221542ae469b3e9aac3a4fc81f7696bcad82029493db"
 "checksum crossbeam-utils 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ce446db02cdc3165b94ae73111e570793400d0794e46125cc4056c81cbb039f4"
 "checksum deadpool 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "38ce52b0b1ad88ed0b2be2bc3c65ad39dd1a5d9633b1a8a314fc017fbe0027d2"
-"checksum deepwell 0.0.7 (registry+https://github.com/rust-lang/crates.io-index)" = "6ecca4462d7053230a8f087e817c3221dcb0641de8d7f375d40803f3bb24ef2a"
-"checksum deepwell-core 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7ac217c744175dfea7928ff17cd8f7618f2218366d8db937b706e61230a40c4e"
-"checksum deepwell-core 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "a39d5875fedd2a64028ad7b04c9fba81279b1d2c5488a0f57fa632fe1158266b"
-"checksum deepwell-rpc 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "2495bdc1e20099fbbcdeba336e18829eefe99fa49eb173ca3bd45404c2ffc857"
+"checksum deepwell 0.0.8 (registry+https://github.com/rust-lang/crates.io-index)" = "1586f8dc508e500a3190f31e46d30b96ab4ab7e5d1d06dfb8c31623520dc99e3"
+"checksum deepwell-core 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)" = "aba140043c1cc22c7b2b88ac09bd4ac01d34c6e852847a3bbe3b2039cd4a0fbe"
+"checksum deepwell-core 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "5bd08a92b2b5081c3f3a31b58632e9a8891951cc4da9fd121a1e702da64188a0"
+"checksum deepwell-rpc 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "1e2c9c3a622cd4d48bcc2a6d47b9496d30cc4080dad12073ac348f24ab895311"
 "checksum derivative 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "942ca430eef7a3806595a6737bc388bf51adb888d3fc0dd1b50f1c170167ee3a"
 "checksum derive_more 0.99.2 (registry+https://github.com/rust-lang/crates.io-index)" = "2159be042979966de68315bce7034bb000c775f22e3e834e1c52ff78f041cae8"
 "checksum diesel 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)" = "9d7cc03b910de9935007861dce440881f69102aaaedfd4bc5a6f40340ca5840c"
@@ -2858,6 +2856,7 @@ dependencies = [
 "checksum rand_hc 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ca3129af7b92a17112d59ad498c6f81eaf463253766b90396d39ea7a39d6613c"
 "checksum rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "678054eb77286b51581ba43620cc911abf02758c91f93f479767aed0f90458b2"
 "checksum redox_syscall 0.1.56 (registry+https://github.com/rust-lang/crates.io-index)" = "2439c63f3f6139d1b57529d16bc3b8bb855230c8efcc5d3a896c8bea7c3b1e84"
+"checksum ref-map 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "e07143267e626f77884e16b4aab9411eb8862f2b58dbeddba35ba7cb2545ebad"
 "checksum regex 1.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "b5508c1941e4e7cb19965abef075d35a9a8b5cdf0846f30b4050e9b55dc55e87"
 "checksum regex-syntax 0.6.13 (registry+https://github.com/rust-lang/crates.io-index)" = "e734e891f5b408a29efbf8309e656876276f49ab6a6ac208600b4419bd893d90"
 "checksum resolv-conf 0.6.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b263b4aa1b5de9ffc0054a2386f96992058bb6870aab516f8cdeb8a667d56dcb"
@@ -2941,7 +2940,6 @@ dependencies = [
 "checksum web-sys 0.3.35 (registry+https://github.com/rust-lang/crates.io-index)" = "aaf97caf6aa8c2b1dac90faf0db529d9d63c93846cca4911856f78a83cebf53b"
 "checksum weedle 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)" = "3bb43f70885151e629e2a19ce9e50bd730fd436cfd4b666894c9ce4de9141164"
 "checksum widestring 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "effc0e4ff8085673ea7b9b2e3c73f6bd4d118810c9009ed8f1e16bd96c331db6"
-"checksum wikidot-normalize 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "8cfc27351d71bdeb883a184d82dfd0f3aa5712182933ef66649f78aac47743f3"
 "checksum wikidot-normalize 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)" = "dae99faba38f690f966dd4ebf9e4e6c7d8bbcd9e3dbf4a7498cc0e981196b777"
 "checksum wikidot-path 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "9403766ba2572cfab9c1e06ed9b647c9b5b7314f2fa2c7e7d46fc7b8d06252cf"
 "checksum winapi 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)" = "167dc9d6949a9b857f3451275e911c3f44255842c1f7a76f33c55103a909087a"
