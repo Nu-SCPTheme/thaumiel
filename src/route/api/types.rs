@@ -36,6 +36,8 @@
 //!     "message: "User is not logged in"
 //! }
 //! ```
+//!
+//! This is done by the `deepwell_core::SendableError` object.
 
 use deepwell_core::Error;
 use serde::Serialize;
@@ -57,22 +59,5 @@ where
     #[inline]
     fn from(result: T) -> Self {
         Success { result }
-    }
-}
-
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "kebab-case")]
-pub struct Failure {
-    error: &'static str,
-    message: String,
-}
-
-impl From<&'_ Error> for Failure {
-    #[inline]
-    fn from(error: &Error) -> Self {
-        Failure {
-            error: error.fixed_name(),
-            message: error.to_string(),
-        }
     }
 }

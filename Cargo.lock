@@ -677,7 +677,7 @@ dependencies = [
 
 [[package]]
 name = "deepwell"
-version = "0.0.8"
+version = "0.0.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "arrayvec 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -687,7 +687,6 @@ dependencies = [
  "diesel 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "either 1.5.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "ipnetwork 0.15.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.7.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -697,18 +696,6 @@ dependencies = [
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "subprocess 0.1.20 (registry+https://github.com/rust-lang/crates.io-index)",
  "wikidot-normalize 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "deepwell-core"
-version = "0.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "diesel 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
- "subprocess 0.1.20 (registry+https://github.com/rust-lang/crates.io-index)",
- "thiserror 1.0.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -725,21 +712,20 @@ dependencies = [
 
 [[package]]
 name = "deepwell-rpc"
-version = "0.0.3"
+version = "0.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "async-std 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "color-backtrace 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "deepwell 0.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "deepwell 0.0.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "deepwell-core 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "ipnetwork 0.15.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "pretty_env_logger 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ref-map 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.45 (registry+https://github.com/rust-lang/crates.io-index)",
- "str-macro 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "str-macro 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "structopt 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "tarpc 0.20.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "tokio 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -921,13 +907,13 @@ dependencies = [
  "regex 1.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_repr 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "str-macro 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "str-macro 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 1.0.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "ftml-rpc"
-version = "0.0.3"
+version = "0.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "color-backtrace 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -937,7 +923,7 @@ dependencies = [
  "pretty_env_logger 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.45 (registry+https://github.com/rust-lang/crates.io-index)",
- "str-macro 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "str-macro 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "structopt 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "tarpc 0.20.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "tokio 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2065,7 +2051,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "str-macro"
-version = "0.1.3"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -2203,10 +2189,10 @@ dependencies = [
  "bytes 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "color-backtrace 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "deadpool 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "deepwell-core 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "deepwell-rpc 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "deepwell-core 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "deepwell-rpc 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "dns-lookup 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "ftml-rpc 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ftml-rpc 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2726,10 +2712,9 @@ dependencies = [
 "checksum crossbeam-queue 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "c695eeca1e7173472a32221542ae469b3e9aac3a4fc81f7696bcad82029493db"
 "checksum crossbeam-utils 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ce446db02cdc3165b94ae73111e570793400d0794e46125cc4056c81cbb039f4"
 "checksum deadpool 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "38ce52b0b1ad88ed0b2be2bc3c65ad39dd1a5d9633b1a8a314fc017fbe0027d2"
-"checksum deepwell 0.0.8 (registry+https://github.com/rust-lang/crates.io-index)" = "1586f8dc508e500a3190f31e46d30b96ab4ab7e5d1d06dfb8c31623520dc99e3"
-"checksum deepwell-core 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)" = "aba140043c1cc22c7b2b88ac09bd4ac01d34c6e852847a3bbe3b2039cd4a0fbe"
+"checksum deepwell 0.0.9 (registry+https://github.com/rust-lang/crates.io-index)" = "356be671c9cb289c402b20b63b74fbeabfe7c78b7726dc0a38462a4ab744e391"
 "checksum deepwell-core 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "5bd08a92b2b5081c3f3a31b58632e9a8891951cc4da9fd121a1e702da64188a0"
-"checksum deepwell-rpc 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "1e2c9c3a622cd4d48bcc2a6d47b9496d30cc4080dad12073ac348f24ab895311"
+"checksum deepwell-rpc 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "59aa63406781b4bd747390f8c09bd9bd54f92816984a556d570299acd76ff268"
 "checksum derivative 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "942ca430eef7a3806595a6737bc388bf51adb888d3fc0dd1b50f1c170167ee3a"
 "checksum derive_more 0.99.2 (registry+https://github.com/rust-lang/crates.io-index)" = "2159be042979966de68315bce7034bb000c775f22e3e834e1c52ff78f041cae8"
 "checksum diesel 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)" = "9d7cc03b910de9935007861dce440881f69102aaaedfd4bc5a6f40340ca5840c"
@@ -2749,7 +2734,7 @@ dependencies = [
 "checksum flate2 1.0.13 (registry+https://github.com/rust-lang/crates.io-index)" = "6bd6d6f4752952feb71363cffc9ebac9411b75b87c6ab6058c40c8900cf43c0f"
 "checksum fnv 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "2fad85553e09a6f881f739c29f0b00b0f01357c743266d478b68951ce23285f3"
 "checksum ftml 0.2.19 (registry+https://github.com/rust-lang/crates.io-index)" = "c5f1c79c1fdb65e9700f309fccde599bd0f2779f0fe531985e7a8e0d60e61fe4"
-"checksum ftml-rpc 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "ccc2991e45cf8322bf6dd45b6c2774c8a8c9692644eb6209f46803192b2ec36d"
+"checksum ftml-rpc 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)" = "9d7649c655f550ac8d69dce34571e0732ba4f960438cc55f221d2f00f9ed2320"
 "checksum fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "a06f77d526c1a601b7c4cdd98f54b5eaabffc14d5f2f0296febdc7f357c6d3ba"
 "checksum fuchsia-zircon 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "2e9763c69ebaae630ba35f74888db465e49e259ba1bc0eda7d06f4a067615d82"
 "checksum fuchsia-zircon-sys 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)" = "3dcaa9ae7725d12cdb85b3ad99a434db70b468c09ded17e012d86b5c1010f7a7"
@@ -2887,7 +2872,7 @@ dependencies = [
 "checksum spin 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)" = "6e63cff320ae2c57904679ba7cb63280a3dc4613885beafb148ee7bf9aa9042d"
 "checksum stable_deref_trait 1.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "dba1a27d3efae4351c8051072d619e3ade2820635c3958d826bfea39d59b54c8"
 "checksum static_assertions 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "7f3eb36b47e512f8f1c9e3d10c2c1965bc992bd9cdb024fa581e2194501c83d3"
-"checksum str-macro 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)" = "f9e67c0ec92afecad1896d51b70cdddaaeef0368b822163743b69823d9a31c18"
+"checksum str-macro 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "0914339d16fabe5ae7c5abd3a55d9697801cc224154543f3a7e1396dba3426dd"
 "checksum strsim 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)" = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
 "checksum structopt 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)" = "df136b42d76b1fbea72e2ab3057343977b04b4a2e00836c3c7c0673829572713"
 "checksum structopt-derive 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)" = "fd50a87d2f7b8958055f3e73a963d78feaccca3836767a9069844e34b5b03c0a"

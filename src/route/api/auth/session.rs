@@ -22,7 +22,7 @@ use super::prelude::*;
 
 #[derive(Deserialize, Debug)]
 pub struct LoginInput {
-    username: String,
+    username_or_email: String,
     password: String,
 }
 
@@ -40,28 +40,39 @@ pub async fn api_login(
 ) -> HttpResponse {
     info!("API v0 /auth/login");
 
-    let LoginInput { username, password } = &*arg;
+    let LoginInput {
+        username_or_email,
+        password,
+    } = &*arg;
 
-    // TODO authenticate with deepwell
-    let valid = true;
+    let address = req.connection_info().remote().map(String::from);
+    debug!("Trying to log in as '{}'", username_or_email);
 
-    if valid {
-        debug!("Logging in user '{}'", username);
+    let result = deepwell
+        .get()
+        .await
+        .login(username_or_email.clone(), password.clone(), address)
+        .await;
 
-        id.remember(username.clone());
+    match try_io!(result) {
+        Ok(_) => {
+            debug!("Login succeeded, beginning session");
 
-        let result = LoginOutput {
-            logged_in: username,
-            success: true,
-        };
+            // TODO store session json in cookie
+            id.remember("_test".into());
 
-        HttpResponse::Ok().json(Success::from(result))
-    } else {
-        debug!("Failed login attempt for user '{}'", username);
+            let result = LoginOutput {
+                logged_in: "_test",
+                success: true,
+            };
 
-        let error = Error::AuthenticationFailed;
+            HttpResponse::Ok().json(Success::from(result))
+        }
+        Err(error) => {
+            debug!("Failed login attempt");
 
-        HttpResponse::Unauthorized().json(Failure::from(&error))
+            HttpResponse::Unauthorized().json(error)
+        }
     }
 }
 
@@ -90,9 +101,7 @@ pub async fn api_logout(req: HttpRequest, id: Identity) -> HttpResponse {
         None => {
             debug!("Cannot logout, no session cookie");
 
-            let error = Error::NotLoggedIn;
-
-            HttpResponse::Unauthorized().json(Failure::from(&error))
+            HttpResponse::Unauthorized().json(Error::NotLoggedIn.to_sendable())
         }
     }
 }

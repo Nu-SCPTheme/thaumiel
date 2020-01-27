@@ -1,5 +1,5 @@
 /*
- * route/api/mod.rs
+ * route/api/macros.rs
  *
  * thaumiel - Wikidot-like web server to provide pages, forums, and other services
  * Copyright (C) 2019-2020 Ammon Smith
@@ -18,26 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-mod prelude {
-    pub use super::super::prelude::*;
-    pub use super::types::*;
-    pub use crate::remote::*;
-    pub use actix_identity::Identity;
-    pub use deepwell_core::Error;
-    pub use deepwell_rpc::Api as _;
-    pub use ftml_rpc::Api as _;
+macro_rules! try_io {
+    ($result:expr) => {
+        // TODO use real error type
+        match $result {
+            Ok(api_result) => api_result,
+            Err(error) => {
+                return HttpResponse::BadGateway()
+                    .json(format!("unable to connect to service: {}", error))
+            }
+        }
+    };
 }
-
-#[macro_use]
-mod macros;
-
-mod auth;
-mod misc;
-mod page;
-mod types;
-mod user;
-
-pub use self::auth::*;
-pub use self::misc::*;
-pub use self::page::*;
-pub use self::user::*;
