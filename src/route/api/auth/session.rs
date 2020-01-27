@@ -21,12 +21,14 @@
 use super::prelude::*;
 
 #[derive(Deserialize, Debug)]
+#[serde(rename_all = "kebab-case")]
 pub struct LoginInput {
     username_or_email: String,
     password: String,
 }
 
 #[derive(Serialize, Debug)]
+#[serde(rename_all = "kebab-case")]
 pub struct LoginOutput<'a> {
     logged_in: &'a str,
     success: bool,
