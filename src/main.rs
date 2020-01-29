@@ -19,6 +19,7 @@
  */
 
 #![deny(missing_debug_implementations)]
+#![forbid(unsafe_code)]
 
 extern crate actix_files;
 extern crate actix_identity;

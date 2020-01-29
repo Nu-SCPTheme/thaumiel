@@ -3,6 +3,8 @@
 
 A Wikidot-like web server to provide pages, forums, and other wiki services using backends such as [DEEPWELL](https://github.com/Nu-SCPTheme/deepwell).
 
+The lint `#![forbid(unsafe_code)]` is set, and therefore this crate has only safe code. However dependencies may have `unsafe` internals.
+
 Available under the terms of the GNU Affero General Public License. See [LICENSE.md](LICENSE).
 
 ### Compilation
