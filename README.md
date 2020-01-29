@@ -20,7 +20,7 @@ Then, build using:
 $ cargo build --release
 ```
 
-Before running the binary, create a cookie key by using 512 bytes of random data:
+Before running the binary, create a random cookie key at least 32 bytes long:
 
 ```sh
 $ head -c 32 /dev/urandom > thaumiel-cookie.key
@@ -33,3 +33,8 @@ This will create the final `thaumiel` binary, which can be executed using the fo
 ```sh
 $ cargo run -- [arguments]
 ```
+
+However, thaumiel requires several services to be running, which in turn have requirements such as a Postgres database to write to. Also be sure the port numbers configured here and in the respective services match.
+
+* [DEEPWELL](https://github.com/Nu-SCPTheme/deepwell-rpc)
+* [ftml](https://github.com/Nu-SCPTheme/ftml-rpc)
