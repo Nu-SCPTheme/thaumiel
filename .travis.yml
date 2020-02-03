@@ -7,42 +7,33 @@ rust:
 os:
   - linux
   - osx
+  - windows
 
-matrix:
+before_script:
+  # Add rustfmt
+  - rustup component add rustfmt
+  # Add clippy
+  - .travis/clippy.sh setup
+
+script:
+  # Ensure code is rustfmt'd
+  - .travis/banner.sh rustfmt
+  - rustfmt --edition=2018 src/lib.rs --check
+  # Check clippy lints
+  - .travis/banner.sh clippy
+  - .travis/clippy.sh check
+  # Run build
+  - .travis/banner.sh build
+  - cargo build --release
+  - cargo test --release -- --nocapture
+  # Build documentation
+  - .travis/banner.sh docs
+  - cargo doc --no-deps
+
+jobs:
   allow_failures:
     - rust: nightly
   fast_finish: true
-
-before_script:
-  - rustup component add rustfmt
-
-stages:
-  - format
-  - clippy
-  - test
-
-jobs:
-  include:
-    - stage: format
-      script:
-        - rustfmt --edition=2018 --check src/main.rs
-    - stage: clippy
-      script:
-        - rustup toolchain install nightly-2020-01-02-x86_64-unknown-linux-gnu
-        - rustup component add clippy --toolchain nightly-2020-01-02-x86_64-unknown-linux-gnu
-        - cargo +nightly-2020-01-02 clippy
-    - stage: test
-      rust:
-        - stable
-        - beta
-        - nightly
-      os:
-        - linux
-        - osx
-        - windows
-      script:
-        - cargo build --verbose
-        - cargo test --verbose -- --nocapture
 
 notifications:
   email:
