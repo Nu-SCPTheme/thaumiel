@@ -40,3 +40,5 @@ However, thaumiel requires several services to be running, which in turn have re
 
 * [DEEPWELL](https://github.com/Nu-SCPTheme/deepwell-rpc)
 * [ftml](https://github.com/Nu-SCPTheme/ftml-rpc)
+
+Example nginx configuration is present in `misc/nginx`.
