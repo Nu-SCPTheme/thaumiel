@@ -18,6 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crate::session::CookieSession;
+use deepwell_core::UserId;
 use super::prelude::*;
 
 #[derive(Deserialize, Debug)]
@@ -29,8 +31,8 @@ pub struct LoginInput {
 
 #[derive(Serialize, Debug)]
 #[serde(rename_all = "kebab-case")]
-pub struct LoginOutput<'a> {
-    logged_in: &'a str,
+pub struct LoginOutput {
+    logged_in: UserId,
     success: bool,
 }
 
@@ -57,14 +59,21 @@ pub async fn api_login(
         .await;
 
     match try_io!(result) {
-        Ok(_) => {
+        Ok(session) => {
             debug!("Login succeeded, beginning session");
 
-            // TODO store session json in cookie
-            id.remember("_test".into());
+            let cookie = CookieSession {
+                session_id: session.session_id(),
+                user_id: session.user_id(),
+            };
+
+            match cookie.serialize() {
+                Ok(data) => id.remember(data),
+                Err(resp) => return resp,
+            }
 
             let result = LoginOutput {
-                logged_in: "_test",
+                logged_in: session.user_id(),
                 success: true,
             };
 

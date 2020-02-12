@@ -61,6 +61,7 @@ mod middleware;
 mod remote;
 mod route;
 mod server;
+mod session;
 
 use self::config::Config;
 use self::remote::{DeepwellPool, FtmlPool};
