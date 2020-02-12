@@ -25,7 +25,7 @@ use serde_json as json;
 
 macro_rules! http_err {
     ($message:expr) => (
-        Err(HttpResponse::InternalServerError().json(Error::StaticMsg($message).to_sendable()))
+        HttpResponse::InternalServerError().json(Error::StaticMsg($message).to_sendable())
     );
 }
 
@@ -47,24 +47,18 @@ pub struct CookieSession {
 
 impl CookieSession {
     pub fn read(data: &str) -> StdResult<Self, HttpResponse> {
-        match json::from_str(data) {
-            Ok(cookie) => Ok(cookie),
-            Err(error) => {
-                error!("Invalid JSON session data in cookie: {}", error);
+        json::from_str(data).map_err(|error| {
+            error!("Invalid JSON session data in cookie: {}", error);
 
-                http_err!("Unable to read session cookie")
-            }
-        }
+            http_err!("Unable to read session cookie")
+        })
     }
 
     pub fn serialize(&self) -> StdResult<String, HttpResponse> {
-        match json::to_string(self) {
-            Ok(data) => Ok(data),
-            Err(error) => {
-                error!("Unable to serialize session cookie data: {}", error);
+        json::to_string(self).map_err(|error|{
+            error!("Unable to serialize session cookie data: {}", error);
 
-                http_err!("Unable to write session cookie")
-            }
-        }
+            http_err!("Unable to write session cookie")
+        })
     }
 }
