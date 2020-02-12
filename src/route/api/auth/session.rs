@@ -88,8 +88,8 @@ pub async fn api_login(
 }
 
 #[derive(Serialize, Debug)]
-pub struct LogoutOutput<'a> {
-    logged_out: &'a str,
+pub struct LogoutOutput {
+    logged_out: UserId,
     success: bool,
 }
 
@@ -97,13 +97,18 @@ pub async fn api_logout(req: HttpRequest, id: Identity) -> HttpResponse {
     info!("API v0 /auth/logout");
 
     match id.identity() {
-        Some(username) => {
-            debug!("Logging out user '{}'", username);
+        Some(ref data) => {
+            let CookieSession { session_id, user_id } = match CookieSession::read(data) {
+                Ok(cookie) => cookie,
+                Err(resp) => return resp,
+            };
+
+            debug!("Logging out user ID {} (session {})", user_id, session_id);
 
             id.forget();
 
             let result = LogoutOutput {
-                logged_out: &username,
+                logged_out: user_id,
                 success: true,
             };
 

@@ -23,6 +23,12 @@ use actix_web::HttpResponse;
 use deepwell_core::{Error, SessionId, UserId};
 use serde_json as json;
 
+macro_rules! http_err {
+    ($message:expr) => (
+        Err(HttpResponse::InternalServerError().json(Error::StaticMsg($message).to_sendable()))
+    );
+}
+
 /// Value kept in encrypted secret cookies.
 ///
 /// The data here is not modifiable or viewable by
@@ -40,13 +46,13 @@ pub struct CookieSession {
 }
 
 impl CookieSession {
-    pub fn parse(value: &str) -> Option<Self> {
-        match json::from_str(value) {
-            Ok(data) => Some(data),
+    pub fn read(data: &str) -> StdResult<Self, HttpResponse> {
+        match json::from_str(data) {
+            Ok(cookie) => Ok(cookie),
             Err(error) => {
-                warn!("Invalid JSON session data in cookie: {}", error);
+                error!("Invalid JSON session data in cookie: {}", error);
 
-                None
+                http_err!("Unable to read session cookie")
             }
         }
     }
@@ -54,12 +60,10 @@ impl CookieSession {
     pub fn serialize(&self) -> StdResult<String, HttpResponse> {
         match json::to_string(self) {
             Ok(data) => Ok(data),
-            Err(serde_err) => {
-                error!("Unable to serialize session cookie data: {}", serde_err);
+            Err(error) => {
+                error!("Unable to serialize session cookie data: {}", error);
 
-                let error = Error::StaticMsg("Unable to serialize session cookie data").to_sendable();
-
-                Err(HttpResponse::InternalServerError().json(error))
+                http_err!("Unable to write session cookie")
             }
         }
     }
