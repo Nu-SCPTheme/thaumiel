@@ -18,9 +18,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+use super::prelude::*;
 use crate::session::CookieSession;
 use deepwell_core::UserId;
-use super::prelude::*;
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "kebab-case")]
@@ -98,7 +98,10 @@ pub async fn api_logout(req: HttpRequest, id: Identity) -> HttpResponse {
 
     match id.identity() {
         Some(ref data) => {
-            let CookieSession { session_id, user_id } = match CookieSession::read(data) {
+            let CookieSession {
+                session_id,
+                user_id,
+            } = match CookieSession::read(data) {
                 Ok(cookie) => cookie,
                 Err(resp) => return resp,
             };

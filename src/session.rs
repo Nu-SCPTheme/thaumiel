@@ -24,9 +24,11 @@ use deepwell_core::{Error, SessionId, UserId};
 use serde_json as json;
 
 macro_rules! http_err {
-    ($message:expr) => (
-        HttpResponse::InternalServerError().json(Error::StaticMsg($message).to_sendable())
-    );
+    ($message:expr) => {{
+        let error = Error::StaticMsg($message).to_sendable();
+
+        HttpResponse::InternalServerError().json(error)
+    }};
 }
 
 /// Value kept in encrypted secret cookies.
@@ -55,7 +57,7 @@ impl CookieSession {
     }
 
     pub fn serialize(&self) -> StdResult<String, HttpResponse> {
-        json::to_string(self).map_err(|error|{
+        json::to_string(self).map_err(|error| {
             error!("Unable to serialize session cookie data: {}", error);
 
             http_err!("Unable to write session cookie")
