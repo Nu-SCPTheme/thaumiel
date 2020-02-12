@@ -22,7 +22,7 @@ actix-web = "2"
 bytes = "*"
 color-backtrace = "0.3"
 deadpool = { version = "0.5", features = ["unmanaged"] }
-deepwell-core = "0.0.6"
+deepwell-core = "0.0.8"
 deepwell-rpc = "0.0.6"
 dns-lookup = "1"
 ftml-rpc = "0.0.4"

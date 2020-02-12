@@ -721,6 +721,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "deepwell-core"
+version = "0.0.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "arrayvec 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "chrono 0.4.10 (registry+https://github.com/rust-lang/crates.io-index)",
+ "diesel 1.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ref-map 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "regex 1.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
+ "subprocess 0.1.20 (registry+https://github.com/rust-lang/crates.io-index)",
+ "thiserror 1.0.9 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "deepwell-rpc"
 version = "0.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2221,7 +2238,7 @@ dependencies = [
  "bytes 0.5.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "color-backtrace 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "deadpool 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "deepwell-core 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "deepwell-core 0.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "deepwell-rpc 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "dns-lookup 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ftml-rpc 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2747,6 +2764,7 @@ dependencies = [
 "checksum deadpool 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "38ce52b0b1ad88ed0b2be2bc3c65ad39dd1a5d9633b1a8a314fc017fbe0027d2"
 "checksum deepwell 0.0.9 (registry+https://github.com/rust-lang/crates.io-index)" = "356be671c9cb289c402b20b63b74fbeabfe7c78b7726dc0a38462a4ab744e391"
 "checksum deepwell-core 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "5bd08a92b2b5081c3f3a31b58632e9a8891951cc4da9fd121a1e702da64188a0"
+"checksum deepwell-core 0.0.8 (registry+https://github.com/rust-lang/crates.io-index)" = "69e4ba05fd3ad7a1db68456221bcfb76ee16c2eb271f1fa7a04d038cdcfcd337"
 "checksum deepwell-rpc 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "59aa63406781b4bd747390f8c09bd9bd54f92816984a556d570299acd76ff268"
 "checksum derivative 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "942ca430eef7a3806595a6737bc388bf51adb888d3fc0dd1b50f1c170167ee3a"
 "checksum derive_more 0.99.2 (registry+https://github.com/rust-lang/crates.io-index)" = "2159be042979966de68315bce7034bb000c775f22e3e834e1c52ff78f041cae8"
