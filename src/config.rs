@@ -150,7 +150,7 @@ struct Deepwell {
     pool_size: usize,
 }
 
-impl TryInto<(SocketAddr, usize)> for Deepwell {
+impl TryInto<(SocketAddr, Duration, usize)> for Deepwell {
     type Error = io::Error;
 
     fn try_into(self) -> StdResult<(SocketAddr, Duration, usize), io::Error> {
@@ -174,7 +174,7 @@ struct Ftml {
     pool_size: usize,
 }
 
-impl TryInto<(SocketAddr, usize)> for Ftml {
+impl TryInto<(SocketAddr, Duration, usize)> for Ftml {
     type Error = io::Error;
 
     fn try_into(self) -> StdResult<(SocketAddr, Duration, usize), io::Error> {

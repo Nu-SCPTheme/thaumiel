@@ -25,6 +25,7 @@ use deepwell_rpc::Client as DeepwellClient;
 use ftml_rpc::Client as FtmlClient;
 use std::fmt::{self, Debug};
 use std::net::SocketAddr;
+use std::time::Duration;
 
 pub struct RemotePool<T> {
     pool: Pool<T>,
@@ -69,13 +70,13 @@ impl RemotePool<DeepwellClient> {
 pub type FtmlPool = RemotePool<FtmlClient>;
 
 impl RemotePool<FtmlClient> {
-    pub async fn connect(address: SocketAddr, size: usize) -> Self {
+    pub async fn connect(address: SocketAddr, timeout: Duration, size: usize) -> Self {
         info!("Initializing ftml client");
 
         let pool = Pool::new(size);
 
         for _ in 0..size {
-            let worker = FtmlClient::new(address)
+            let worker = FtmlClient::new(address, timeout)
                 .await
                 .expect("Unable to create new ftml client");
 

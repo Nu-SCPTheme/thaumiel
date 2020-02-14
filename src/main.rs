@@ -84,8 +84,10 @@ async fn main() {
         cookie_same_site,
         cookie_key,
         deepwell_address,
+        deepwell_timeout,
         deepwell_pool_size,
         ftml_address,
+        ftml_timeout,
         ftml_pool_size,
         runtime,
     } = Config::parse_args();
@@ -96,7 +98,7 @@ async fn main() {
 
     let (deepwell, ftml) = join!(
         DeepwellPool::connect(deepwell_address, deepwell_pool_size),
-        FtmlPool::connect(ftml_address, ftml_pool_size),
+        FtmlPool::connect(ftml_address, ftml_timeout, ftml_pool_size),
     );
 
     info!("HTTP server starting on {}", http_address);
