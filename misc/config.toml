@@ -51,6 +51,9 @@ host = "localhost"
 # What port the server is hosted on.
 port = 2747
 
+# Network call timeout, milliseconds
+timeout = 800
+
 # How many connections to keep open to the service
 pool-size = 4
 
@@ -61,6 +64,9 @@ host = "localhost"
 
 # What port the server is hosted on.
 port = 3865
+
+# Network call timeout, milliseconds
+timeout = 500
 
 # How many connections to keep open to the service
 pool-size = 2
