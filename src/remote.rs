@@ -50,13 +50,13 @@ impl<T> Clone for RemotePool<T> {
 pub type DeepwellPool = RemotePool<DeepwellClient>;
 
 impl RemotePool<DeepwellClient> {
-    pub async fn connect(address: SocketAddr, size: usize) -> Self {
+    pub async fn connect(address: SocketAddr, timeout: Duration, size: usize) -> Self {
         info!("Initializing DEEPWELL client");
 
         let pool = Pool::new(size);
 
         for _ in 0..size {
-            let worker = DeepwellClient::new(address)
+            let worker = DeepwellClient::new(address, timeout)
                 .await
                 .expect("Unable to create new DEEPWELL client");
 

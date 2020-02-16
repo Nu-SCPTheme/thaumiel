@@ -97,7 +97,7 @@ async fn main() {
         .init();
 
     let (deepwell, ftml) = join!(
-        DeepwellPool::connect(deepwell_address, deepwell_pool_size),
+        DeepwellPool::connect(deepwell_address, deepwell_timeout, deepwell_pool_size),
         FtmlPool::connect(ftml_address, ftml_timeout, ftml_pool_size),
     );
 
