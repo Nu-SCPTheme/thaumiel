@@ -93,7 +93,7 @@ pub struct LogoutOutput {
     success: bool,
 }
 
-pub async fn api_logout(req: HttpRequest, id: Identity) -> HttpResponse {
+pub async fn api_logout(id: Identity) -> HttpResponse {
     info!("API v0 /auth/logout");
 
     match id.identity() {

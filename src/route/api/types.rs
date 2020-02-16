@@ -39,7 +39,6 @@
 //!
 //! This is done by the `deepwell_core::SendableError` object.
 
-use deepwell_core::Error;
 use serde::Serialize;
 use std::fmt::Debug;
 

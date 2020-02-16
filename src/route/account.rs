@@ -20,7 +20,7 @@
 
 use super::prelude::*;
 
-pub async fn verify_email(req: HttpRequest, token: web::Path<String>) -> HttpResult {
+pub async fn verify_email(req: HttpRequest, _token: web::Path<String>) -> HttpResult {
     let host = get_host(&req);
 
     info!("GET /verify-email [{}]", host.unwrap_or("none"));
