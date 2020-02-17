@@ -93,7 +93,7 @@ pub struct LogoutOutput {
     success: bool,
 }
 
-pub async fn api_logout(id: Identity) -> HttpResponse {
+pub async fn api_logout(id: Identity, deepwell: web::Data<DeepwellPool>) -> HttpResponse {
     info!("API v0 /auth/logout");
 
     match id.identity() {
@@ -107,6 +107,13 @@ pub async fn api_logout(id: Identity) -> HttpResponse {
             };
 
             debug!("Logging out user ID {} (session {})", user_id, session_id);
+
+            let result = deepwell.get().await.logout(session_id, user_id).await;
+            if let Err(error) = try_io!(result) {
+                debug!("Failed to end session: {}", error);
+
+                return HttpResponse::InternalServerError().json(error);
+            }
 
             id.forget();
 
