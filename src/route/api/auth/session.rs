@@ -49,7 +49,14 @@ pub async fn api_login(
     } = &*arg;
 
     let address = req.connection_info().remote().map(String::from);
-    debug!("Trying to log in as '{}'", username_or_email);
+    debug!(
+        "Trying to log in as '{}' from '{}'",
+        username_or_email,
+        match &address {
+            Some(ref addr) => addr,
+            None => "<unkown>",
+        },
+    );
 
     let result = deepwell
         .claim()
