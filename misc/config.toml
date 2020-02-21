@@ -52,7 +52,7 @@ host = "localhost"
 port = 2747
 
 # Network call timeout, milliseconds
-timeout = 800
+timeout = 1500
 
 # How many connections to keep open to the service
 pool-size = 4
