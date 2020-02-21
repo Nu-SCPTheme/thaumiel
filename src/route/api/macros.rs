@@ -20,12 +20,12 @@
 
 macro_rules! try_io {
     ($result:expr) => {
-        // TODO use real error type
         match $result {
             Ok(api_result) => api_result,
             Err(error) => {
-                return HttpResponse::BadGateway()
-                    .json(format!("unable to connect to service: {}", error))
+                let error = Error::ServiceTransport(error).to_sendable();
+
+                return HttpResponse::BadGateway().json(error);
             }
         }
     };
