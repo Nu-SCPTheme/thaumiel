@@ -36,12 +36,18 @@ pub struct RegisterOutput {
 }
 
 pub async fn api_register(
-    req: HttpRequest,
     id: Identity,
     arg: web::Json<RegisterInput>,
     deepwell: web::Data<DeepwellPool>,
 ) -> HttpResponse {
     info!("API v0 /auth/register");
+
+    // First check if we're logged in
+    if id.identity().is_some() {
+        let error = Error::StaticMsg("Cannot create account while logged in").to_sendable();
+
+        return HttpResponse::Forbidden().json(error);
+    }
 
     let RegisterInput {
         username,
