@@ -21,10 +21,11 @@
 mod prelude {
     pub use super::utils::*;
     pub use crate::StdResult;
-    pub use actix_web::{http, web, Error, HttpRequest, HttpResponse, HttpServer};
+    pub use actix_web::Error as ActixError;
+    pub use actix_web::{http, web, HttpRequest, HttpResponse, HttpServer};
     pub use futures::{future, Future};
 
-    pub type HttpResult = StdResult<HttpResponse, Error>;
+    pub type HttpResult = StdResult<HttpResponse, ActixError>;
 }
 
 mod account;

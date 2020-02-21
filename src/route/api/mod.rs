@@ -23,7 +23,7 @@ mod prelude {
     pub use super::types::*;
     pub use crate::remote::*;
     pub use actix_identity::Identity;
-    pub use deepwell_core::Error;
+    pub use deepwell_core::*;
     pub use deepwell_rpc::Api as _;
     pub use ftml_rpc::Api as _;
 }

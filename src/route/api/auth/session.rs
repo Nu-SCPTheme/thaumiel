@@ -20,7 +20,6 @@
 
 use super::prelude::*;
 use crate::session::CookieSession;
-use deepwell_core::UserId;
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "kebab-case")]
@@ -32,7 +31,7 @@ pub struct LoginInput {
 #[derive(Serialize, Debug)]
 #[serde(rename_all = "kebab-case")]
 pub struct LoginOutput {
-    logged_in: UserId,
+    user_id: UserId,
     success: bool,
 }
 
@@ -60,7 +59,7 @@ pub async fn api_login(
 
     match try_io!(result) {
         Ok(session) => {
-            debug!("Login succeeded, beginning session");
+            info!("Login succeeded, beginning session");
 
             let cookie = CookieSession {
                 session_id: session.session_id(),
@@ -73,14 +72,14 @@ pub async fn api_login(
             }
 
             let result = LoginOutput {
-                logged_in: session.user_id(),
+                user_id: session.user_id(),
                 success: true,
             };
 
             HttpResponse::Ok().json(Success::from(result))
         }
         Err(error) => {
-            debug!("Failed login attempt");
+            warn!("Failed login attempt");
 
             HttpResponse::Unauthorized().json(error)
         }

@@ -671,6 +671,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6ff9c56c9fb2a49c05ef0e431485a22400af20d33226dc0764d891d09e724127"
 
 [[package]]
+name = "cow-utils"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "79bb3adfaf5f75d24b01aee375f7555907840fa2800e5ec8fa3b9e2031830173"
+
+[[package]]
 name = "crc32fast"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -753,6 +759,7 @@ version = "0.0.9"
 dependencies = [
  "async-std",
  "chrono",
+ "cow-utils",
  "deepwell-core",
  "diesel",
  "either",
