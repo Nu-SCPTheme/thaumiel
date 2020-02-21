@@ -33,7 +33,7 @@ pub struct RemotePool<T> {
 
 impl<T> RemotePool<T> {
     #[inline]
-    pub async fn get(&self) -> Object<T> {
+    pub async fn claim(&self) -> Object<T> {
         self.pool.get().await
     }
 }

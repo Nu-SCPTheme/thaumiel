@@ -104,10 +104,10 @@ pub async fn api_services(
         ftml: bool,
     }
 
-    // Get the remote handles
+    // Get remote handles
     let (mut deepwell, mut ftml) = join!(
-        deepwell.get(), //
-        ftml.get(),
+        deepwell.claim(), //
+        ftml.claim(),
     );
 
     // Ping the services

@@ -57,7 +57,7 @@ pub async fn api_register(
 
     // Create user
     let result = deepwell
-        .get()
+        .claim()
         .await
         .create_user(username.clone(), email.clone(), password.clone())
         .await;

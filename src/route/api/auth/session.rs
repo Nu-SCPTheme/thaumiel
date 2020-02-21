@@ -52,7 +52,7 @@ pub async fn api_login(
     debug!("Trying to log in as '{}'", username_or_email);
 
     let result = deepwell
-        .get()
+        .claim()
         .await
         .login(username_or_email.clone(), password.clone(), address)
         .await;
@@ -107,7 +107,11 @@ pub async fn api_logout(id: Identity, deepwell: web::Data<DeepwellPool>) -> Http
 
             debug!("Logging out user ID {} (session {})", user_id, session_id);
 
-            let result = deepwell.get().await.logout(session_id, user_id).await;
+            let result = deepwell //
+                .claim()
+                .await
+                .logout(session_id, user_id)
+                .await;
             if let Err(error) = try_io!(result) {
                 debug!("Failed to end session: {}", error);
 
