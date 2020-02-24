@@ -91,8 +91,8 @@ pub async fn api_debug(req: HttpRequest) -> HttpResponse {
     HttpResponse::Ok().body(output)
 }
 
-/// Pings remote services and reports on their statuses.
-pub async fn api_services(
+/// Determines server health by pinging remote services and getting their statuses.
+pub async fn api_health(
     deepwell: web::Data<DeepwellPool>,
     ftml: web::Data<FtmlPool>,
 ) -> HttpResponse {
