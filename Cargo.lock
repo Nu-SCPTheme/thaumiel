@@ -798,7 +798,7 @@ dependencies = [
  "deepwell-core",
  "futures",
  "log",
- "pretty_env_logger 0.4.0",
+ "pretty_env_logger",
  "ref-map",
  "serde",
  "serde_json",
@@ -913,19 +913,6 @@ dependencies = [
 
 [[package]]
 name = "env_logger"
-version = "0.6.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aafcde04e90a5226a6443b7aabdb016ba2f8307c847d524724bd9b346dd1a2d3"
-dependencies = [
- "atty",
- "humantime",
- "log",
- "regex",
- "termcolor",
-]
-
-[[package]]
-name = "env_logger"
 version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "44533bbbb3bb3c1fa17d9f2e4e38bbbaf8396ba82193c4cb1b6445d711445d36"
@@ -1028,7 +1015,7 @@ dependencies = [
  "ftml",
  "futures",
  "log",
- "pretty_env_logger 0.3.1",
+ "pretty_env_logger",
  "serde",
  "serde_json",
  "str-macro",
@@ -1835,22 +1822,11 @@ dependencies = [
 
 [[package]]
 name = "pretty_env_logger"
-version = "0.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "717ee476b1690853d222af4634056d830b5197ffd747726a9a1eee6da9f49074"
-dependencies = [
- "chrono",
- "env_logger 0.6.2",
- "log",
-]
-
-[[package]]
-name = "pretty_env_logger"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "926d36b9553851b8b0005f1275891b392ee4d2d833852c417ed025477350fb9d"
 dependencies = [
- "env_logger 0.7.1",
+ "env_logger",
  "log",
 ]
 
@@ -2471,7 +2447,7 @@ dependencies = [
  "lazy_static",
  "log",
  "maplit",
- "pretty_env_logger 0.4.0",
+ "pretty_env_logger",
  "regex",
  "serde",
  "serde_json",
