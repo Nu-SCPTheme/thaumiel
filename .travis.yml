@@ -9,6 +9,9 @@ os:
   - osx
   - windows
 
+env:
+  - RUSTFLAGS='-D warnings'
+
 before_script:
   # Download dependency repositories
   - .travis/download.sh deepwell
