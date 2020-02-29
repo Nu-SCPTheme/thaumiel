@@ -20,7 +20,8 @@
 
 use crate::StdResult;
 use actix_web::HttpResponse;
-use deepwell_core::{Error, SessionId, UserId};
+use deepwell_core::error::Error;
+use deepwell_core::types::{SessionId, UserId};
 use serde_json as json;
 
 macro_rules! http_err {
