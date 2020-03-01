@@ -123,6 +123,7 @@ impl Server {
                                         .route("login", web::post().to(api_login))
                                         .route("logout", web::post().to(api_logout))
                                         .route("logout", web::delete().to(api_logout))
+                                        .route("status", web::get().to(api_auth_status))
                                         .route("register", web::post().to(api_register))
                                         .route("reset-password", web::post().to(temp_api))
                                         .route("reset-password", web::put().to(temp_api)),

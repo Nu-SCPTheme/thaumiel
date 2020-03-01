@@ -119,6 +119,7 @@ pub async fn api_logout(id: Identity, deepwell: web::Data<DeepwellPool>) -> Http
                 .await
                 .logout(session_id, user_id)
                 .await;
+
             if let Err(error) = try_io!(result) {
                 debug!("Failed to end session: {}", error);
 
@@ -140,4 +141,55 @@ pub async fn api_logout(id: Identity, deepwell: web::Data<DeepwellPool>) -> Http
             HttpResponse::Unauthorized().json(Error::NotLoggedIn.to_sendable())
         }
     }
+}
+
+#[derive(Serialize, Debug)]
+pub struct AuthStatusOutput {
+    user_id: Option<UserId>,
+    name: Option<String>,
+    email: Option<String>,
+}
+
+pub async fn api_auth_status(id: Identity, deepwell: web::Data<DeepwellPool>) -> HttpResponse {
+    info!("API v0 /auth/status");
+
+    let output = match id.identity() {
+        Some(ref data) => {
+            let CookieSession {
+                session_id,
+                user_id,
+            } = match CookieSession::read(data) {
+                Ok(cookie) => cookie,
+                Err(resp) => return resp,
+            };
+
+            debug!("Fetching user information about current session");
+
+            let result = deepwell //
+                .claim()
+                .await
+                .get_user_from_id(user_id)
+                .await;
+
+            match try_io!(result) {
+                Ok(Some(user)) => AuthStatusOutput {
+                    user_id: Some(user_id),
+                    name: Some(user.name().into()),
+                    email: Some(user.email().into()),
+                },
+                _ => AuthStatusOutput {
+                    user_id: None,
+                    name: None,
+                    email: None,
+                },
+            }
+        }
+        None => AuthStatusOutput {
+            user_id: None,
+            name: None,
+            email: None,
+        },
+    };
+
+    HttpResponse::Ok().json(Success::from(output))
 }
