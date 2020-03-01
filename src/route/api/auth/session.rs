@@ -107,10 +107,7 @@ pub async fn api_logout(id: Identity, deepwell: web::Data<DeepwellPool>) -> Http
             let CookieSession {
                 session_id,
                 user_id,
-            } = match CookieSession::read(data) {
-                Ok(cookie) => cookie,
-                Err(resp) => return resp,
-            };
+            } = try_resp!(CookieSession::read(data));
 
             debug!("Logging out user ID {} (session {})", user_id, session_id);
 
@@ -158,10 +155,7 @@ pub async fn api_auth_status(id: Identity, deepwell: web::Data<DeepwellPool>) ->
             let CookieSession {
                 session_id,
                 user_id,
-            } = match CookieSession::read(data) {
-                Ok(cookie) => cookie,
-                Err(resp) => return resp,
-            };
+            } = try_resp!(CookieSession::read(data));
 
             debug!("Fetching user information about current session");
 

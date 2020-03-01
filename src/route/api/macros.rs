@@ -21,12 +21,21 @@
 macro_rules! try_io {
     ($result:expr) => {
         match $result {
-            Ok(api_result) => api_result,
+            Ok(object) => object,
             Err(error) => {
                 let error = Error::ServiceTransport(error).to_sendable();
 
                 return HttpResponse::BadGateway().json(error);
             }
+        }
+    };
+}
+
+macro_rules! try_resp {
+    ($result:expr) => {
+        match $result {
+            Ok(object) => object,
+            Err(resp) => return resp,
         }
     };
 }
