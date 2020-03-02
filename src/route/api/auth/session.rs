@@ -180,7 +180,7 @@ pub async fn api_auth_status(id: Identity, deepwell: web::Data<DeepwellPool>) ->
                 },
                 _ => empty,
             }
-        },
+        }
     };
 
     HttpResponse::Ok().json(Success::from(output))
