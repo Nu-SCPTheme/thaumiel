@@ -152,19 +152,24 @@ pub struct AuthStatusOutput {
 pub async fn api_auth_status(id: Identity, deepwell: web::Data<DeepwellPool>) -> HttpResponse {
     info!("API v0 /auth/status");
 
-    let output = match id.identity() {
-        Some(ref data) => {
-            let CookieSession {
-                session_id,
-                user_id,
-            } = try_resp!(CookieSession::read(data));
+    let empty = AuthStatusOutput {
+        user_id: None,
+        name: None,
+        email: None,
+    };
 
-            debug!("Fetching user information about current session");
+    let output = match id.identity() {
+        None => empty,
+        Some(ref data) => {
+            let session = try_resp!(CookieSession::read(data));
+
+            debug!("Verifying current session and getting user information");
 
             let mut deepwell = deepwell.claim().await;
 
-            // TODO: verify session info
+            try_resp!(session.verify(&mut deepwell).await);
 
+            let CookieSession { user_id, .. } = session;
             let result = deepwell.get_user_from_id(user_id).await;
 
             match try_io!(result) {
@@ -173,17 +178,8 @@ pub async fn api_auth_status(id: Identity, deepwell: web::Data<DeepwellPool>) ->
                     name: Some(user.name().into()),
                     email: Some(user.email().into()),
                 },
-                _ => AuthStatusOutput {
-                    user_id: None,
-                    name: None,
-                    email: None,
-                },
+                _ => empty,
             }
-        }
-        None => AuthStatusOutput {
-            user_id: None,
-            name: None,
-            email: None,
         },
     };
 
