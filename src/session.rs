@@ -22,7 +22,9 @@ use crate::StdResult;
 use actix_web::HttpResponse;
 use deepwell_core::error::Error;
 use deepwell_core::types::{SessionId, UserId};
+use deepwell_rpc::Client as DeepwellClient;
 use serde_json as json;
+use std::io;
 
 macro_rules! http_err {
     ($message:expr) => {{
@@ -63,5 +65,19 @@ impl CookieSession {
 
             http_err!("Unable to write session cookie")
         })
+    }
+
+    pub async fn verify(&self, deepwell: &mut DeepwellClient) -> StdResult<(), HttpResponse> {
+        let result = deepwell.check_session(self.session_id, self.user_id).await;
+
+        match result {
+            Ok(Ok(_)) => Ok(()),
+            Ok(Err(error)) => Err(HttpResponse::Unauthorized().json(error)),
+            Err(error) => {
+                let error = Error::ServiceTransport(error).to_sendable();
+
+                Err(HttpResponse::BadGateway().json(error))
+            }
+        }
     }
 }

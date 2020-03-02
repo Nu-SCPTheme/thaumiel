@@ -135,7 +135,9 @@ pub async fn api_logout(id: Identity, deepwell: web::Data<DeepwellPool>) -> Http
         None => {
             debug!("Cannot logout, no session cookie");
 
-            HttpResponse::Unauthorized().json(Error::NotLoggedIn.to_sendable())
+            let error = Error::InvalidSession.to_sendable();
+
+            HttpResponse::Unauthorized().json(error)
         }
     }
 }
@@ -159,11 +161,11 @@ pub async fn api_auth_status(id: Identity, deepwell: web::Data<DeepwellPool>) ->
 
             debug!("Fetching user information about current session");
 
-            let result = deepwell //
-                .claim()
-                .await
-                .get_user_from_id(user_id)
-                .await;
+            let mut deepwell = deepwell.claim().await;
+
+            // TODO: verify session info
+
+            let result = deepwell.get_user_from_id(user_id).await;
 
             match try_io!(result) {
                 Ok(Some(user)) => AuthStatusOutput {
