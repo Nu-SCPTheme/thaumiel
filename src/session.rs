@@ -21,7 +21,6 @@
 use crate::StdResult;
 use actix_web::HttpResponse;
 use deepwell_core::error::Error;
-use deepwell_core::roles::Role;
 use deepwell_core::types::{SessionId, UserId};
 use deepwell_rpc::Client as DeepwellClient;
 use serde_json as json;

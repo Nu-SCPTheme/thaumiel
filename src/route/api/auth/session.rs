@@ -152,6 +152,32 @@ pub struct AuthStatusOutput {
 pub async fn api_auth_status(id: Identity, deepwell: web::Data<DeepwellPool>) -> HttpResponse {
     info!("API v0 /auth/status");
 
+    // Helper function so we can use return to break early
+    // No errors in the final result, only 'None' if invalid
+    async fn get_user(cookie: &str, deepwell: web::Data<DeepwellPool>) -> Option<User> {
+        macro_rules! try_opt {
+            ($result:expr) => {
+                match $result {
+                    Ok(result) => result,
+                    Err(_) => return None,
+                }
+            };
+        }
+
+        let session = try_opt!(CookieSession::read(cookie));
+
+        let mut deepwell = deepwell.claim().await;
+        try_opt!(session.verify(&mut deepwell).await);
+
+        let CookieSession { user_id, .. } = session;
+        let result = deepwell.get_user_from_id(user_id).await;
+        match result {
+            Ok(Ok(Some(user))) => Some(user),
+            _ => None,
+        }
+    }
+
+    // Pre-prepared empty response to avoid copypasta
     let empty = AuthStatusOutput {
         user_id: None,
         name: None,
@@ -161,20 +187,11 @@ pub async fn api_auth_status(id: Identity, deepwell: web::Data<DeepwellPool>) ->
     let output = match id.identity() {
         None => empty,
         Some(ref data) => {
-            let session = try_resp!(CookieSession::read(data));
-
             debug!("Verifying current session and getting user information");
 
-            let mut deepwell = deepwell.claim().await;
-
-            try_resp!(session.verify(&mut deepwell).await);
-
-            let CookieSession { user_id, .. } = session;
-            let result = deepwell.get_user_from_id(user_id).await;
-
-            match try_io!(result) {
-                Ok(Some(user)) => AuthStatusOutput {
-                    user_id: Some(user_id),
+            match get_user(data, deepwell).await {
+                Some(user) => AuthStatusOutput {
+                    user_id: Some(user.id()),
                     name: Some(user.name().into()),
                     email: Some(user.email().into()),
                 },

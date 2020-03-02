@@ -19,6 +19,7 @@
  */
 
 mod prelude {
+    pub use super::permissions::*;
     pub use super::utils::*;
     pub use crate::StdResult;
     pub use actix_web::Error as ActixError;
