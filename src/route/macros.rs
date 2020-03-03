@@ -1,5 +1,5 @@
 /*
- * route/api/macros.rs
+ * route/macros.rs
  *
  * thaumiel - Wikidot-like web server to provide pages, forums, and other services
  * Copyright (C) 2019-2020 Ammon Smith
@@ -23,9 +23,22 @@ macro_rules! try_io {
         match $result {
             Ok(object) => object,
             Err(error) => {
-                let error = Error::ServiceTransport(error).to_sendable();
+                let error = deepwell_core::error::Error::ServiceTransport(error).to_sendable();
 
                 return HttpResponse::BadGateway().json(error);
+            }
+        }
+    };
+}
+
+macro_rules! try_io_result {
+    ($result:expr) => {
+        match $result {
+            Ok(object) => object,
+            Err(error) => {
+                let error = deepwell_core::error::Error::ServiceTransport(error).to_sendable();
+
+                return Ok(HttpResponse::BadGateway().json(error));
             }
         }
     };

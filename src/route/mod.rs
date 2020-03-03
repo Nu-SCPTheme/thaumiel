@@ -29,6 +29,9 @@ mod prelude {
     pub type HttpResult = StdResult<HttpResponse, ActixError>;
 }
 
+#[macro_use]
+mod macros;
+
 mod account;
 mod api;
 mod files;

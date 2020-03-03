@@ -31,6 +31,7 @@ extern crate deadpool;
 extern crate deepwell_core;
 extern crate deepwell_rpc;
 extern crate dns_lookup;
+extern crate ftml;
 extern crate ftml_rpc;
 
 #[macro_use]

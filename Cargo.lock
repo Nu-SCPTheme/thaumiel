@@ -991,6 +991,26 @@ checksum = "2fad85553e09a6f881f739c29f0b00b0f01357c743266d478b68951ce23285f3"
 [[package]]
 name = "ftml"
 version = "0.2.19"
+dependencies = [
+ "arrayvec 0.5.1",
+ "chrono",
+ "either",
+ "lazy_static",
+ "log",
+ "percent-encoding",
+ "pest",
+ "pest_derive",
+ "regex",
+ "serde",
+ "serde_json",
+ "serde_repr",
+ "str-macro",
+ "thiserror",
+]
+
+[[package]]
+name = "ftml"
+version = "0.2.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c5f1c79c1fdb65e9700f309fccde599bd0f2779f0fe531985e7a8e0d60e61fe4"
 dependencies = [
@@ -1014,7 +1034,7 @@ name = "ftml-rpc"
 version = "0.0.4"
 dependencies = [
  "color-backtrace",
- "ftml",
+ "ftml 0.2.19 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures",
  "log",
  "pretty_env_logger",
@@ -2453,6 +2473,7 @@ dependencies = [
  "deepwell-core",
  "deepwell-rpc",
  "dns-lookup",
+ "ftml 0.2.19",
  "ftml-rpc",
  "futures",
  "lazy_static",

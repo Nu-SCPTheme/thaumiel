@@ -18,37 +18,134 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use super::prelude::*;
+use crate::{remote::DeepwellPool, route::prelude::*};
+use actix_web::{Error, *};
+use deepwell_core::prelude::*;
+use ftml::{
+    data::User as FtmlUser,
+    handle::{NullHandle, RemoteHandle},
+    prefilter,
+    prelude::*,
+    RemoteError, RemoteResult,
+};
 use std::collections::HashMap;
 use wikidot_path::Request as PageRequest;
 
 // Public route methods
 
+/* TODO: Temporary Measure
+ *
+ * Until we can figure out a good way of divining the WikiId from the wiki request,
+ * just assume that these functions are retrieving the wiki at WikiId 1.
+ */
+lazy_static! {
+    static ref TEMP_WIKI_ID: WikiId = WikiId::from_raw(1);
+}
+
+/// Return an HttpResult for getting a page by its slug, using deepwell.
+pub async fn get_deepwell_page(
+    wiki_id: WikiId,
+    slug: &str,
+    deepwell: &web::Data<DeepwellPool>,
+) -> std::result::Result<HttpResponse, ()> {
+    debug!("Retrieving page by WikiId {} and slug {}", wiki_id, slug);
+    let result = deepwell
+        .claim()
+        .await
+        .get_page_contents(wiki_id.clone(), slug.to_string())
+        .await;
+
+    match try_io_result!(result) {
+        Ok(Some(page)) => {
+            // now run FTML on it
+            let mut contents = match String::from_utf8(page.to_vec()) {
+                Ok(v) => v,
+                Err(e) => return Ok(HttpResponse::InternalServerError().json(format!("{:?}", e))),
+            };
+
+            // TODO: something that uses Deepwell
+            let remote_handle = NullHandle;
+            let renderer = HtmlRender::new(&remote_handle);
+
+            // TODO: also get page metadata
+            let page_info = PageInfo {
+                title: "SCP-XXXX",
+                alt_title: Some("The Monster"),
+                header: None,
+                subheader: None,
+                rating: 1000,
+                tags: vec![
+                    "scp",
+                    "keter",
+                    "intangible",
+                    "k-class-scenario",
+                    "ontokinetic",
+                ],
+            };
+
+            let mut output = match renderer.transform(&mut contents, page_info, &remote_handle) {
+                Ok(o) => o,
+                Err(e) => return Ok(HttpResponse::InternalServerError().json(format!("{:?}", e))),
+            };
+
+            // TODO: use jinja/other templater to put this text into a better template
+            let mut buffer = String::from("<html><head>");
+
+            for meta in &output.meta {
+                meta.render(&mut buffer);
+            }
+
+            buffer.push_str("<style>");
+            buffer.push_str(&output.style);
+            buffer.push_str("</style></head><body>");
+            buffer.push_str(&output.html);
+            buffer.push_str("</body></html>\n");
+
+            Ok(HttpResponse::Ok().json(buffer))
+        }
+        Ok(None) => Err(()),
+        Err(e) => {
+            warn!("Failed to retrieve page contents: {}", e);
+
+            Ok(HttpResponse::InternalServerError().json(e))
+        }
+    }
+}
+
+pub async fn get_deepwell_page_wrapped(
+    wiki_id: WikiId,
+    slug: &str,
+    deepwell: web::Data<DeepwellPool>,
+) -> HttpResponse {
+    match get_deepwell_page(wiki_id, slug, &deepwell).await {
+        Ok(o) => o,
+        Err(()) => get_deepwell_page(wiki_id, "_404", &deepwell).await.unwrap(), // todo: make this safer
+    }
+}
+
 /// Route handling for pages, with arguments or not.
-pub async fn page_get(req: HttpRequest) -> HttpResult {
+pub async fn page_get(req: HttpRequest, deepwell: web::Data<DeepwellPool>) -> HttpResult {
     let host = get_host(&req);
     let path = req.uri().path();
 
     info!("GET page {} [{}]", path, host.unwrap_or("none"));
 
-    let _page_req = PageRequest::parse(path);
+    let page_req = PageRequest::parse(path);
 
-    // TODO retrieve page from client
-    Ok(HttpResponse::NotImplemented().finish())
+    Ok(get_deepwell_page_wrapped(*TEMP_WIKI_ID, page_req.slug, deepwell).await)
 }
 
 /// Route for root, which is the same as whatever the `main` page is.
-pub async fn page_main(req: HttpRequest) -> HttpResult {
+pub async fn page_main(req: HttpRequest, deepwell: web::Data<DeepwellPool>) -> HttpResult {
     let host = get_host(&req);
 
     info!("GET / [{}]", host.unwrap_or("none"));
 
-    let _page_req = PageRequest {
+    let page_req = PageRequest {
         slug: "",
         categories: Vec::new(),
         arguments: HashMap::new(),
     };
 
-    // TODO get page request
-    Ok(HttpResponse::NotImplemented().finish())
+    Ok(get_deepwell_page_wrapped(*TEMP_WIKI_ID, page_req.slug, deepwell).await)
 }

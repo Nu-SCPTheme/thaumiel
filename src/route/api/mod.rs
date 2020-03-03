@@ -28,9 +28,6 @@ mod prelude {
     pub use ftml_rpc::Api as _;
 }
 
-#[macro_use]
-mod macros;
-
 mod auth;
 mod misc;
 mod page;
