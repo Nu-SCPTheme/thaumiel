@@ -18,18 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use crate::remote::DeepwellPool;
 use crate::session::CookieSession;
 use crate::StdResult;
 use actix_identity::Identity;
-use actix_web::{web, HttpResponse};
+use actix_web::HttpResponse;
 use deepwell_core::error::Error;
 use deepwell_core::roles::Role;
+use deepwell_rpc::Client as DeepwellClient;
 
 pub async fn get_role(
     id: Identity,
     host: Option<&str>,
-    deepwell: web::Data<DeepwellPool>,
+    deepwell: &mut DeepwellClient,
 ) -> StdResult<Role, HttpResponse> {
     debug!("Checking role information from host {:?}", host);
 
@@ -37,8 +37,7 @@ pub async fn get_role(
         None => Ok(Role::Guest),
         Some(ref data) => {
             let session = CookieSession::read(data)?;
-            let mut deepwell = deepwell.claim().await;
-            session.verify(&mut deepwell).await?;
+            session.verify(deepwell).await?;
 
             // TODO fetch role based on wiki_membership
 
@@ -51,7 +50,7 @@ pub async fn check_role(
     expected_role: Role,
     id: Identity,
     host: Option<&str>,
-    deepwell: web::Data<DeepwellPool>,
+    deepwell: &mut DeepwellClient,
 ) -> StdResult<(), HttpResponse> {
     let actual_role = get_role(id, host, deepwell).await?;
 
