@@ -22,6 +22,7 @@ use crate::config::RuntimeSettings;
 use crate::middleware as crate_middleware;
 use crate::remote::{DeepwellPool, FtmlPool};
 use crate::route::*;
+use crate::utils::get_client_ip;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_ratelimit::{MemoryStore, MemoryStoreActor, RateLimiter};
 use actix_web::client::Client;
@@ -78,7 +79,8 @@ impl Server {
                 .wrap(
                     RateLimiter::new(MemoryStoreActor::from(ratelimit_store.clone()).start())
                         .with_max_requests(ratelimit_requests)
-                        .with_interval(ratelimit_interval),
+                        .with_interval(ratelimit_interval)
+                        .with_identifier(|req| Ok(get_client_ip(&req).to_string())),
                 )
                 .wrap(IdentityService::new(
                     CookieIdentityPolicy::new(&cookie_key)
