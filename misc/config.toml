@@ -5,6 +5,11 @@
 # Logging level for the web server. If empty, defaults to info.
 log-level = "debug"
 
+# Server ratelimits.
+# Number of requests per time period, in seconds.
+ratelimit-requests = 120
+ratelimit-interval = 60
+
 [network]
 
 # What hostname the server uses.

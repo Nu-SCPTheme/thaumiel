@@ -23,6 +23,7 @@
 
 extern crate actix_files;
 extern crate actix_identity;
+extern crate actix_ratelimit;
 extern crate actix_rt;
 extern crate actix_web;
 extern crate bytes;
@@ -79,6 +80,8 @@ async fn main() {
         http_address,
         keep_alive,
         log_level,
+        ratelimit_requests,
+        ratelimit_interval,
         cookie_secure,
         cookie_max_age,
         cookie_same_site,
@@ -107,6 +110,8 @@ async fn main() {
         hostname,
         http_address,
         keep_alive,
+        ratelimit_requests,
+        ratelimit_interval,
         cookie_secure,
         cookie_max_age,
         cookie_same_site,

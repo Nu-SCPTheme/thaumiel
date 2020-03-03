@@ -23,18 +23,22 @@ use crate::middleware as crate_middleware;
 use crate::remote::{DeepwellPool, FtmlPool};
 use crate::route::*;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
+use actix_ratelimit::{MemoryStore, MemoryStoreActor, RateLimiter};
 use actix_web::client::Client;
 use actix_web::cookie::SameSite;
 use actix_web::middleware as actix_middleware;
 use actix_web::{http, web, App, HttpResponse, HttpServer};
 use std::io;
 use std::net::SocketAddr;
+use std::time::Duration;
 
 #[derive(Debug, Clone)]
 pub struct Server {
     pub hostname: String,
     pub http_address: SocketAddr,
     pub keep_alive: usize,
+    pub ratelimit_requests: usize,
+    pub ratelimit_interval: Duration,
     pub cookie_secure: bool,
     pub cookie_max_age: i64,
     pub cookie_same_site: SameSite,
@@ -50,6 +54,8 @@ impl Server {
             hostname,
             http_address,
             keep_alive,
+            ratelimit_requests,
+            ratelimit_interval,
             cookie_secure,
             cookie_max_age,
             cookie_same_site,
@@ -57,6 +63,8 @@ impl Server {
             deepwell,
             ftml,
         } = self;
+
+        let ratelimit_store = MemoryStore::new();
 
         HttpServer::new(move || {
             App::new()
@@ -67,6 +75,11 @@ impl Server {
                 .data(settings.clone())
                 // Middleware
                 .wrap(actix_middleware::Compress::default())
+                .wrap(
+                    RateLimiter::new(MemoryStoreActor::from(ratelimit_store.clone()).start())
+                        .with_max_requests(ratelimit_requests)
+                        .with_interval(ratelimit_interval),
+                )
                 .wrap(IdentityService::new(
                     CookieIdentityPolicy::new(&cookie_key)
                         .name("thaumiel-auth")

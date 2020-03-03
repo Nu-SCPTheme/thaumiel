@@ -64,6 +64,8 @@ pub struct Config {
     pub keep_alive: usize,
     // Server settings
     pub log_level: LevelFilter,
+    pub ratelimit_interval: Duration,
+    pub ratelimit_requests: usize,
     pub cookie_secure: bool,
     pub cookie_max_age: i64,
     pub cookie_same_site: SameSite,
@@ -115,6 +117,8 @@ pub struct RuntimeSettings {
 #[derive(Deserialize, Debug)]
 struct App {
     log_level: Option<String>,
+    ratelimit_requests: usize,
+    ratelimit_interval: u64,
 }
 
 #[serde(rename_all = "kebab-case")]
@@ -292,6 +296,12 @@ impl Into<Config> for ConfigFile {
             ftml,
         } = self;
 
+        let App {
+            log_level,
+            ratelimit_requests,
+            ratelimit_interval,
+        } = app;
+
         let Network {
             hostname,
             use_ipv6,
@@ -306,7 +316,6 @@ impl Into<Config> for ConfigFile {
             cookie_key_path,
         } = security;
 
-        let App { log_level } = app;
         let Files { static_dir } = files;
 
         let (deepwell_address, deepwell_timeout, deepwell_pool_size) = deepwell
@@ -334,6 +343,8 @@ impl Into<Config> for ConfigFile {
             http_address,
             keep_alive,
             log_level: Self::parse_log_level(log_level),
+            ratelimit_requests,
+            ratelimit_interval: Duration::from_secs(ratelimit_interval),
             cookie_secure,
             cookie_max_age,
             cookie_same_site: Self::parse_same_site(&cookie_same_site),
