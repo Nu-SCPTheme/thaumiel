@@ -20,8 +20,8 @@
 
 mod prelude {
     pub use super::permissions::*;
-    pub use crate::StdResult;
     pub use crate::utils::*;
+    pub use crate::StdResult;
     pub use actix_web::Error as ActixError;
     pub use actix_web::{http, web, HttpRequest, HttpResponse, HttpServer};
     pub use futures::{future, Future};
