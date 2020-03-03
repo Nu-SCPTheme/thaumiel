@@ -1,5 +1,5 @@
 /*
- * route/utils.rs
+ * utils.rs
  *
  * thaumiel - Wikidot-like web server to provide pages, forums, and other services
  * Copyright (C) 2019-2020 Ammon Smith
