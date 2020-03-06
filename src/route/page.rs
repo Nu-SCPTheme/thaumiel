@@ -47,7 +47,7 @@ pub async fn get_deepwell_page(
     wiki_id: WikiId,
     slug: &str,
     deepwell: &web::Data<DeepwellPool>,
-) -> std::result::Result<HttpResponse, ()> {
+) -> Option<HttpResponse> {
     debug!("Retrieving page by WikiId {} and slug {}", wiki_id, slug);
     let result = deepwell
         .claim()
@@ -55,12 +55,12 @@ pub async fn get_deepwell_page(
         .get_page_contents(wiki_id.clone(), slug.to_string())
         .await;
 
-    match try_io_result!(result) {
+    match try_io_option!(result) {
         Ok(Some(page)) => {
             // now run FTML on it
             let mut contents = match String::from_utf8(page.to_vec()) {
                 Ok(v) => v,
-                Err(e) => return Ok(HttpResponse::InternalServerError().json(format!("{:?}", e))),
+                Err(e) => return Some(HttpResponse::InternalServerError().json(format!("{:?}", e))),
             };
 
             // TODO: something that uses Deepwell
@@ -85,7 +85,7 @@ pub async fn get_deepwell_page(
 
             let mut output = match renderer.transform(&mut contents, page_info, &remote_handle) {
                 Ok(o) => o,
-                Err(e) => return Ok(HttpResponse::InternalServerError().json(format!("{:?}", e))),
+                Err(e) => return Some(HttpResponse::InternalServerError().json(format!("{:?}", e))),
             };
 
             // TODO: use jinja/other templater to put this text into a better template
@@ -101,13 +101,13 @@ pub async fn get_deepwell_page(
             buffer.push_str(&output.html);
             buffer.push_str("</body></html>\n");
 
-            Ok(HttpResponse::Ok().json(buffer))
+            Some(HttpResponse::Ok().json(buffer))
         }
-        Ok(None) => Err(()),
+        Ok(None) => None,
         Err(e) => {
             warn!("Failed to retrieve page contents: {}", e);
 
-            Ok(HttpResponse::InternalServerError().json(e))
+            Some(HttpResponse::InternalServerError().json(e))
         }
     }
 }
@@ -118,8 +118,8 @@ pub async fn get_deepwell_page_wrapped(
     deepwell: web::Data<DeepwellPool>,
 ) -> HttpResponse {
     match get_deepwell_page(wiki_id, slug, &deepwell).await {
-        Ok(o) => o,
-        Err(()) => get_deepwell_page(wiki_id, "_404", &deepwell).await.unwrap(), // todo: make this safer
+        Some(o) => o,
+        None => get_deepwell_page(wiki_id, "_404", &deepwell).await.unwrap(), // todo: make this safer
     }
 }
 
@@ -142,7 +142,7 @@ pub async fn page_main(req: HttpRequest, deepwell: web::Data<DeepwellPool>) -> H
     info!("GET / [{}]", host.unwrap_or("none"));
 
     let page_req = PageRequest {
-        slug: "",
+        slug: "main",
         categories: Vec::new(),
         arguments: HashMap::new(),
     };

@@ -23,7 +23,8 @@ macro_rules! try_io {
         match $result {
             Ok(object) => object,
             Err(error) => {
-                let error = deepwell_core::error::Error::ServiceTransport(error).to_sendable();
+                use deepwell_core::error::Error;
+                let error = Error::ServiceTransport(error).to_sendable();
 
                 return HttpResponse::BadGateway().json(error);
             }
@@ -31,14 +32,14 @@ macro_rules! try_io {
     };
 }
 
-macro_rules! try_io_result {
+macro_rules! try_io_option {
     ($result:expr) => {
         match $result {
             Ok(object) => object,
             Err(error) => {
                 let error = deepwell_core::error::Error::ServiceTransport(error).to_sendable();
 
-                return Ok(HttpResponse::BadGateway().json(error));
+                return Some(HttpResponse::BadGateway().json(error));
             }
         }
     };

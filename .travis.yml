@@ -17,6 +17,7 @@ before_script:
   - .travis/download.sh deepwell
   - .travis/download.sh deepwell-rpc
   - .travis/download.sh ftml-rpc
+  - .travis/download.sh ftml
   # Add rustfmt
   - rustup component add rustfmt
   # Add clippy
