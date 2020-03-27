@@ -37,7 +37,8 @@ macro_rules! try_io_option {
         match $result {
             Ok(object) => object,
             Err(error) => {
-                let error = deepwell_core::error::Error::ServiceTransport(error).to_sendable();
+                use deepwell_core::error::Error;
+                let error = Error::ServiceTransport(error).to_sendable();
 
                 return Some(HttpResponse::BadGateway().json(error));
             }

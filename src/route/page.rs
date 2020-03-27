@@ -19,7 +19,6 @@
  */
 
 use crate::{remote::DeepwellPool, route::prelude::*};
-use actix_web::{Error, *};
 use deepwell_core::prelude::*;
 use ftml::{
     data::User as FtmlUser,
@@ -70,20 +69,16 @@ pub async fn get_deepwell_page(
             // TODO: also get page metadata
             let page_info = PageInfo {
                 title: "SCP-XXXX",
-                alt_title: Some("The Monster"),
+                alt_title: Some("Template Page"),
                 header: None,
                 subheader: None,
                 rating: 1000,
                 tags: vec![
                     "scp",
-                    "keter",
-                    "intangible",
-                    "k-class-scenario",
-                    "ontokinetic",
                 ],
             };
 
-            let mut output = match renderer.transform(&mut contents, page_info, &remote_handle) {
+            let output = match renderer.transform(&mut contents, page_info, &remote_handle) {
                 Ok(o) => o,
                 Err(e) => return Some(HttpResponse::InternalServerError().json(format!("{:?}", e))),
             };
@@ -92,7 +87,7 @@ pub async fn get_deepwell_page(
             let mut buffer = String::from("<html><head>");
 
             for meta in &output.meta {
-                meta.render(&mut buffer);
+                meta.render(&mut buffer).unwrap(); // TODO: let's not unwrap this
             }
 
             buffer.push_str("<style>");
@@ -101,7 +96,7 @@ pub async fn get_deepwell_page(
             buffer.push_str(&output.html);
             buffer.push_str("</body></html>\n");
 
-            Some(HttpResponse::Ok().json(buffer))
+            Some(HttpResponse::Ok().body(buffer))
         }
         Ok(None) => None,
         Err(e) => {
@@ -117,9 +112,9 @@ pub async fn get_deepwell_page_wrapped(
     slug: &str,
     deepwell: web::Data<DeepwellPool>,
 ) -> HttpResponse {
-    match get_deepwell_page(wiki_id, slug, &deepwell).await {
+    match get_deepwell_page(wiki_id, slug, &deepwell).await { 
         Some(o) => o,
-        None => get_deepwell_page(wiki_id, "_404", &deepwell).await.unwrap(), // todo: make this safer
+        None => get_deepwell_page(wiki_id, "_404", &deepwell).await.unwrap(), 
     }
 }
 
