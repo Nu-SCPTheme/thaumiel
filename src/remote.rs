@@ -21,8 +21,8 @@
 //! Wrappers for RPC client pools.
 
 use deadpool::unmanaged::{Object, Pool};
-use deepwell_rpc::Client as DeepwellClient;
-use ftml_rpc::Client as FtmlClient;
+use deepwell_rpc::{Client as DeepwellClient, PROTOCOL_VERSION as DEEPWELL_VERSION};
+use ftml_rpc::{Client as FtmlClient, PROTOCOL_VERSION as FTML_VERSION};
 use std::fmt::{self, Debug};
 use std::net::SocketAddr;
 use std::time::Duration;
@@ -53,13 +53,35 @@ impl RemotePool<DeepwellClient> {
     pub async fn connect(address: SocketAddr, timeout: Duration, size: usize) -> Self {
         info!("Initializing DEEPWELL client");
 
+        macro_rules! make_client {
+            () => {
+                DeepwellClient::new(address, timeout)
+                    .await
+                    .expect("Unable to create new DEEPWELL client")
+            };
+        }
+
+        // Check version for mismatch
+        {
+            trace!("Checking DEEPWELL server and client versions");
+
+            let mut worker = make_client!();
+            let version = worker
+                .protocol()
+                .await
+                .expect("Unable to get deepwell version");
+
+            assert_eq!(
+                DEEPWELL_VERSION, version,
+                "Version mismatch between DEEPWELL client and server",
+            );
+        }
+
+        // Create connection pool
         let pool = Pool::new(size);
 
         for _ in 0..size {
-            let worker = DeepwellClient::new(address, timeout)
-                .await
-                .expect("Unable to create new DEEPWELL client");
-
+            let worker = make_client!();
             pool.add(worker).await;
         }
 
@@ -73,13 +95,32 @@ impl RemotePool<FtmlClient> {
     pub async fn connect(address: SocketAddr, timeout: Duration, size: usize) -> Self {
         info!("Initializing ftml client");
 
+        macro_rules! make_client {
+            () => {
+                FtmlClient::new(address, timeout)
+                    .await
+                    .expect("Unable to create new ftml client")
+            };
+        }
+
+        // Check version for mismatch
+        {
+            trace!("Checking ftml server and client versions");
+
+            let mut worker = make_client!();
+            let version = worker.protocol().await.expect("Unable to get ftml version");
+
+            assert_eq!(
+                FTML_VERSION, version,
+                "Version mismatch between ftml client and server",
+            );
+        }
+
+        // Create connection pool
         let pool = Pool::new(size);
 
         for _ in 0..size {
-            let worker = FtmlClient::new(address, timeout)
-                .await
-                .expect("Unable to create new ftml client");
-
+            let worker = make_client!();
             pool.add(worker).await;
         }
 
