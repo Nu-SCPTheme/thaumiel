@@ -5,6 +5,7 @@ Requires=deepwell.service ftml.service
 After=network.target network-online.target
 
 [Service]
+User=thaumiel
 Type=simple
 ExecStart=/usr/bin/thaumiel
 Restart=always
