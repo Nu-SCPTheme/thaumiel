@@ -8,7 +8,7 @@ The lint `#![forbid(unsafe_code)]` is set, and therefore this crate has only saf
 Available under the terms of the GNU Affero General Public License. See [LICENSE.md](LICENSE).
 
 ### Compilation
-This library targets the latest stable Rust. At time of writing, that is 1.42.0
+This library targets the latest stable Rust. At time of writing, that is 1.43.0
 
 You must first install Postgres bindings. On a Debian-based operating system, this would look like:
 
